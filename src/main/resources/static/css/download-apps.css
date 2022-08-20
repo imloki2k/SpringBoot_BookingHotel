@@ -1,0 +1,123 @@
+html {
+    height: 100%;
+}
+
+header a:hover {
+    text-decoration: none;
+}
+
+header a, header a:hover {
+    color: white;
+}
+
+#logo {
+    /*http://markdotto.com/playground/3d-text/*/
+    font-size: 50px;
+    text-shadow: 0 1px 0 #ccc,
+    0px 2px 0px #c9c9c9,
+    0px 3px 0px #bbb,
+    0px 4px 0px #b9b9b9,
+    0px 5px 0px #aaa,
+    0 6px 1px rgba(0, 0, 0, .1),
+    0 0 5px rgba(0, 0, 0, .1),
+    0 1px 3px rgba(0, 0, 0, .3),
+    0 3px 5px rgba(0, 0, 0, .2),
+    0 5px 10px rgba(0, 0, 0, .25),
+    0 10px 10px rgba(0, 0, 0, .2),
+    0 20px 20px rgba(0, 0, 0, .15);
+}
+
+.wrapper {
+    height: 100% !important;
+    height: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: center;
+    display: block;
+    padding: 23px 0 23px 0;
+    width: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    /*background: rgba(255, 255, 255, 0.25);*/
+    background: rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    font-size: small;
+    color: #000;
+    -webkit-transition: all 500ms ease-in-out;
+    -moz-transition: all 500ms ease-in-out;
+    -o-transition: all 500ms ease-in-out;
+    transition: all 500ms ease-in-out;
+}
+
+.back:hover {
+    color: black;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+body.disabled-onepage-scroll .onepage-wrapper section {
+    min-height: 100%;
+    height: auto;
+}
+
+.main section.page1 {
+    background: url(../img/download-apps/pic-mobileapps1.jpg) no-repeat;
+    /*http://stackoverflow.com/questions/9262861/css-background-image-to-fit-width-height-should-auto-scale-in-proportion */
+    background-position: center center;
+    background-size: cover;
+}
+
+.main section.page2 {
+    background: url(../img/download-apps/pic-mobileapps2.jpg) no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.main section.page3 {
+    background: url(../img/download-apps/pic-mobileapps3.jpg) no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.main section.page4 {
+    background: url(../img/download-apps/pic-mobileapps4.jpg) no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.icon-download-apps {
+    /*========*/
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    /*========*/
+    margin-top: 5%;
+}
+
+.icon-download-apps img {
+    border: 1px solid white;
+}
+
+.icon-download-apps img:hover {
+    -moz-box-shadow: 0 0 10px #ccc;
+    -webkit-box-shadow: 0 0 10px #ccc;
+    box-shadow: 0 0 10px #ccc;
+}
+
+.sub-page {
+    color: white;
+    width: 50%;
+    margin-left: 40%;
+    margin-top: 15%;
+}
+
+hr {
+    width: 10%;
+    /*border-top: 1px solid darkgrey;*/
+}

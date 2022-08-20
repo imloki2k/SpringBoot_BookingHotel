@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>YOY | download-apps</title>
+
+    <script type="text/javascript" src="Utilities/jQuery-1.x/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="Utilities/OnePageScroll/jquery.onepage-scroll.js"></script>
+    <link href='Utilities/OnePageScroll/onepage-scroll.css' rel='stylesheet' type='text/css'>
+    <meta name="viewport"
+          content="initial-scale=1, width=device-width, maximum-scale=1, minimum-scale=1, user-scalable=no">
+
+
+    <link rel="stylesheet" href="Utilities/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <!--jquery: dung` version 1.9.1 -->
+    <script src="Utilities/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/download-apps.css"/>
+
+    <style>
+
+    </style>
+
+</head>
+<body>
+<div class="wrapper">
+
+
+    <div class="navbar-fixed-top">
+
+        <header style="position: absolute; color: white; margin-left: 20px; z-index: 1000">
+            <a th:href="@{/}" id="logo">YOY</a>
+            <span style="margin-left: 10px; font-size: 15px;">Mạng đặt phòng khách sạn Online</span>
+        </header>
+
+        <div style="position: absolute; margin-top: 7%; margin-left: 10%">
+            <!--chua co' class="img-responsive"-->
+            <img src="img/download-apps/inner.png" width="205px" height="359px"
+                 style="position: absolute; margin-left: 40px; margin-top: 70px">
+            <img src="img/download-apps/iphone-red.png" alt="phones" id="iphone-red"
+                 style="position: absolute; height: 500px;">
+        </div>
+
+        <div id="tai-ungdung" style="color: white; width: 50%; margin-left: 40%; margin-top: 31%">
+            <div style="font-size: 25px; letter-spacing: 4px; margin-top: 10%; text-align: center">
+                Tải ứng dụng miễn phí
+            </div>
+            <div class="icon-download-apps">
+                <a href="https://play.google.com/store" target="_blank">
+                    <img class="img-responsive" src="img/download-apps/google.png" style="border-radius: 10px"/>
+                </a>
+                <a href="https://itunes.apple.com" target="_blank">
+                    <img class="img-responsive" src="img/download-apps/apple.png" style="border-radius: 10px"/>
+                </a>
+                <a href="https://www.microsoft.com/en-us/store/apps" target="_blank">
+                    <img class="img-responsive" src="img/download-apps/microsoft.jpg"/>
+                </a>
+            </div>
+        </div>
+
+        <a href="#" class="back" style="z-index: 999">Trở về trang trước</a>
+    </div>
+
+    <div class="main">
+        <section class="page1">
+            <div class="page_container">
+                <div class="sub-page">
+                    <h1 style="text-align: center; line-height: 60px">Trải nghiệm kỳ nghỉ thú vị <br/>tại 43 tỉnh, thành
+                        phố</h1>
+                    <hr/>
+                </div>
+            </div>
+        </section>
+
+        <section class="page2">
+            <div class="page_container">
+                <div class="sub-page">
+                    <!--2 buoc: (1) tim` kiem' va` chon khach san, (2) dat phong-->
+                    <h1 style="text-align: center; line-height: 60px">Đặt phòng trên YOY <br/> chỉ qua 2 bước</h1>
+                    <hr/>
+                </div>
+            </div>
+        </section>
+
+        <section class="page3">
+            <div class="page_container">
+                <div class="sub-page">
+                    <h1 style="text-align: center; line-height: 60px">Tìm nhà hàng gần khách sạn <br/> trên App</h1>
+                    <hr/>
+                </div>
+            </div>
+        </section>
+
+        <section class="page4">
+            <div class="page_container">
+                <div class="sub-page">
+                    <h1 style="text-align: center; line-height: 60px">Đặt hàng Trà, Cafe từ App</h1>
+                    <hr/>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(".main").onepage_scroll({
+            sectionContainer: "section",
+            responsiveFallback: 600,
+            loop: false
+        });
+        //http://www.w3schools.com/jsref/met_his_back.asp
+        //Go Back 2 Pages: http://www.w3schools.com/jsref/met_his_go.asp
+        $('.back').click(function () {
+            window.history.back();
+        });
+    });
+</script>
+
+<!--Form Feedback (position: fixed): https://webengage.com/ , phai dang ky', chua tach ra duoc file rieng do co' kem` id-->
+<script id="_webengage_script_tag" type="text/javascript">
+    var webengage;
+    !function (e, t, n) {
+        function o(e, t) {
+            e[t[t.length - 1]] = function () {
+                r.__queue.push([t.join("."), arguments])
+            }
+        }
+
+        var i, s, r = e[n], g = " ", l = "init options track onReady".split(g),
+            a = "feedback survey notification".split(g), c = "options render clear abort".split(g),
+            p = "Open Close Submit Complete View Click".split(g), u = "identify login logout setAttribute".split(g);
+        if (!r || !r.__v) {
+            for (e[n] = r = {__queue: [], __v: "5.0", user: {}}, i = 0; i < l.length; i++) o(r, [l[i]]);
+            for (i = 0; i < a.length; i++) {
+                for (r[a[i]] = {}, s = 0; s < c.length; s++) o(r[a[i]], [a[i], c[s]]);
+                for (s = 0; s < p.length; s++) o(r[a[i]], [a[i], "on" + p[s]])
+            }
+            for (i = 0; i < u.length; i++) o(r.user, ["user", u[i]]);
+            var f = t.createElement("script"), d = t.getElementById("_webengage_script_tag");
+            f.type = "text/javascript", f.async = !0, f.src = ("https:" == t.location.protocol ? "//ssl.widgets.webengage.com" : "//cdn.widgets.webengage.com") + "/js/widget/webengage-min-v-5.0.js", d.parentNode.insertBefore(f, d)
+        }
+    }(window, document, "webengage");
+    webengage.init('~15ba209b4');
+    webengage.options('isDemoMode', true);
+</script>
+
+</body>
+</html>

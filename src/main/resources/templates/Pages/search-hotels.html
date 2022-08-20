@@ -1,0 +1,3610 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>YOY | search-hotels</title>
+
+    <link rel="stylesheet" href="../../static/css/search-hotels.css">
+    <!-- bootstrap: de y' 2 file ajax phai dat truoc maxcdn thi moi dung` duoc modal (Form)-->
+    <!-- Online -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- Offline -->
+    <link rel="stylesheet" href="../Utilities/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <script src="../Utilities/jQuery-1.x/jquery-1.11.3.min.js"></script>
+    <script src="../Utilities/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+
+    <!-- Start WOWSlider.com section -->
+    <!--slide-1-->
+    <link rel="stylesheet" type="text/css" href="../Utilities/slideshow/slideshow1/engine0/style.css"/>
+    <script type="text/javascript" src="../Utilities/slideshow/slideshow1/engine0/jquery.js"></script>
+    <!--slide-2: tu` slide nay` tro di thi file engine cua jquery dug chung voi slide 1-->
+    <link rel="stylesheet" type="text/css" href="../Utilities/slideshow/slideshow1/engine1/style.css"/>
+    <!--script type="text/javascript" src="engine1/jquery.js"></script-->
+    <!--slide-3-->
+    <link rel="stylesheet" type="text/css" href="../Utilities/slideshow/slideshow1/engine2/style.css"/>
+    <!--slide-4-->
+    <link rel="stylesheet" type="text/css" href="../Utilities/slideshow/slideshow1/engine3/style.css"/>
+    <!--slide-5-->
+    <link rel="stylesheet" type="text/css" href="../Utilities/slideshow/slideshow1/engine4/style.css"/>
+    <!--slide-6-->
+    <link rel="stylesheet" type="text/css" href="../Utilities/slideshow/slideshow1/engine5/style.css"/>
+    <!--slide-7-->
+    <link rel="stylesheet" type="text/css" href="../Utilities/slideshow/slideshow1/engine6/style.css"/>
+    <!--slide-8-->
+    <link rel="stylesheet" type="text/css" href="../Utilities/slideshow/slideshow1/engine7/style.css"/>
+    <!--slide-9-->
+    <link rel="stylesheet" type="text/css" href="../Utilities/slideshow/slideshow1/engine8/style.css"/>
+    <!--slide-10-->
+    <link rel="stylesheet" type="text/css" href="../Utilities/slideshow/slideshow1/engine9/style.css"/>
+    <!-- End WOWSlider.com HEAD section -->
+
+    <!--nhóm js nay` phai dat phia' sau cac slide thi moi' chay duoc (co le code tren chua cai ready...)-->
+    <!--autocomplete-suggestions-->
+    <link rel="stylesheet" type="text/css" media="all" href="../Utilities/autocomplete-suggestions/style.css">
+    <!--<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>-->
+    <script type="text/javascript" src="../Utilities/autocomplete-suggestions/jquery.autocomplete.min.js"></script>
+    <script type="text/javascript" src="../Utilities/autocomplete-suggestions/locations-autocomplete.js"></script>
+
+    <!-- Put icons inside of input fields -->
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!--Slider-->
+    <link rel="stylesheet" href="../Utilities/RangeSlider/jquery-ui.css">
+    <script src="../Utilities/RangeSlider/jquery-1.10.2.js"></script>
+    <script src="../Utilities/RangeSlider/jquery-ui.js"></script>
+
+    <style>
+        .ws_images img {
+            border-radius: 4px;
+        }
+
+        #left-center ul li {
+            cursor: pointer;
+        }
+
+        #left-center ul li:hover {
+            background-color: rgb(246, 246, 246);
+        }
+
+        #left-center input {
+            /*cho dong bo voi' cac li*/
+            cursor: pointer;
+        }
+    </style>
+    <style>
+        * {
+            margin: 0px;
+            /*do co' file bootstrap.min.css => font duoc dinh dang san~*/
+            /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+            /*font-size: 15px;*/
+            /*border-color: rgb(191,191,191);*/
+            /*border-style: none; uu tien cac div inline (neu co')*/
+        }
+
+        #container {
+            width: 100%;
+            height: auto;
+        }
+
+        /** navigation **/
+        nav {
+            /*height: 70px;*/
+            width: 100%;
+            /*background-color: rgb(46,45,45);*/
+            background-color: rgb(233, 234, 237);
+
+        }
+
+        #nav-timkiem {
+            width: 85%;
+            /*height: 100%;*/
+            margin: auto;
+            padding-bottom: 10px;
+            /*background-color: yellow;*/
+            /*https://css-tricks.com/snippets/css/a-guide-to-flexbox/*/
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-around;
+
+        }
+
+        /*http://stackoverflow.com/questions/18838964/add-bootstrap-glyphicon-to-input-box*/
+        /* enable absolute positioning */
+        .inner-addon {
+            position: relative;
+        }
+
+        /* style icon */
+        /*.inner-addon .glyphicon {*/
+        .inner-addon .fa {
+            position: absolute;
+            /*padding: 5px;*/
+            pointer-events: none;
+        }
+
+        /* align icon */
+        /*.left-addon .glyphicon  { left:  0px;}*/
+        .left-addon .fa {
+            left: 7px;
+            top: 23px;
+        }
+
+        /*.right-addon .glyphicon { right: 0px;}*/
+        /* add padding  */
+        .left-addon input {
+            padding-left: 30px;
+        }
+
+        /*.right-addon input { padding-right: 30px; }*/
+
+        /*icon Google http://www.w3schools.com/icons/google_icons_social.asp */
+        .inner-addon .material-icons {
+            position: absolute;
+            pointer-events: none;
+        }
+
+        /* align icon */
+        .left-addon .material-icons {
+            left: 7px;
+            top: 23px;
+        }
+
+        /* add padding  */
+        .left-addon select {
+            padding-left: 30px;
+        }
+
+        input[type='date'] {
+            /*margin: left & top*/
+            /*background: url(../img/index/cal-icon.png) no-repeat scroll 5px 10px;*/
+            /*padding-left:35px;*/
+            /*background-color: #ffffff;*/
+            width: 180px;
+        }
+
+        /*nhom' data-tooltip*/
+        /*http://stackoverflow.com/questions/19746767/hide-title-from-tooltip*/
+        input[type=date] {
+            /*position: relative; => anh huong den' class icon ben trong */
+        }
+
+        .my-tooltip:hover:after {
+            position: absolute;
+            /*#333*/
+            /*background: #ffffff;*/
+            /*background: rgba(0,0,0,.8);*/
+            background: rgba(255, 255, 255, 1);
+            border-radius: 5px;
+            margin-top: -90px;
+            /*bottom: 26px;*/
+            /*color: #fff;*/
+            content: attr(data-tooltip);
+            /*left: 20%;*/
+            padding: 5px 15px;
+            z-index: 1000;
+            width: auto;
+            border: 1px solid rgb(233, 234, 237);
+        }
+
+        .my-tooltip:hover:before {
+            position: absolute;
+            border: solid;
+            /*#333*/
+            border-color: white transparent;
+            border-width: 6px 6px 0 6px;
+            margin-top: 0px;
+            /*bottom: 20px;*/
+            content: "";
+            /*left: 50%;*/
+            margin-left: 15px;
+            z-index: 1001;
+        }
+
+        input[type='search'] {
+            /*background: url(../img/index/MarkerFilled-23.png) no-repeat scroll 5px 10px;*/
+            /*padding-left:35px;*/
+            /*background-color: #ffffff;*/
+        }
+
+        button[type="submit"].mybtn-style1 {
+            background: rgb(220, 30, 40);
+            color: white;
+            /*hoac dung width % tai. id*/
+            padding-left: 25px;
+            padding-right: 25px;
+        }
+
+        button[type="submit"].mybtn-style1:hover {
+            background: rgb(212, 18, 28);
+        }
+
+        /*viet day du? thuoc tinh', select (viet khac 1 ti') #nav-timkiem input[type='search'] */
+        #nav-timkiem input, #nav-timkiem select:optional, #nav-timkiem button {
+            /*margin-top co' the dat tai the div*/
+            margin-top: 10px;
+            height: 48px;
+        }
+
+        #loaiphong-khac {
+            /*width: 65%;*/
+            /*margin: auto;*/
+            /*https://css-tricks.com/snippets/css/a-guide-to-flexbox/*/
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-around;
+        }
+
+        /** END navigation **/
+
+        /** center **/
+        #center {
+            margin: auto;
+            margin-left: 7%;
+            margin-right: 7%;
+            /*height: 1280px;*/
+            height: auto;
+        }
+
+        #left-center {
+            width: 28%;
+            height: 100%;
+            float: left;
+        }
+
+        /*dat height 100%, se~ bi day? xuong khi co' margin-top, anh huong den Footer*/
+        #right-center {
+            width: 70%;
+            float: right;
+            margin-top: 15px;
+        }
+
+        .left-title {
+            font-weight: bold;
+            /*chuyen tu` span sang div*/
+            margin-top: 15px;
+            color: rgb(70, 68, 68);
+        }
+
+        #left-center li {
+            margin-top: 10px;
+            margin-left: -20px;
+        }
+
+        /*http://brennaobrien.com/blog/2014/05/style-input-type-range-in-every-browser.html*/
+        input[type=range] {
+            -webkit-appearance: none;
+        }
+
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 300px;
+            height: 5px;
+            /*#ddd*/
+            background: rgb(220, 30, 40);
+            border: none;
+            border-radius: 3px;
+        }
+
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            border: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            /*goldenrod*/
+            background: white;
+            box-shadow: 1px 1px 1px 1px grey;
+            margin-top: -4px;
+        }
+
+        input[type=range]:focus {
+            outline: none;
+        }
+
+        input[type=range]:focus::-webkit-slider-runnable-track {
+            /*#ccc*/
+            /*background: #ff0000;*/
+        }
+
+        /*END style-input-type-range-in-every-browser*/
+
+        /*nhóm Lựa chọn của bạn*/
+        .options {
+            border: 1px solid rgb(223, 221, 221);
+            /*display: inline-block; chi tao border bao quoanh text*/
+            display: inline-block;
+            /*padding: top right bottom left*/
+            padding: 2px 5px 2px 5px;
+        }
+
+        .options a {
+            color: black;
+        }
+
+        .options a:hover {
+            color: rgb(239, 238, 239);
+            text-decoration: none;
+        }
+
+        .options-x {
+            display: none;
+            position: absolute;
+            color: black;
+        }
+
+        #right-center-2 .row {
+            margin-top: 25px;
+        }
+
+        #right-center-2 .size-of-img {
+            width: 393px;
+            height: 238px;
+        }
+
+        .my-wowslider {
+            cursor: pointer;
+        }
+
+        /*duoc dung chung cho nhieu image*/
+        /*https://css-tricks.com/examples/ShapesOfCSS/*/
+        .badge-outer {
+            position: absolute;
+            z-index: 1000;
+            border-bottom: 25px solid black;
+            color: white;
+            opacity: 0.3;
+            /*#####*/
+            border-left: 21px solid transparent;
+            border-right: 29px solid transparent;
+            height: 0;
+            width: 135px;
+            /*#####*/
+            -webkit-transform: rotate(-40deg);
+            margin-left: -24px;
+            margin-top: 21px;
+        }
+
+        .badge-inner {
+            position: absolute;
+            z-index: 1000;
+            color: white;
+            text-align: center;
+            -webkit-transform: rotate(-42deg);
+            margin-top: 25px;
+            margin-left: 10px;
+            font-size: 14px;
+        }
+
+        /*badge-outer-2, badge-inner-2: dung cho khuyen mai~
+        neu dung` glyphicon thi ko tuy chon duoc size
+        */
+        .badge-outer-2 {
+            position: absolute;
+            z-index: 999;
+            opacity: 0.5;
+            margin-top: -10px;
+        }
+
+        .badge-inner-2 {
+            position: absolute;
+            z-index: 1000;
+            width: 30px;
+            text-align: center;
+            margin-left: 20px;
+            font-size: larger;
+            margin-top: 5px;
+        }
+
+        .badge-outer-3 {
+            position: absolute;
+            z-index: 1000;
+            border-bottom: 25px solid rgb(220, 30, 40);
+            color: white;
+            opacity: 0.3;
+            /*#####*/
+            border-left: 21px solid transparent;
+            border-right: 29px solid transparent;
+            height: 0;
+            width: 135px;
+            /*#####*/
+            -webkit-transform: rotate(-40deg);
+            margin-left: -24px;
+            margin-top: 21px;
+        }
+
+        .badge-inner-3 {
+            position: absolute;
+            z-index: 1000;
+            color: white;
+            text-align: center;
+            -webkit-transform: rotate(-40deg);
+            margin-top: 25px;
+            margin-left: 0px;
+            font-size: 14px;
+        }
+
+        .loaiphong {
+            position: absolute;
+            z-index: 1000;
+            margin-top: 15px;
+            /*margin-left: 300px; xay ra loi~ khi zoom browser*/
+            right: 20px;
+            width: 80px;
+            height: 28px;
+            line-height: 28px;
+            border: 0px solid;
+            color: rgb(238, 166, 16);
+            text-align: center;
+            border-radius: 15px;
+            background-color: black;
+            font-size: 12px;
+        }
+
+        .info-hotel {
+            position: absolute;
+            z-index: 1000;
+            /*margin-top: 170px; xay ra loi~ khi zoom browser*/
+            /*dam bao khi zoom thi van thay' dc price'*/
+            bottom: 5px;
+            width: 280px;
+            height: 75px;
+            margin-left: 5px;
+            text-shadow: 1px 0px black;
+        }
+
+        .price {
+            position: absolute;
+            z-index: 1000;
+            width: 100px;
+            text-align: right;
+            /*margin-left: 285px;*/
+            right: 10px;
+            /*margin-top: 210px;*/
+            bottom: 0px;
+            text-shadow: 1px 0px black;
+            font-size: 15px;
+        }
+
+
+        /*da chuyen sang dung div*/
+        /*viet day du ten Id cua the div chua' class .borderless khi tach' rieng file doc lap, neu dat chung 1 file thi ok*/
+        #myModal .borderless tbody tr td, #myModal .borderless tbody tr th, #myModal .borderless thead tr th {
+            /*http://stackoverflow.com/questions/18075794/bootstrap-table-without-stripe-borders
+            do mac dinh table co' ke khung, neu them css inline thi ko the tac dong. den duoc.
+            */
+            border: none;
+        }
+
+        #myModal-2 .borderless tbody tr td, #myModal-2 .borderless tbody tr th, #myModal-2 .borderless thead tr th {
+            border: none;
+        }
+
+        /*neu img la` display: none thi dung` jQuery su kien fadeIn tac dong den (neu' lien quan den' toc' do^)
+        va phai kem` the? a de? show duoc ban` tay
+        tai index cung co' img nay`*/
+        /*ko the kiem tra duoc dk input = empty*/
+        /*#search-locations img{*/
+        /*visibility: hidden;*/
+        /*cursor: pointer;*/
+        /*}*/
+        /*#search-locations:hover img{*/
+        /*visibility: visible;*/
+        /*}*/
+
+    </style>
+
+    <style>
+
+        * {
+            margin: 0px;
+        }
+
+        #container {
+            /*ho tro* cac element ben trong deu 100%*/
+            width: 100%;
+            height: auto;
+        }
+
+        /*** NAVIGATION-BAR ***/
+        nav {
+            /*height: 40px; khi tke ban dau, sau do da~ them <div class="container-fluid">*/
+            background-color: rgb(220, 30, 40);
+            line-height: 40px; /*canh deu noi dung theo chieu doc */
+            /*box-shadow: 2px 2px black;*/
+            /*width: 100%;*/
+
+        }
+
+        #left-nav {
+            float: left;
+            margin-left: 30px;
+            color: white;
+        }
+
+        #left-nav ul {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        /*#left-nav ul li: dang tac dong toan` bo li => dung` class
+        vo^ tinh` dat. ten 2 css cung` ten van~ chay. duoc.
+        */
+        /*.left-nav-city{*/
+        /*float: left;*/
+        /*margin-left: 0px;*/
+        /*}*/
+
+        .rotate-up {
+            position: relative;
+            /* add the animation */
+            -webkit-animation: spin-up 0.3s ease;
+            -moz-animation: spin-up 0.3s ease;
+            /* -ms-animation: spin-right 10s linear infinite;  => Unknown Css property animation */
+            -o-animation: spin-up 0.3s ease;
+            animation: spin-up 0.3s ease;
+        }
+
+        @keyframes spin-up {
+            0% {
+                -webkit-transform: rotate(-180deg);
+                -moz-transform: rotate(-180deg);
+                -ms-transform: rotate(-180deg);
+                -o-transform: rotate(-180deg);
+                transform: rotate(-180deg);
+            }
+
+            99% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+        }
+
+        .rotate-down {
+            position: relative;
+            /* add the animation */
+            -webkit-animation: spin-down 0.3s ease;
+            -moz-animation: spin-down 0.3s ease;
+            -o-animation: spin-down 0.3s ease;
+            animation: spin-down 0.3s ease;
+        }
+
+        @keyframes spin-down {
+            0% {
+                -webkit-transform: rotate(180deg);
+                -moz-transform: rotate(180deg);
+                -ms-transform: rotate(180deg);
+                -o-transform: rotate(180deg);
+                transform: rotate(180deg);
+            }
+            99% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+        }
+
+        .left-nav-city {
+            float: left;
+            margin-left: 0px;
+            /* noi' rong. block, resize sao cho bang` the? div con ben duoi' */
+            padding-left: 15px;
+            padding-right: 15px;
+            /*neu set khi hover thi` se thay' bi. day? xuong'*/
+            border-top: thin solid rgb(220, 30, 40);
+        }
+
+        .left-nav-city:hover {
+            background-color: white;
+            color: black;
+            /*-webkit-border-top-left-radius: 4px; *//* border-radius: binh thuong` thi` ko co' top-left cu the */
+            /*-webkit-border-top-right-radius: 4px;*/
+            /*khac 1 ti'*/
+            /*-moz-border-radius-topleft: 4px; *//* border-radius: binh thuong` thi` ko co' top-left cu the */
+            /*-moz-border-radius-topright: 4px;*/
+            /*border-top: thin solid #ff0000;*/
+        }
+
+        /*#left-nav-A, #left-nav-B, #left-nav-C => gop 3 ID lai => kho' chinh? sua
+        viec display: none; chi cai` tung` ID (none, visible)
+        */
+        .tmp-left-nav {
+            /*them 1 class cho 3 id (left-nav-A,B,C), vi co' nhieu thuoc tinh giong nhau' (ngoai`: z-index, margin-left)*/
+            display: none;
+            position: absolute;
+            background-color: white;
+            width: 80%;
+            height: 370px;
+            /*cai` lai. mau` do the? hien khac' voi' div chinh' */
+            color: black;
+            /*(margin-top: 40px) dung` khi ul li dat ben ngoai` => anh den su* kien jQuery mouseenter */
+            padding-top: 20px;
+            /**/
+            z-index: 1000;
+            /*margin-left: -15px; ban dau => cac id B, C ko chinh xac */
+            /*giong margin-left cua #left-nav*/
+            left: 45px;
+            /*** http://www.hongkiat.com/blog/css3-box-shadows-effects/ ***/
+            /*border: 1px solid #edf0f3;*/
+            border-right: 1px solid #edf0f3;
+            border-bottom: 1px solid #edf0f3;
+            /*border-top: 0;*/
+            /*padding: 10px 0 10px 10px;*/
+            /*overflow: hidden;*/
+            -webkit-box-shadow: 5px 7px 2px 1px rgba(0, 0, 0, 0.25);
+            -moz-box-shadow: 5px 7px 2px 1px rgba(0, 0, 0, 0.25);
+            box-shadow: 5px 7px 2px 1px rgba(0, 0, 0, 0.25);
+        }
+
+        #left-nav-A {
+            /*sau khi cai xong js thi mo? lai: display (visible)*/
+            /*z-index: 1000;*/
+            /*left: 30px;*/
+        }
+
+        #left-nav-B {
+            /*z-index: 1001;*/
+            /*left: 30px;*/
+        }
+
+        #left-nav-C {
+            /*z-index: 1002;*/
+            /*left: 30px;*/
+        }
+
+        /*#left-nav-A span, #left-nav-B span, #left-nav-C span{*/
+        .tmp-left-nav span {
+            /* vi chi co' 1 the span => ko can class */
+            color: rgb(220, 30, 40);
+            font-weight: bold
+        }
+
+        /*#left-nav-A ul, #left-nav-B ul, #left-nav-C ul{*/
+        .tmp-left-nav ul {
+            margin-left: 10px; /* lech ve ben phai 1 ti' */
+        }
+
+        /*#left-nav-A ul li, #left-nav-B ul li, #left-nav-C ul li{*/
+        .tmp-left-nav ul li {
+            margin: 0;
+            margin-top: -10px;
+            padding-top: 0;
+        }
+
+        .left-nav-A-lastli, .left-nav-B-lastli, .left-nav-C-lastli {
+            /*#left-nav-A ul li:nth-child(4){*: do co' den' 2 nhom' ul co' format khac nhau/ */
+            font-weight: bold;
+            color: rgb(102, 105, 102);
+        }
+
+        /*loai bo color: blue do the a tao ra*/
+        .left-nav-city {
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        /*#left-nav-A li:hover, #left-nav-B li:hover, #left-nav-C li:hover{*/
+        .tmp-left-nav li:hover {
+            color: rgb(214, 57, 31);
+        }
+
+        /*** CENTER ***/
+        #center {
+            height: 450px;
+        }
+
+        #booking {
+            position: absolute;
+            width: 460px;
+            height: 400px;
+            left: 120px;
+        }
+
+        #booking_slogan {
+            font-size: 25px;
+            font-weight: bold;
+            height: 75px;
+            text-align: center;
+            color: white;
+            font-family: Arial, Times New Romans;
+            text-shadow: 0 1px black;
+            margin-top: 15px;
+        }
+
+        #search_form {
+            height: 330px;
+            /*background-color: black;*/
+            /*opacity: 0.2;*/
+            border-radius: 5px;
+            border: 1px solid white;
+        }
+
+        /*viet day du ten Id cua the div chua' class .borderless khi tach' rieng file doc lap, neu dat chung 1 file thi ok*/
+        #search_form .borderless tbody tr td, #search_form .borderless tbody tr th, #search_form .borderless thead tr th {
+            /*http://stackoverflow.com/questions/18075794/bootstrap-table-without-stripe-borders
+            do mac dinh table co' ke khung, neu them css inline thi ko the tac dong. den duoc.
+            */
+            border: none;
+        }
+
+        #search_form input, #search_form select {
+            height: 45px;
+            /*width: con` tuy`*/
+        }
+
+        /*neu img la` display: none thi dung` jQuery su kien fadeIn tac dong den (neu' lien quan den' toc' do^)
+        va phai kem` the? a de? show duoc ban` tay
+        neu dung` css thi` ko the kiem tra dc input dang empty hay la ko? */
+        #search-locations img {
+            /*visibility: hidden;*/
+            cursor: pointer;
+        }
+
+        /*#search-locations:hover img{*/
+        /*visibility: visible;*/
+        /*}*/
+
+        /*Put icon inside input element in a form: http://stackoverflow.com/questions/917610/put-icon-inside-input-element-in-a-form*/
+        /*dag thieu' nut' clear cua type = search*/
+        input[type='search'] {
+            background: url(../../static/img/homepage/MarkerFilled-1824.png) no-repeat scroll 5px 10px;
+            padding-left: 30px;
+            background-color: #ffffff;
+        }
+
+        input[type='date'] {
+            background: url(../../static/img/homepage/cal-icon.png) no-repeat scroll 5px 10px;
+            padding-left: 35px;
+            background-color: #ffffff;
+        }
+
+        #loaiphong-khac {
+            width: 65%;
+            margin: auto;
+            /*https://css-tricks.com/snippets/css/a-guide-to-flexbox/*/
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-around;
+        }
+
+        #booking_form_search {
+            /*width: 100%;*/
+            width: 96%;
+            height: 50px;
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+
+        button[type="submit"].mybtn-style1 {
+            background: rgb(220, 30, 40);
+            color: white;
+        }
+
+        button[type="submit"].mybtn-style1:hover {
+            background: rgb(212, 18, 28);
+        }
+
+        /*** our_promise: Chung toi dam bao ***/
+        #our_promise {
+            /*height: 230px; => da~ them class cua bootstrap => them padding-bottom*/
+            padding-bottom: 20px;
+            background-color: white;
+        }
+
+        #our_promise_title {
+            height: 70px;
+            width: 300px;
+            text-align: center;
+            line-height: 70px;
+            font-family: Arial, Times New Romans;
+            color: rgb(70, 68, 68);
+            font-weight: bold;
+        }
+
+        #our_promise img {
+            /*ket hop voi text-align: center cua div chua' no': http://stackoverflow.com/questions/7283045/display-centered-row-of-images*/
+            display: inline-block;
+        }
+
+        /*** promotion: Khuyen mai hap dan ***/
+        #promotion {
+            /*height: 600px; da~ them class cua bootstrap*/
+            padding-bottom: 50px;
+            background-color: rgb(46, 45, 45);
+        }
+
+        #promotion_title {
+            height: 50px;
+            width: 300px;
+            text-align: center;
+            line-height: 50px;
+            font-family: Arial, Times New Romans;
+            color: white;
+            font-weight: bold;
+            margin: 0 auto;
+            font-size: 25px;
+        }
+
+        .redline {
+            height: 3px;
+            background-color: rgb(220, 30, 40);
+            border-radius: 2px;
+        }
+
+        #promotion figure {
+            cursor: pointer;
+        }
+
+        /*** comment: Nhan xet khach hang ***/
+        #comment {
+            /*height: 600px; da~ them class bootstrap */
+            padding-bottom: 40px;
+            background-color: white;
+        }
+
+        #comment_title {
+            height: 90px;
+            width: 300px;
+            text-align: center;
+            line-height: 90px;
+            font-family: Arial, Times New Romans;
+            color: rgb(70, 68, 85);
+            font-weight: bold;
+            margin: 0 auto;
+            font-size: 20px;
+        }
+
+        #comment ul li {
+            display: block;
+            float: left;
+            width: 50%;
+            margin-top: 30px;
+        }
+
+        .comment_name {
+            font-weight: bold;
+        }
+
+        .comment_country {
+            color: rgb(185, 176, 177);
+        }
+
+        .effect-shadow {
+            /*https://graphpaperpress.com/tips/creating-image-shadows-using-css3/*/
+            -webkit-box-shadow: 3px 3px 3px #7C7C7C;
+            box-shadow: 3px 3px 3px #7C7C7C;
+        }
+
+        /*Start SCROLL TO TOP*/
+        #scrolltop {
+            text-align: center;
+            width: 50px;
+            height: 15px;
+            background-color: rgb(46, 45, 45);
+            /*margin: auto; ko the dung auto, khi nam` doc lap div rieng*/
+            margin-left: 50%;
+            margin-right: 50%;
+            margin-top: -15px;
+            /*bottom: 0px;*/
+            -webkit-border-top-left-radius: 3px;
+            -webkit-border-top-right-radius: 3px;
+            /*khac 1 ti'*/
+            -moz-border-radius-topleft: 3px;
+            -moz-border-radius-topright: 3px;
+        }
+
+        #scrolltop:hover span {
+            animation-name: mymove; /* ten bat ky, va` se~ lay' ten da~ luu cac page truoc' */
+            animation-duration: 500ms; /* tong thoi gian 1 lan chay */
+            animation-iteration-count: infinite; /* dung infinite de loop vo han */
+            /* chua the cai` co' dinh khi them delay */
+            /*cursor: pointer;*/
+            /*neu ko co delay thi se~ gap loi cho lan` chay. dau tien*/
+            animation-delay: 500ms;
+            position: relative; /* mac dinh. la` Absolute (dung' im) */
+            /* huong' chay. (ko co' suggestions)  reverse: chay nguoc lai */
+            /* alternate: vua chay xuoi va nguoc */
+            animation-direction: alternate;
+            /*animation-play-state:running;*/
+        }
+
+        /*@keyframes: dieu khien dien~ bien' cua square*/
+        @keyframes mymove {
+            0% {
+                color: rgb(46, 45, 45);
+                opacity: 0.1;
+                top: 10px
+            }
+            100% {
+                color: white;
+                opacity: 1;
+                top: 0
+            }
+        }
+
+        /* nen chi ro cho chay. tren nhieu browser, neu ko khai bao' thi dung voi default browser
+        neu chi co' 1 thuoc tinh thi nhap chung voi @keyframes tren */
+        @-webkit-keyframes mymove {
+            0% {
+                color: rgb(46, 45, 45);
+                opacity: 0.1;
+                top: 10px
+            }
+            100% {
+                color: white;
+                opacity: 1;
+                top: 0
+            }
+        }
+
+        @-moz-keyframes mymove {
+            0% {
+                color: rgb(46, 45, 45);
+                opacity: 0.1;
+                top: 10px
+            }
+            100% {
+                color: white;
+                opacity: 1;
+                top: 0
+            }
+        }
+
+        /*End SCROLL TO TOP*/
+        /*Start transition*/
+        #scrolltop {
+            cursor: pointer;
+            transition-property: all;
+            transition-duration: 500ms;
+            transition-timing-function: ease; /* transition-timing-function: ease (default); in: vao dau cham, out: ket thuc cham, linear: toc do nhu* nhau */
+            /**/
+            -webkit-transition-property: all;
+            -webkit-transition-duration: 500ms;
+            -moz-transition-property: all;
+            -moz-transition-duration: 500ms;
+        }
+
+        /*Start transform*/
+        /*http://webdesign.tutsplus.com/articles/css3-transitions-and-transforms-from-scratch--webdesign-4975*/
+        #scrolltop:hover {
+            transform: scale(1.5);
+            -webkit-transform: scale(1.5);
+            -o-transform: scale(1.5);
+            -moz-transform: scale(1.5);
+        }
+
+        /*End transform*/
+
+    </style>
+
+    <style>
+        * {
+            margin: 0;
+        }
+
+        #aboutHotel {
+            width: 100%;
+            /*height: 1700px;*/
+            height: auto;
+        }
+
+        .tmp-left-aboutHotel {
+            /*http://www.devign.me/css-stretch-a-box-to-its-parent-bounds*/
+            position: absolute;
+            top: 0px;
+            bottom: 0px;
+            width: 99.9%;
+            background-color: black;
+            z-index: 1500;
+            opacity: 0.7;
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: bolder;
+            color: rgb(70, 68, 68);
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .redline {
+            height: 2px;
+            background-color: rgb(220, 30, 40);
+            width: 35px;
+            margin-bottom: 25px;
+        }
+
+        .li-title {
+            list-style-type: none;
+            font-weight: bold;
+        }
+
+        /*viet day du ten Id cua the div chua' class .borderless khi tach' rieng file doc lap, neu dat chung 1 file thi ok*/
+        #home .borderless tbody tr td, #home .borderless tbody tr th, #home .borderless thead tr th {
+            /*http://stackoverflow.com/questions/18075794/bootstrap-table-without-stripe-borders
+            do mac dinh table co' ke khung, neu them css inline thi ko the tac dong. den duoc.
+            */
+            border: none;
+        }
+
+        #menu1 .borderless tbody tr td, #menu1 .borderless tbody tr th, #menu1 .borderless thead tr th {
+            border: none;
+        }
+
+        #menu2 .borderless tbody tr td, #menu1 .borderless tbody tr th, #menu1 .borderless thead tr th {
+            border: none;
+        }
+
+        #amenities .borderless tbody tr td, #amenities .borderless tbody tr th, #amenities .borderless thead tr th {
+            border: none;
+        }
+
+        /*right-aboutHotel*/
+        #right-aboutHotel .borderless tbody tr td, #right-aboutHotel .borderless tbody tr th, #right-aboutHotel .borderless thead tr th {
+            border: none;
+        }
+
+        #home table tr td:last-child, #menu1 table tr td:last-child, #menu2 table tr td:last-child {
+            /*thay vi` dat class cho cac td*/
+            text-align: right;
+        }
+
+
+        #amenities table ul li {
+            list-style-type: none;
+            margin-bottom: 15px;
+            /*line-height: 15px;*/
+        }
+
+        .del {
+            color: rgb(223, 221, 221);
+            /*tuong ung voi the <del>*/
+            text-decoration: line-through;
+        }
+
+        /*Bootstrap - how to set up fixed width for <td>? (do xay ra loi khi zoom browser)*/
+        /*chi cai` cho 1 table duy nhat', hoac chuyen sang dung` grid, */
+        .myTable-1 {
+            table-layout: fixed;
+            word-wrap: break-word;
+        }
+
+        .validation-advice {
+            position: absolute;
+            background: black;
+            /*bottom: 0px; nam` duoi' day' trinh duyet*/
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            line-height: 13px;
+            min-height: 13px;
+            padding: 10px;
+            /*right: -150px;*/
+            /*margin-left: 30px;*/
+            margin-top: -47px;
+            /*width: 120px; cho auto theo text*/
+            border-radius: 5px;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+        }
+
+        .validation-advice:after {
+            position: absolute;
+            left: 5px;
+            /*right: 20px;*/
+            /*bottom: 20px;*/
+            top: 33px;
+            content: " ";
+            width: 0;
+            height: 0;
+
+            border-top: 8px solid black;
+            /*border-bottom: 8px solid transparent;*/
+            border-bottom: 8px solid transparent;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+        }
+
+        input[type='date'] {
+            background: url(../../static/img/homepage/cal-icon.png) no-repeat scroll 5px 5px;
+            /*glyphicon glyphicon-calendar*/
+            padding-left: 35px;
+            background-color: #ffffff;
+        }
+
+
+        .right-aboutHotel-margin-left {
+            /*ho tro* navbar-fixed-top*/
+            margin-left: 65%;
+        }
+
+        #mytable img {
+            /*border toan bo img minus & plus*/
+            border-radius: 15px;
+        }
+
+        .img-not-allowed {
+            cursor: not-allowed;
+            /*opacity: 0.3;*/
+            /*dung css-filters bi han che ve` trinh duyet*/
+            /*http://www.impressivewebs.com/image-tint-blend-css/*/
+            /*tao them border radius, 1 la` opacity*/
+            background: rgba(246, 245, 245, 1);
+            -moz-transition: background .3s linear;
+            -webkit-transition: background .3s linear;
+            -o-transition: background .3s linear;
+            transition: background .3s linear;
+        }
+
+        .img-allowed {
+            cursor: pointer;
+        }
+
+        #book-now {
+            width: 80%;
+            height: 50px;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        #extra-room input[type=submit] {
+            width: 80%;
+            height: 50px;
+            letter-spacing: 2px;
+            font-weight: bold;
+        }
+
+        input[type="button"].mybtn-style1, input[type="submit"].mybtn-style1 {
+            background: rgb(220, 30, 40);
+            color: white;
+        }
+
+        input[type="button"].mybtn-style2, input[type="submit"].mybtn-style2 {
+            background: white;
+            color: rgb(220, 30, 40);
+            border-color: rgb(220, 30, 40);
+        }
+
+        input[type="button"].mybtn-style1:hover {
+            background: rgb(212, 18, 28);
+        }
+
+        /*nhom' data-tooltip*/
+        /*http://stackoverflow.com/questions/19746767/hide-title-from-tooltip*/
+        #extra-room input[name='extraroom-phone'] {
+            position: relative;
+            /*width: 300px;*/
+            height: 45px;
+        }
+
+        /*.extraroom-phone:hover:after {*/
+        .extraroom-phone:after {
+            position: absolute;
+            background: #333;
+            background: rgba(0, 0, 0, .8);
+            border-radius: 5px;
+            margin-top: -80px;
+            /*bottom: 26px;*/
+            color: #fff;
+            content: attr(data-tooltip);
+            /*left: 20%;*/
+            padding: 5px 15px;
+            z-index: 1000;
+            width: auto;
+        }
+
+        /*.extraroom-phone:hover:before {*/
+        .extraroom-phone:before {
+            position: absolute;
+            border: solid;
+            border-color: #333 transparent;
+            border-width: 6px 6px 0 6px;
+            margin-top: -6px;
+            /*bottom: 20px;*/
+            content: "";
+            /*left: 50%;*/
+            margin-left: 15px;
+            z-index: 1001;
+        }
+
+        .effect-shadow-ul {
+            /*https://graphpaperpress.com/tips/creating-image-shadows-using-css3/*/
+            -webkit-box-shadow: 2px 2px 2px 2px #7C7C7C;
+            box-shadow: 2px 2px 2px 2px #7C7C7C;
+            /**/
+            display: none;
+            position: absolute;
+            background: white;
+            margin-left: -80px;
+            margin-top: -220px;
+            /*bottom: 50px;*/
+            /*neu cuon xuong sat day' thi` bi thoat ra ngoai` ul*/
+            /*overflow-y: auto;*/
+            /*height: 200px;*/
+        }
+
+        #paywith td {
+            cursor: pointer;
+        }
+
+        /* nhom' ios-overlay */
+        .ios-overlay {
+            z-index: 99999;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 200px;
+            margin-left: -150px;
+            margin-top: -100px;
+            /*background: rgba(0,0,0,0.8);*/
+            background: rgba(223, 240, 216, 1);
+            /*rgb(223,240,216)*/
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius: 20px;
+            /**/
+            display: block;
+            /*height: auto;*/
+            -webkit-transition: all 1000ms linear;
+            -moz-transition: all 1000ms linear;
+            -ms-transition: all 1000ms linear;
+            -o-transition: all 1000ms linear;
+            transition: all 1000ms linear;
+
+        }
+
+        .ios-overlay.hidden {
+            -moz-opacity: 0;
+            opacity: 0;
+            -moz-transform: scale(0.01);
+            -webkit-transform: scale(0.01);
+            -o-transform: scale(0.01);
+            -ms-transform: scale(0.01);
+            transform: scale(0.01);
+        }
+
+        .ios-overlay span {
+            /*color: #FFF;*/
+            color: rgb(60, 118, 61);
+            font-weight: bold;
+            text-align: center;
+            display: block;
+            font-size: 26px;
+            position: absolute;
+            bottom: 35px;
+            left: 0;
+            width: 100%;
+        }
+
+    </style>
+
+    <style>
+        html {
+            height: 100%;
+        }
+
+        header a:hover {
+            text-decoration: none;
+        }
+
+        header a, header a:hover {
+            color: white;
+        }
+
+        #logo {
+            /*http://markdotto.com/playground/3d-text/*/
+            font-size: 50px;
+            text-shadow: 0 1px 0 #ccc,
+            0px 2px 0px #c9c9c9,
+            0px 3px 0px #bbb,
+            0px 4px 0px #b9b9b9,
+            0px 5px 0px #aaa,
+            0 6px 1px rgba(0, 0, 0, .1),
+            0 0 5px rgba(0, 0, 0, .1),
+            0 1px 3px rgba(0, 0, 0, .3),
+            0 3px 5px rgba(0, 0, 0, .2),
+            0 5px 10px rgba(0, 0, 0, .25),
+            0 10px 10px rgba(0, 0, 0, .2),
+            0 20px 20px rgba(0, 0, 0, .15);
+        }
+
+        .wrapper {
+            height: 100% !important;
+            height: 100%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            text-align: center;
+            display: block;
+            padding: 23px 0 23px 0;
+            width: 100%;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            /*background: rgba(255, 255, 255, 0.25);*/
+            background: rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+            font-size: small;
+            color: #000;
+            -webkit-transition: all 500ms ease-in-out;
+            -moz-transition: all 500ms ease-in-out;
+            -o-transition: all 500ms ease-in-out;
+            transition: all 500ms ease-in-out;
+        }
+
+        .back:hover {
+            color: black;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        body.disabled-onepage-scroll .onepage-wrapper section {
+            min-height: 100%;
+            height: auto;
+        }
+
+        .main section.page1 {
+            background: url(../../static/img/download-apps/pic-mobileapps1.jpg) no-repeat;
+            /*http://stackoverflow.com/questions/9262861/css-background-image-to-fit-width-height-should-auto-scale-in-proportion */
+            background-position: center center;
+            background-size: cover;
+        }
+
+        .main section.page2 {
+            background: url(../../static/img/download-apps/pic-mobileapps2.jpg) no-repeat;
+            background-position: center center;
+            background-size: cover;
+        }
+
+        .main section.page3 {
+            background: url(../../static/img/download-apps/pic-mobileapps3.jpg) no-repeat;
+            background-position: center center;
+            background-size: cover;
+        }
+
+        .main section.page4 {
+            background: url(../../static/img/download-apps/pic-mobileapps4.jpg) no-repeat;
+            background-position: center center;
+            background-size: cover;
+        }
+
+        .icon-download-apps {
+            /*========*/
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-around;
+            /*========*/
+            margin-top: 5%;
+        }
+
+        .icon-download-apps img {
+            border: 1px solid white;
+        }
+
+        .icon-download-apps img:hover {
+            -moz-box-shadow: 0 0 10px #ccc;
+            -webkit-box-shadow: 0 0 10px #ccc;
+            box-shadow: 0 0 10px #ccc;
+        }
+
+        .sub-page {
+            color: white;
+            width: 50%;
+            margin-left: 40%;
+            margin-top: 15%;
+        }
+
+        hr {
+            width: 10%;
+            /*border-top: 1px solid darkgrey;*/
+        }
+
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            $("#header").load("header-footer/part-header.html");
+            $("#footer").load("header-footer/part-footer.html");
+            //lay' ten locations da~ search o? trang homepage (neu co)
+            $('#autocomplete').val(localStorage.index_tmp_name);
+            $('.name-of-location').text(localStorage.index_tmp_name);
+            $('#s-datePicker1').val(localStorage.index_tmp_checkin);
+            $('#s-datePicker2').val(localStorage.index_tmp_checkout);
+            $('#loaiphong select').val(localStorage.index_tmp_typeofroom);
+            $('.3-dd-noibat').fadeOut(10);
+//        neu viet theo css: $('.3-dd-noibat'+':nth-child('+ localStorage.ddnoibat + ')').fadeIn(10);
+//        http://stackoverflow.com/questions/27519457/jquery-get-nth-child-having-a-particular-class
+//        https://api.jquery.com/eq-selector/
+//        http://www.w3schools.com/jquery/jquery_ref_selectors.asp
+            $('.3-dd-noibat' + ':eq(' + localStorage.ddnoibat + ')').fadeIn(10);
+            //
+            $('.ws_images a').attr('href', 'room-bookings.html');
+            // sau khi load xong thi check user da~ login hay chua
+            // phai them delay thi moi' kich hoat duoc localStorage + id tu` file header1
+//      se~ check + load sau khi load xong part-header1.html
+//      bien' localStorage.check_login luu tai file user-login
+            var timer;
+//      neu thoi gian load body nhieu hon delay thi co the xay ra loi
+            var delay = 1000;
+            timer = setTimeout(function () {
+                if (localStorage.check_login === 'true') {
+//                    alert('DA DANG NHAP');
+                    $('#welcome').fadeIn(10);
+                    $('#signup-signin').fadeOut(10);
+                } else {
+                    $('#welcome').fadeOut(10);
+                    $('#signup-signin').fadeIn(10);
+                }
+            }, delay);
+        });
+    </script>
+    <script>
+        /** Created by Group6 on 15/12/2015. **/
+        $(document).ready(function () {
+            /* navigation-bar */
+            /* viec xay ra cua mouseenter xay ra qua' nhanh => sau 1 hoac 2s thi` moi' kich hoat thanh nav */
+            // How to add delay to jquery mouseover? [duplicate]: http://stackoverflow.com/questions/15575993/how-to-add-delay-to-jquery-mouseover
+            // cung co 1 phuong thuc delay khac: https://api.jquery.com/delay/    http://www.w3schools.com/jquery/eff_delay.asp
+            var timer;
+            var delay = 300; //dam bao khi re chuot nhanh van~ chua so? menu ra
+            $('.left-nav-city').hover(function () {
+                //dat ngoai` function
+                var $glyphicon = $(this).find('.tmp-glyphicon');
+                //find ID (dug ra la dung` class cho nav_sub, nhu*ng do da cai nhieu` css truoc' do, bi anh huog', va` dung
+                //var att = $(this).attr('id'); de xac dinh ten id
+                //ban dau dung` ID => co nhieu dk if
+                //var $txt = $(this).find('.txt-name-location').text();
+                //if ($txt === "HÀ NỘI") {
+                //    $nav_sub = $('#left-nav-A');
+                //} else if ($txt === "ĐÀ NẴNG") {
+                //    $nav_sub = $('#left-nav-B');
+                //} else if ($txt === "HỒ CHÍ MINH") {
+                //    $nav_sub = $('#left-nav-C');
+                //} else {
+                //    //'khi hover vao` TẤT CẢ
+                //    $nav_sub = '';
+                //}
+                //dat ngoai function (neu dat trong thi` phai them bien' de? ho~ tro* this)
+                $nav_sub = $(this).find('.tmp-left-nav');
+                // on mouse in, start a timeout
+                timer = setTimeout(function () {
+                    // do your stuff here
+                    $nav_sub.fadeIn(10);
+                    $glyphicon
+                        //viet gop, dau ; dat o thuoc tinh cuoi cung`, co' the gop css vao` class rotate-up
+                        .css("color", "grey")
+                        //position = relative, dung su* kien Fade ko nhanh = remove class'
+                        .removeClass('glyphicon-menu-down rotate-down')
+                        .addClass('glyphicon-menu-up rotate-up');
+                }, delay);
+            }, function () {
+                //phai khai bao' lai bien' $glyphicon, con` $txt thi` ko can
+                var $glyphicon = $(this).find('.tmp-glyphicon');
+                // on mouse out, cancel the timer
+                clearTimeout(timer);
+                $nav_sub.fadeOut();
+                $glyphicon
+                    /*lay thong so' tai vi tri span da~ cai` (ko fai eye picker) */
+                    .css("color", "#E58373")
+                    .removeClass('glyphicon-menu-up rotate-up')
+                    .addClass('glyphicon-menu-down rotate-down')
+            });
+
+            $('#search-locations img').click(function () {
+                $('#search-locations input').val('');
+                $('#search-locations input').focus();
+            });
+
+            $('#search-locations').hover(function () {
+                if ($('#autocomplete').val() !== '') {
+                    $('#search-locations img').fadeIn();
+                }
+            }, function () {
+                $('#search-locations img').fadeOut();
+            });
+            //su* kien change (ko duoc): http://stackoverflow.com/questions/12797700/jquery-detect-change-in-input-field
+            $('#autocomplete').on('input', function () {
+                //alert('autocomplete changed!');
+                if ($(this).val().length !== 0) {
+                    $('#search-locations img').fadeIn();
+                } else {
+                    $('#search-locations img').fadeOut();
+                }
+            });
+
+            $('#booking_form_search').click(function () {
+                //luu tru~ bien' cho trang tim kiem (khi load trang nay` se~ thay') http://www.w3schools.com/html/html5_webstorage.asp
+                save_name_of_location();
+            });
+
+            function save_name_of_location() {
+                if (typeof (Storage) !== "undefined") {
+                    if (localStorage.index_tmp_name) {
+                        var $txtLocal = $('#autocomplete').val().toUpperCase();
+                        localStorage.index_tmp_name = $txtLocal;
+                        //alert(localStorage.index_tmp_name.toUpperCase());
+                        if ($txtLocal === 'HÀ NỘI') {
+                            // luu bien' de ho tro tao ra cac options lien quan den dia diem noi bat tai trang search hotels
+                            localStorage.ddnoibat = '0';
+                        } else if ($txtLocal === 'ĐÀ NẴNG') {
+                            localStorage.ddnoibat = '1';
+                        } else if ($txtLocal === 'TP HỒ CHÍ MINH') {
+                            localStorage.ddnoibat = '2';
+                        }
+                        localStorage.index_tmp_typeofroom = $('#loaiphong select').val();
+                        //save Date (checkin, checkout)
+                        var check_in = new Date(document.getElementById("datepicker1").value);
+                        var check_out = new Date(document.getElementById("datepicker2").value);
+                        if ((isNaN(check_in) == false && isNaN(check_out) == false)) {
+                            //check_in
+                            var month_check_in = check_in.getMonth() + 1;
+                            var day_check_in = check_in.getDate();
+                            if (check_in.getMonth() < 10) month_check_in = "0" + month_check_in;
+                            if (day_check_in < 10) day_check_in = "0" + day_check_in;
+                            //check_out
+                            var month_check_out = check_out.getMonth() + 1;
+                            var day_check_out = check_out.getDate();
+                            if (check_out.getMonth() < 10) month_check_out = "0" + month_check_out;
+                            if (day_check_out < 10) day_check_out = "0" + day_check_out;
+                            //convert
+                            var check_in_convert = check_in.getFullYear() + "-" + month_check_in + "-" + day_check_in;
+                            var check_out_convert = check_out.getFullYear() + "-" + month_check_out + "-" + day_check_out;
+                            //save
+                            localStorage.index_tmp_checkin = check_in_convert;
+                            localStorage.index_tmp_checkout = check_out_convert;
+                        } else {
+                            localStorage.index_tmp_checkin = "2016-01-20";
+                            localStorage.index_tmp_checkout = "2016-01-21";
+                        }
+                    } else {
+                        localStorage.index_tmp_name = "Đà Nẵng";
+                        localStorage.index_tmp_checkin = "2016-01-20";
+                        localStorage.index_tmp_checkout = "2016-01-21";
+                        localStorage.index_tmp_typeofroom = "1 phòng (2 người lớn)";
+                    }
+                    //bien' nay` se~ duoc chuyen sang trang search-hotels
+                } else {
+                    alert("Sorry, your browser does not support web storage...");
+                }
+            }
+
+        });
+
+        //  link to search-hotels
+        $(document).ready(function () {
+            //ko duoc $('#left-nav-city').click(function(){
+            $('#left-nav li').click(function () {
+                //tren thuc te khi click vao` nhom' li thu' 2 cung co' 2 truong hop xay ra:
+                //khi click vao nhom dia diem noi tieng => vao trang search-hotels
+                //khi click vao cac ks thi` chay thang den' trang room-bookings
+                //========
+                //xac dinh thuoc tinh id, class: var att = $(this).attr('id');
+                //do dag cai li chung chung cho #left-nav nen them dk if de xac dinh dag o nhom' nao`
+                //alert($(this).find('.txt-name-location').text());
+                //return false;
+                var bcheck;
+                if ($(this).attr('class') == "left-nav-city") {
+                    var $txt = $(this).find('.txt-name-location').text();
+
+                    if ($txt === 'HÀ NỘI') {
+                        // code bị lặp lại tại nút submit: đúng ra việc check được thực hiện tại trang search-hotels
+                        // (co' khac ve` text o? dia diem: TP HO CHI MINH)
+                        // luu bien' de ho tro tao ra cac options lien quan den dia diem noi bat tai trang search hotels
+                        localStorage.ddnoibat = '0';
+                        bcheck = 'true';
+                    } else if ($txt === 'ĐÀ NẴNG') {
+                        localStorage.ddnoibat = '1';
+                        bcheck = 'true';
+                    } else if ($txt === 'HỒ CHÍ MINH') {
+                        localStorage.ddnoibat = '2';
+                        bcheck = 'true';
+                    } else if ($txt === 'TẤT CẢ') {
+                        window.location = 'all-locations.html';
+                        return false;
+                    }
+                } else {
+                    //alert('bcheck = false 1');
+                    bcheck = 'false';
+                    //http://api.jquery.com/parents/
+                    var $txt = $(this).parents("li").find('.txt-name-location').text();
+                    var local = $(this).parents('.nav-ddnoibat').find('.nav-title-loaiphong').text();
+                }
+
+                if (typeof (Storage) !== "undefined") {
+                    //cac bien' nay` se~ duoc chuyen sang trang search-hotels
+                    if (localStorage.index_tmp_name) {
+                        localStorage.index_tmp_name = $txt;
+                    } else {
+                        localStorage.index_tmp_name = "Đà Nẵng";
+                    }
+                    //3 bien sau: co' dinh
+                    localStorage.index_tmp_checkin = "";
+                    localStorage.index_tmp_checkout = "";
+                    localStorage.index_tmp_typeofroom = "1 phòng (2 người lớn)";
+                } else {
+                    alert("Sorry, your browser does not support web storage...");
+                }
+
+                if (bcheck === 'true') {
+                    //alert('bcheck = true');
+                    //hoac window.open("search-hotels.html","_self");
+                    window.location = 'search-hotels.html';
+                    return false;
+                } else {
+                    if (local === 'Địa điểm nổi tiếng' || $(this).text() === 'Tất cả ...') {
+                        window.location = 'search-hotels.html';
+                        return false;
+                    } else {
+                        //luu tru ten bien' khach san, nhu*ng ko co' dia chi => viec xac dinh Google se~ co the bi. co' dinh
+                        //alert('bcheck = false 2');
+                        localStorage.searchhotels_tmp_nameofhotel = $(this).text();
+                        window.location = 'room-bookings.html';
+                        return false;
+                    }
+                }
+            });
+
+            $('#promotion figure').click(function () {
+                var $txt = $(this).find('.txt-name-location').text();
+                if (typeof (Storage) !== "undefined") {
+                    //cac bien' nay` se~ duoc chuyen sang trang search-hotels
+                    if (localStorage.index_tmp_name) {
+                        //chua chuyen chu~ hoa thanh chu~ thuong` (neu dung ham thi co phan biet Unicode)
+                        //C1: .css('text-transform','capitalize')
+                        //C2: http://www.w3schools.com/jsref/prop_style_texttransform.asp
+                        localStorage.index_tmp_name = $txt;
+                    } else {
+                        localStorage.index_tmp_name = "Đà Nẵng";
+                    }
+                    //3 bien sau: co' dinh
+                    localStorage.index_tmp_checkin = "";
+                    localStorage.index_tmp_checkout = "";
+                    localStorage.index_tmp_typeofroom = "1 phòng (2 người lớn)";
+                } else {
+                    alert("Sorry, your browser does not support web storage...");
+                }
+                //hoac window.open("search-hotels.html","_self");
+                window.location = 'search-hotels.html';
+            });
+
+        });
+
+        $(document).ready(function () {
+            $('#loaiphong select').change(function () {
+                if ($(this).val() == "lựa chọn khác ...") {
+                    $('#loaiphong').fadeOut();
+                    $('#loaiphong-khac').fadeIn();
+                    $('#loaiphong-khac input[name=guest]').focus();
+                }
+            });
+        });
+
+        $(document).ready(function () {
+            // Add smooth scrolling to all links
+            // https://css-tricks.com/examples/SmoothPageScroll/
+            // http://www.w3schools.com/jquery/css_scrolltop.asp
+//              $("a").on('click', function(event) {
+//            dung the a khi co' nhieu the a cai lien quan den Scroll + ko co hieu u*ng
+            $("#scrolltop").on('click', function (event) {
+                // Prevent default anchor click behavior
+//                    $(this).css('cursor','none');
+
+                event.preventDefault();
+//                    hide cursor do bi. tac dong den img co' hieu u*ng' effect bubba: http://www.w3schools.com/cssref/pr_class_cursor.asp
+                $('body').css('cursor', 'none');
+                // Store hash
+//                var hash = this.hash;
+
+                // Using jQuery's animate() method to add smooth page scroll
+                // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+                $('html, body').animate({
+//                    scrollTop: $(hash).offset().top
+                    scrollTop: 0
+                }, 900, function () {
+                    $('body').css('cursor', 'default');
+                    // Add hash (#) to URL when done scrolling (default click behavior)
+//                    window.location.hash = hash;
+                });
+            });
+        });
+
+
+
+
+    </script>
+    <script>
+        /**
+         * Created by Group6 on 02/01/2016.
+         */
+
+        //http://www.w3schools.com/jquery/css_scrolltop.asp
+        // http://stackoverflow.com/questions/28452235/make-a-nav-bar-stick-to-the-top-when-scrolling-with-css
+        // phai them 1 class de chinh? lai margin left (neu' div nam` ben phai')
+        $(window).scroll(function () {
+//  if you hard code, then use console, .log to determine when you want the nav bar to stick.
+//  mo phan kiem tra phan tu? se~ thay' tab nay`', khi man hinh bi thu nho => scroll vi tri ko chinh xac
+//  console.log($(window).scrollTop());
+//  alert($(window).scrollTop());
+            var $target_1 = $('#right-aboutHotel');
+            if ($(window).scrollTop() > 0) {
+                $target_1.addClass('navbar-fixed-top');
+                $target_1.addClass('right-aboutHotel-margin-left');
+            }
+            if ($(window).scrollTop() < 65) {
+                $target_1.removeClass('navbar-fixed-top');
+                $target_1.removeClass('right-aboutHotel-margin-left');
+            }
+//  1088, dung` chuot keo' chinh' xac hon scroll giua~.
+            if ($(window).scrollTop() > 1100) {
+                $target_1.removeClass('navbar-fixed-top');
+                $target_1.removeClass('right-aboutHotel-margin-left');
+
+            }
+//  tai trang chinh thi ho van~ thay' duoc nut' book-now khi vi tri dang o? footer
+        });
+        //##########################
+        $(document).ready(function () {
+            $('#slt-rooms').change(function () {
+//          hoac co the dung vong lap duyet tu` Room6 ve` Room2
+                var amount = $(this).val();
+//phai dao nguoc amount lon' nhat' xay ra truoc' roi` thoat' dk return false, cac
+                if (amount >= 1) {
+                    fadeInRoom(1);
+                } else {
+                    resetRoom('#room-row1');
+                }
+                if (amount >= 2) {
+                    fadeInRoom(2);
+                } else {
+                    resetRoom('#room-row2');
+                }
+                if (amount >= 3) {
+                    fadeInRoom(3);
+                } else {
+                    resetRoom('#room-row3');
+                }
+                if (amount >= 4) {
+                    fadeInRoom(4);
+                } else {
+                    resetRoom('#room-row4');
+                }
+                if (amount >= 5) {
+                    fadeInRoom(5);
+                } else {
+                    resetRoom('#room-row5');
+                }
+                if (amount == 6) {
+                    fadeInRoom(6);
+                } else {
+                    resetRoom('#room-row6');
+                }
+                if (amount == '6+') {
+//              do cai' cac cai' else o? tren => room 2 den' 6 deu refresh
+//                alert('Để đặt số lượng lớn, vui lòng để lại số điện thoại của bạn. ' +
+//                'Chúng tôi sẽ gọi cho bạn trong thời gian sớm nhất.');
+//                alert: khi viet xuog dong thi` tu* dong them +
+                    $('#extra-room').fadeIn();
+                    //$('#book-now').val("YÊU CẦU GỌI LẠI");
+                    $('#book-now').fadeOut(1);
+                    $('#mytable-th').fadeOut(1);
+                    $('#table-result').fadeOut(1);
+//              change noi dung cua nut' book-now
+                } else {
+//          tinh tien phong
+//              table-result-1, table-result-2
+//              Tổng số 1 Phòng, 1 Khách & 1 Đêm
+                    var iRoom = amount;
+                    var iGuest = 0;
+                    for (var i = 1; i <= amount; i++) {
+                        iGuest = iGuest + parseInt($('#room-row' + i).find('span').text());
+                    }
+
+//          session 15.4.3 Date	Object
+                    function GetDays() {
+                        var check_in = new Date(document.getElementById("date1").value);
+                        var check_out = new Date(document.getElementById("date2").value);
+
+                        if ((isNaN(check_in) == true || isNaN(check_out) == true)) {
+                            //alert('Nhận phòng & Trả phòng không hợp lệ');
+                            //ko can show tooltip, da cai day du tai nut DAT PHONG
+                            return 1;
+                        } else if (check_out < check_in) {
+                            //xay ra sau cung` (ko nhap chung voi If thu' nhat')
+                            $('.validation-advice').fadeIn();
+                            return 1;
+                        } else {
+                            return parseInt((check_out - check_in) / (24 * 3600 * 1000));
+                        }
+                    }
+
+//                chi thay doi so' cua cac ID chu' ko thay doi toan` bo (tranh' bi xoa' ID), ko the dung` rieng cho nut minus, plus
+//                dung` val() ko dung khi thay doi so' luong room' (chi dung' cho nut' minus, plus)
+//                $('#table-result-1').html("Tổng số " + iRoom + " Phòng, " + iGuest + " Khách & " + GetDays() + " Đêm");
+                    $('#table-result-11').html(iRoom);
+                    $('#table-result-12').html(iGuest);
+                    $('#table-result-13').html(GetDays());
+                    //ho tro khi click DAT PHONG
+                    $('#table-result-21').html(iRoom);
+                    $('#table-result-22').html(iGuest);
+
+                    var iTotal = 0;
+                    for (var j = 1; j <= amount; j++) {
+//                  http://stackoverflow.com/questions/16970237/jquery-replace-g-do-not-work-for-me-but-others
+                        var replaceDot = $('#room-row' + j).find('.row-total').text().replace(/\./g, "");
+                        iTotal = iTotal + parseInt(replaceDot);
+                    }
+
+                    iTotal *= GetDays();
+
+//          https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toLocaleString
+                    $('#table-result-2').html(iTotal.toLocaleString('vn-VN', {style: 'currency', currency: 'VND'}));
+                    $('#tien-thanhtoan').html(iTotal.toLocaleString('vn-VN', {style: 'currency', currency: 'VND'}));
+                }
+            });
+
+//        phai tinh tu` 1 vi khi chon 6+ thi` room1 se~ bi an?
+            var fadeInRoom = function (target) {
+//      var fadeIn_loop_from1to = function(target){
+//      ko can dung vong lap do dk >= do co' xay ra o moi dk if
+                $('#mytable-th').fadeIn();
+                $('#table-result').fadeIn();
+                $('#room-row' + target).fadeIn();
+                var replaceDot = $('#room-row' + target).find('.row-total').text().replace(/\./g, "");
+                $('#room-row' + target).find('.row-total').html(parseInt(replaceDot).toLocaleString('vn-VN'));
+                //
+                $('#extra-room').fadeOut(10);
+                $('#book-now').val("ĐẶT PHÒNG");
+            };
+//        refresh = reset
+            var resetRoom = function (iRoom) {
+//          cho fadeOut nhanh thi` moi ko thay' qua trinh` reset'
+                $(iRoom).fadeOut(10);
+                // return = 1 sau khi an? xong
+                $(iRoom).find('span').html(1);
+                $(iRoom).find('.minus').removeClass('img-allowed');
+                $(iRoom).find('.minus').addClass('img-not-allowed');
+                $(iRoom).find('.plus').removeClass('img-not-allowed');
+                $(iRoom).find('.plus').addClass('img-allowed');
+            };
+        });
+
+        var onclick_guest = function () {
+            $(document).on("click", '.minus', function () {
+                var guest = parseInt($(this).parent().find('span').text());
+                var guestOutput = parseInt($('#table-result-12').text());
+                var pass_val = function (object) {
+//                ko cai this truc tiep o day
+                    object.parent().find('span').html(guest - 1);
+                    $('#table-result-12').html(guestOutput - 1);
+                    $('#table-result-22').html(guestOutput - 1);
+
+                };
+                if (guest == 1) {
+                    return false;
+                } else if (guest == 2) {
+                    pass_val($(this));
+                    $(this).removeClass('img-allowed');
+                    $(this).addClass('img-not-allowed');
+                } else {
+                    pass_val($(this));
+                    $(this).parent().find('.plus').removeClass('img-not-allowed');
+                    $(this).parent().find('.plus').addClass('img-allowed');
+                }
+            });
+
+            $(document).on("click", '.plus', function () {
+                var guest = parseInt($(this).parent().find('span').text());
+                var guestOutput = parseInt($('#table-result-12').text());
+                var pass_val = function (object) {
+//                ko cai this truc tiep o day
+                    object.parent().find('span').html(guest + 1);
+                    $('#table-result-12').html(guestOutput + 1);
+                    $('#table-result-22').html(guestOutput + 1);
+                };
+                if (guest == 1) {
+                    pass_val($(this));
+                    $(this).parent().find('.minus').removeClass('img-not-allowed');
+                    $(this).parent().find('.minus').addClass('img-allowed');
+                } else if (guest == 2) {
+                    pass_val($(this));
+                    $(this).removeClass('img-allowed');
+                    $(this).addClass('img-not-allowed');
+                } else {
+                    return false;
+                }
+            });
+        };
+
+        $(document).ready(onclick_guest);
+
+        $(document).ready(function () {
+            $('.validation-advice').click(function () {
+                $(this).fadeOut();
+            });
+        });
+
+        $(document).ready(function () {
+            $('input[type=date]').change(function () {
+//            se xay ra khi gia tri dien day du? dd/mm/yyyy
+//            alert('changed');
+                function GetDays2() {
+                    var check_in = new Date(document.getElementById("date1").value);
+                    var check_out = new Date(document.getElementById("date2").value);
+
+                    if ((isNaN(check_in) == true || isNaN(check_out) == true)) {
+                        return 1;
+                    } else if (check_out < check_in) {
+                        $('.validation-advice').fadeIn();
+                        return 1;
+                    } else {
+                        //neu lan truoc do' co fadeIn thi bay h se fadeOut
+                        $('.validation-advice').fadeOut();
+                        return parseInt((check_out - check_in) / (24 * 3600 * 1000));
+                    }
+                }
+
+                //nhom nay` co viet o su* kien change Room
+                $('#table-result-13').html(GetDays2());
+
+                var amount = $('#slt-rooms').val();
+                var iTotal = 0;
+
+                for (var j = 1; j <= amount; j++) {
+//              http://stackoverflow.com/questions/16970237/jquery-replace-g-do-not-work-for-me-but-others
+                    var replaceDot = $('#room-row' + j).find('.row-total').text().replace(/\./g, "");
+                    iTotal = iTotal + parseInt(replaceDot);
+                }
+
+                iTotal *= GetDays2();
+
+//          https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toLocaleString
+                $('#table-result-2').html(iTotal.toLocaleString('vn-VN', {style: 'currency', currency: 'VND'}));
+                $('#tien-thanhtoan').html(iTotal.toLocaleString('vn-VN', {style: 'currency', currency: 'VND'}));
+            });
+        });
+
+        $(document).ready(function () {
+//  group 1
+            $('#book-now').click(function () {
+//  co cai o* su* kien change Room (khac nhau o return + dkien else)
+//        if ($(this).val() == 'YÊU CẦU GỌI LẠI'){
+//            if ($('#extraroom-tooltip input').val() == ''){
+//                $('#extraroom-tooltip').addClass('extraroom-phone');
+//                //$('.extraroom-phone').fadeOut(4000); ko the dung fadeOut (bi an? luon Input)
+//                var timer;
+//                var delay = 3000;
+//                timer = setTimeout(function() {
+//                    $('#extraroom-tooltip')
+//                        //neu viet gop: thi dau ; dat o thuoc tinh cuoi cung`
+//                        .removeClass('extraroom-phone')
+//                }, delay);
+//                return false;
+//            } else {
+//            }
+//        }
+
+                var check_in = new Date(document.getElementById("date1").value);
+                var check_out = new Date(document.getElementById("date2").value);
+
+                if ((isNaN(check_in) == true && isNaN(check_out) == true)) {
+                    //alert('Nhận phòng trả phòng không hợp lệ');
+                    $('.validation-advice').fadeIn();
+                    //tu dong an?
+                    $('.validation-advice').fadeOut(7000);
+                    return false;
+                } else if (isNaN(check_in)) {
+                    $('#tooltip1').fadeIn();
+                    $('#tooltip1').fadeOut(4000);
+                    return false;
+                } else if (isNaN(check_out)) {
+                    $('#tooltip2').fadeIn();
+                    $('#tooltip2').fadeOut(4000);
+                    return false;
+                } else if (check_out < check_in) {
+                    //xay ra sau cung` (ko nhap chung voi If thu' nhat')
+                    $('.validation-advice').fadeIn();
+                    $('.validation-advice').fadeIn(7000)
+                    return false;
+                } else {
+                    //return parseInt((check_out - check_in) / (24 * 3600 * 1000));
+                    $('#right-aboutHotel-1').fadeOut();
+                    $('#right-aboutHotel-2').fadeIn();
+                    //update checkin, checkout: http://www.w3schools.com/jsref/jsref_obj_date.asp
+                    $('#right-aboutHotel-2-checkin').html(check_in.toLocaleDateString());
+                    $('#right-aboutHotel-2-checkout').html(check_out.toLocaleDateString());
+                    // lam` mo` div, se fadeOut tai #book-now-2 click
+                    $('.tmp-left-aboutHotel').fadeIn();
+                }
+            });
+
+            var changeRoom = function () {
+
+                $('#bt-thanhtoan').fadeIn(10);
+                $('#verify-code').fadeOut(10);
+                $('#right-aboutHotel-2').fadeOut(10);
+                $('.tmp-left-aboutHotel').fadeOut();
+                $('#thanhtoan input[name=info-name]').val('');
+                $('#thanhtoan input[name=info-phone]').val('');
+                $('#thanhtoan input[name=info-email]').val('');
+                $('#verify-code input[name=enter-code]').val('');
+                //
+                $('#right-aboutHotel-1').fadeIn();
+            };
+
+            $('#book-now-2').click(function () {
+                changeRoom();
+            });
+//  group 2
+            $('#bt-thanhtoan1').click(function () {
+                var $name = $('#thanhtoan input[name=info-name]').val();
+                //viet ten chuan thi dung` dau' _ duoi'
+                var $phone = $('#thanhtoan input[name=info-phone]').val();
+                if (($name !== '') && ($phone !== '')) {
+                    // kiem tra so' dien thoai: http://www.w3resource.com/javascript/form/javascript-validation-download.php
+                    // thay vi dung pattern: pattern="[0-9]{6,}" title="Tối thiểu 6 số" tai input
+                    var numbers = /^[0-9]+$/;
+                    if ($phone.match(numbers)) {
+                        //alert('Your Registration number has accepted....');
+                    } else {
+                        alert('Số điện thoại ko hợp lệ !');
+                        $('#verify-code input[name=enter-code]').focus();
+                        return false;
+                    }
+                    //
+                    $('#bt-thanhtoan').fadeOut();
+                    $('#verify-code').fadeIn();
+                    //neu dung` type = button thi binh thuong nhu*ng ko check duoc required
+                    //neu ko co' return thi trang giong nhu* bi. refresh
+                    $('#verify-code input[name=enter-code]').focus();
+                    return false;
+                } else {
+
+                    //da~ cai them thuoc tinh' required'
+                }
+            });
+
+            // verify-code
+            $('#verify-code input[type=submit]').click(function () {
+                //alert($code);
+                var $code = $('#verify-code input[name=enter-code]').val();
+                if ($code !== '') {
+                    //alert('XÁC NHẬN THÀNH CÔNG !');
+                    $('.ios-overlay').fadeIn(10);
+
+                    var timer;
+                    var delay = 3000;
+                    timer = setTimeout(function () {
+                        changeRoom();
+                    }, delay);
+                    ////de? cho tu* dong return = false <=> refresh trang
+                    return false;
+                } else {
+                    //da~ cai them thuoc tinh' required'
+                }
+            });
+
+            $('#verify-code-resendcode').click(function () {
+                alert('Đã gửi lại mã');
+            });
+
+            $('#verify-code-cancel').click(function () {
+                $('#bt-thanhtoan').fadeIn();
+                $('#verify-code').fadeOut();
+                $('#verify-code input[name=enter-code]').val('');
+            });
+        });
+
+        $(document).ready(function () {
+// http://www.w3schools.com/jquery/jquery_slide.asp
+// https://api.jquery.com/mouseleave/
+// ban dau dung` hover
+            $('#paywith').click(function () {
+                $('#paywith div').slideDown();
+            });
+            $('#paywith div').mouseleave(function () {
+                $(this).fadeOut(100);
+            });
+
+            $('#paywith td').click(function () {
+                alert('< Chưa tạo trang thanh toán bằng thẻ />');
+            });
+        });
+
+    </script>
+    <script>
+        /**
+         * Created by Group6 on 03/01/2016.
+         */
+        var refreshPage = function () {
+            $('#page-1').fadeOut();
+            $('#page-1').fadeIn();
+
+            $('#left-center-result').fadeOut();
+            $('#left-center-result').fadeIn();
+        };
+        // các input & button của nav
+        $(document).ready(function () {
+            //nhom' #search-locations
+            $('#search-locations').hover(function () {
+                //var inputval = $('#autocomplete').val();
+                if ($('#autocomplete').val() !== '') {
+                    $('#search-locations img').fadeIn();
+                }
+            }, function () {
+                $('#search-locations img').fadeOut();
+            });
+//su* kien change (ko duoc): http://stackoverflow.com/questions/12797700/jquery-detect-change-in-input-field
+            $('#autocomplete').on('input', function () {
+                // alert('autocomplete changed!');
+                if ($(this).val().length !== 0) {
+                    $('#search-locations img').fadeIn();
+                } else {
+                    $('#search-locations img').fadeOut();
+                }
+            });
+            $('#search-locations img').click(function () {
+                $('#search-locations input').val('');
+                $('#search-locations input').focus();
+            });
+            //nhom' #loaiphong
+            $('#loaiphong select').change(function () {
+                if ($(this).val() == "lựa chọn khác ...") {
+                    $('#loaiphong').fadeOut();
+                    $('#loaiphong-khac').fadeIn();
+                    $('#loaiphong-khac input[name=guest]').focus();
+                }
+            });
+            //nhom' button[type=submit]
+            <!--button lien quan den' cac' code modal da~ khai bao' nen khi click thi` co' dau hieu. refresh page => them return false-->
+            $("button[type=submit]").click(function () {
+                var get_location = function () {
+                    $('.name-of-location').text($('#autocomplete').val());
+                };
+                var check_in = new Date(document.getElementById("s-datePicker1").value);
+                var check_out = new Date(document.getElementById("s-datePicker2").value);
+                if ((isNaN(check_in) == false && isNaN(check_out) == false)) {
+                    if (check_in > check_out) {
+                        alert("Ngày nhận phòng & trả phòng ko hợp lệ !");
+                        //return false se~ xay tra truoc dk required cua input co' id= autocomplete'
+                        // => dat. trong ham` If de ko anh huong den' dk required
+                        return false;
+                    } else {
+                        get_location();
+                        refreshPage();
+                        return false;
+                    }
+                } else if (isNaN(check_in) || isNaN(check_out)) {
+                    get_location();
+                    refreshPage();
+                    return false;
+                }
+            });
+        });
+
+        var main = function () {
+//    them su* kien nay` de biet duoc dang load thong tin hoac dung` progress
+//    phai cai dat truc tiep' tai tung su* kien de ho tro su* kien click vao li'
+//    $('#center input').click(function(){
+//        refreshPage();
+//    });
+//    voi dk cac input phai dung dk change chu' ko phai click'
+            var boolean;
+            //ko the kiem tra tai li chua' checkbox'
+            $("#left-center ul").click(function (event) {
+
+                var target = $(event.target);
+                // set boolean = 'true' cho nhieu truong hop
+                boolean = 'true';
+
+                if (target.is("li")) {
+                    //alert('click to li');
+                    //if ($(this).find('input[type=checkbox]').is(':checked')) {
+                    if (target.find('input[type=checkbox]').is(':checked')) {
+                        //alert('li 1');
+                        target.find('input').prop("checked", false).trigger("change");
+                        boolean = 'false';
+                        return false;
+                    } else {
+                        //alert('li 2');
+                        target.find('input').prop("checked", true).trigger("change");
+                        boolean = 'false';
+                    }
+                } else if (target.is("span")) {
+                    //alert('click to span');
+                    if (target.parent().find('input[type=radio]').is(':checked')) {
+                        //alert('span 1');
+                        target.find('input[type=radio]').prop("checked", false).trigger("change");
+                        boolean = 'false';
+                        return false;
+                    } else {
+                        //alert('span 2');
+                        target.parent().find('input[type=radio]').prop("checked", true).trigger("change");
+                        boolean = 'false';
+                    }
+                } else {
+                    //alert('click to radio or checkbox, Thêm ...');
+                    //them dk kiem tra all checkbox = empty sau khi trigger xong tai tu*ng` nhom' checkbox' + delay
+                    target.trigger("change");
+                    boolean = 'false';
+                    //return false;
+                }
+            });
+
+            $('input[name=dd-noibat]').change(function () {
+                // se bi refresh 2 lan neu click truc tiep' vao day' (disable input thi ko hop ly)
+                // => phai them 1 bien de kiem tra la` duoc kich' hoat tu` li, vi` li bao phu luon input
+                // neu click truc tiep' vao input thi co the bi tinh den 2 lan do bi bao phu boi? li
+                if (boolean === 'true') {
+//      cho show lai neu' da~ bi. fadeOut
+                    $('#opts-ddnoitieng').fadeIn();
+                    var toAdd = $("input[name=dd-noibat]:checked").val();
+                    $('#opts-ddnoitieng').html(
+                        '<a href="#">' +
+                        '<div class="options-x">' + '&times;' + '</div>' + toAdd +
+                        '</a>');
+
+                    add_HoverClick();
+                    refreshPage();
+                }
+            });
+
+            // 1 nut
+            //$("#range-price").change(function() {
+            //    $('#opts-price').fadeIn();
+            //    var toAdd = (parseInt($(this).val())).toLocaleString('vn-VN', { style: 'currency', currency: 'VND' });
+            //    $('#opts-price').html(
+            //        '<a href="#">' +
+            //        '<div class="options-x">' + '&times;' + '</div>' + toAdd +
+            //        '</a>');
+            //
+            //    add_HoverClick();
+            //});
+
+            // 2 nut http://jqueryui.com/slider/#range
+            $(function () {
+                $("#slider-range").slider({
+                    range: true,
+                    min: 168600,
+                    max: 25952800,
+                    values: [168600, 25952800],
+                    slide: function (event, ui) {
+                        //stop: function( event, ui ) {
+                        // ko co' parseInt
+                        var gia1 = ((ui.values[0]).toLocaleString('vn-VN', {style: 'currency', currency: 'VND'}));
+                        var gia2 = ((ui.values[1]).toLocaleString('vn-VN', {style: 'currency', currency: 'VND'}));
+                        var gia = 0;
+                        $("#amount-1").text(gia1);
+                        $("#amount-2").text(gia2);
+
+                        $('#opts-price').fadeIn();
+
+                        if ((ui.values[0]) == (ui.values[1])) {
+                            gia = (gia1);
+                        } else {
+                            gia = ("> " + gia1 + " - < " + gia2);
+                        }
+                        $('#opts-price').html(
+                            '<a href="#">' +
+                            '<div class="options-x">' + '&times;' + '</div>' + gia +
+                            '</a>');
+
+                        add_HoverClick();
+                        //khi keo' nhieu thi` bi. nhay? nhieu => chua hop ly' (them delay)
+                        //http://www.tutorialspoint.com/jqueryui/jqueryui_slider.htm
+                        //thay the' thuoc tinh slide thanh stop & tach' rieng
+                        //refreshPage();
+                    }
+                });
+                //ket hop 2 su* kien cung luc thi moi hop ly'
+                $("#slider-range").slider({
+                    range: true,
+                    //min: 168600,
+                    //max: 25952800,
+                    //values: [ 168600, 25952800 ],
+                    //slide: function( event, ui ) {
+                    stop: function (event, ui) {
+                        //...
+                        refreshPage();
+                    }
+                });
+
+//      ban dau
+                $("#amount-1").text(($("#slider-range").slider("values", 0)).toLocaleString('vn-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                }));
+                $("#amount-2").text(($("#slider-range").slider("values", 1)).toLocaleString('vn-VN', {
+                    style: 'currency',
+                    currency: 'VND'
+                }));
+            });
+
+            $('input[name=status]').change(function () {
+                refreshPage();
+            });
+
+            $('input[name=khoangcach]').change(function () {
+                if (boolean === 'true') {
+                    $('#opts-km').fadeIn();
+                    var toAdd = $("input[name=khoangcach]:checked").val();
+                    if (toAdd == "Bất kỳ") {
+                        $('#opts-km').fadeOut();
+                    } else {
+                        $('#opts-km').html(
+                            '<a href="#">' +
+                            '<div class="options-x">' + '&times;' + '</div>' + toAdd +
+                            '</a>');
+
+                        add_HoverClick();
+                    }
+                    refreshPage();
+                }
+            });
+
+            $('input[name=hang-khachsang]').change(function () {
+                if (boolean === 'true') {
+                    $('#opts-hangks').fadeIn();
+                    var toAdd = $("input[name=hang-khachsang]:checked").val();
+                    var star = '<span class="glyphicon glyphicon-star" style="color: rgb(255,192,0); font-size: 10px">' + '</span>';
+
+                    if (toAdd == "*****") {
+                        toAdd = star + star + star + star + star;
+                    } else if (toAdd == "****") {
+                        toAdd = star + star + star + star;
+                    } else if (toAdd == "***") {
+                        toAdd = star + star + star;
+                    } else if (toAdd == "**") {
+                        toAdd = star + star;
+                    } else {
+//                      neu ko an? thi dung` su* kien check click lan` 2 de? bo? input radio + ko can input bat ky` nay`
+                        $('#opts-hangks').fadeOut();
+                    }
+
+                    $('#opts-hangks').html(
+                        '<a href="#">' +
+                        '<div class="options-x">' + '&times;' + '</div>' + toAdd +
+                        '</a>');
+
+//      $('#opts-hangks').css('backgroundColor','#ffc000');
+                    add_HoverClick();
+                    refreshPage();
+                }
+            });
+
+            $('#loai input[type=checkbox]').change(function () {
+                if (boolean === 'true') {
+                    $('#opts-loaiks').fadeIn();
+                    //toAdd = array  http://stackoverflow.com/questions/11945802/how-to-get-multiple-checkbox-value-using-jquery
+                    var toAdd = $('#loai input[type=checkbox]:checked').map(function () {
+                        return " " + this.value;
+                    }).get();
+                    $('#opts-loaiks').html(
+                        '<a href="#">' +
+                        '<div class="options-x">' + '&times;' + '</div>' + toAdd +
+                        '</a>');
+
+                    add_HoverClick();
+
+                    refreshPage();
+
+                    if (toAdd.length == 0) {
+                        //alert('if' + toAdd.length);
+                        // ko co delay thi ko the an? (bi choi~ voi' 1 thanh phan nao do' dag chay fia sau)
+                        var timer;
+                        var delay = 500;
+                        timer = setTimeout(function () {
+                            $('#opts-loaiks').fadeOut();
+                        }, delay);
+                        //return false;
+                    }
+                }
+            });
+
+            $('#tiennghi input[type=checkbox]').change(function () {
+                if (boolean === 'true') {
+                    $('#opts-tiennghi').fadeIn();
+                    var toAdd = $('#tiennghi input[type=checkbox]:checked').map(function () {
+                        return " " + this.value;
+                    }).get();
+                    $('#opts-tiennghi').html(
+                        '<a href="#">' +
+                        '<div class="options-x">' + '&times;' + '</div>' + toAdd +
+                        '</a>');
+
+                    add_HoverClick();
+
+                    refreshPage();
+
+                    if (toAdd.length == 0) {
+                        //alert('if' + toAdd.length);
+                        // ko co delay thi ko the an? (bi choi~ voi' 1 thanh phan nao do' dag chay fia sau)
+                        var timer;
+                        var delay = 500;
+                        timer = setTimeout(function () {
+                            $('#opts-tiennghi').fadeOut();
+                        }, delay);
+                        //return false;
+                    }
+                }
+            });
+
+        };
+
+        var add_HoverClick = function () {
+//                    su* kien hover & click duoc ap dung cho tat ca cac tuy` chon (co' cai` lan dau tien khi load page)
+            $('.options a').hover(
+                function () {
+                    $(this).find('div').fadeIn();
+                },
+                function () {
+                    $(this).find('div').fadeOut();
+                }
+            );
+            $('.options').click(function () {
+//                        se~ fadeIn lai, khi add html
+                $(this).fadeOut();
+
+            });
+        };
+
+        $(document).ready(main);
+
+        //nhóm Lựa chọn của bạn:
+        $(document).ready(function () {
+            $('.options a').hover(
+                function () {
+//  http://stackoverflow.com/questions/306583/this-selector-and-children
+                    $(this).find('div').fadeIn();
+                },
+                function () {
+                    $(this).find('div').fadeOut();
+                }
+            );
+            $('.options').click(function () {
+                $(this).fadeOut();
+                refreshPage();
+            });
+
+        });
+
+        // nhóm SẮP XẾP THEO
+        $(document).ready(function () {
+            $('#sort a').click(function () {
+                $('#sort a').css('border-bottom', 'none');
+                $(this).css('textDecoration', 'none');
+//                        http://stackoverflow.com/questions/447197/how-to-define-multiple-css-attributes-in-jquery
+                $(this).css({
+                    'border-bottom': '2px solid rgb(220,30,40)'
+                });
+//                        refreshPage();, chi refresh page (ko phai ket qua)
+                $('#page-1').fadeOut();
+                $('#page-1').fadeIn();
+            });
+
+            $('#sort-price').click(function () {
+//                        http://stackoverflow.com/questions/12665107/how-to-get-class-value-of-a-span
+                var spanClass = $('#sort-price').find('span').attr('class');
+                if (spanClass == 'glyphicon glyphicon-menu-up') {
+                    $('#sort-price span')
+                        .removeClass('glyphicon glyphicon-menu-up')
+                        .addClass('glyphicon glyphicon-menu-down');
+                } else {
+                    $('#sort-price span')
+                        .removeClass('glyphicon glyphicon-menu-down')
+                        .addClass('glyphicon glyphicon-menu-up');
+                }
+
+            });
+        });
+        // nhóm WOWSLIDER
+        $(document).ready(function () {
+//  chua the loai bo the? a ben slideshow bo bot the a de khoi nham
+//    $('.ws_images').click(function(){
+            $('.ws_images').click(function () {
+                // riêng Google map vẫn chưa cập nhật được
+                //    neu xay ra loi thi thoat trinh duyet
+                //    alert('click');
+                if (typeof (Storage) !== "undefined") {
+                    //luu tru~ bien' cho trang room-bookings (khi load trang nay` se~ thay') http://www.w3schools.com/html/html5_webstorage.asp
+                    //get_name_of_location();
+                    //dung` ham thi phai khai bao' them bien' de? ho tro $(this)
+                    if (localStorage.index_tmp_name) {
+                        //1 so' localStorage giong trang homepage: de? ho tro ghi de`
+                        localStorage.index_tmp_name = $('#autocomplete').val();
+                        localStorage.searchhotels_tmp_nameofhotel = $(this).parent().find('.name-of-hotel').text();
+                        localStorage.searchhotels_tmp_addofhotel = $(this).parent().find('.address-of-hotel').text();
+                        localStorage.searchhotels_tmp_addofhotel_2 = $(this).parent().find('.address-of-hotel-sub').text() + ' Đà Nẵng';
+                        //save Date (checkin, checkout)
+                        //viec khai bao' trung id o? cac file co' bi. anh huong? cai` trung id thi` ko chay. duoc ham` nay`
+                        var check_in = new Date(document.getElementById("s-datePicker1").value);
+                        var check_out = new Date(document.getElementById("s-datePicker2").value);
+                        if ((isNaN(check_in) == false && isNaN(check_out) == false)) {
+                            //check_in
+                            var month_check_in = check_in.getMonth() + 1;
+                            var day_check_in = check_in.getDate();
+                            if (check_in.getMonth() < 10) month_check_in = "0" + month_check_in;
+                            if (day_check_in < 10) day_check_in = "0" + day_check_in;
+                            //check_out
+                            var month_check_out = check_out.getMonth() + 1;
+                            var day_check_out = check_out.getDate();
+                            if (check_out.getMonth() < 10) month_check_out = "0" + month_check_out;
+                            if (day_check_out < 10) day_check_out = "0" + day_check_out;
+                            //convert
+                            var check_in_convert = check_in.getFullYear() + "-" + month_check_in + "-" + day_check_in;
+                            var check_out_convert = check_out.getFullYear() + "-" + month_check_out + "-" + day_check_out;
+                            //save
+                            localStorage.searchhotels_tmp_checkin = check_in_convert;
+                            localStorage.searchhotels_tmp_checkout = check_out_convert;
+                        } else {
+                            localStorage.searchhotels_tmp_checkin = "2016-01-20";
+                            localStorage.searchhotels_tmp_checkout = "2016-01-21";
+                        }
+                    } else {
+                        localStorage.searchhotels_tmp_name = "Đà Nẵng";
+                        //localStorage.searchhotels_tmp_nameofhotel = $(this).find('.name-of-hotel').text();
+                        //localStorage.searchhotels_tmp_addofhotel = $(this).find('.address-of-hotel').text();
+                        localStorage.searchhotels_tmp_checkin = "2016-01-20";
+                        localStorage.searchhotels_tmp_checkout = "2016-01-21";
+                    }
+                    //bien' nay` se~ duoc chuyen sang trang search-hotels
+                } else {
+                    alert("Sorry, your browser does not support web storage...");
+                }
+                //hoac window.open("search-hotels.html","_self");
+                //window.location = 'room-bookings.html';
+                //return false;
+            });
+
+            //function get_name_of_location() {
+            //}
+        });
+
+        // nhóm BS Pagination (code thuc te' se link den' tung` page rieng biet)
+        $(document).ready(function () {
+            $("#pagi-1").click(function () {
+                // parents co' them s neu xac dinh selector cha cu. the
+                // xoa' sach. cac li co' chua' class = active & chi add cho cai' dang click
+                $(this).parents("ul").find("li").removeClass('active');
+                $(this).parent().addClass('active');
+                //
+                $('#page-1').fadeIn();
+                $('#page-2').fadeOut();
+            });
+            $("#pagi-2").click(function () {
+                $(this).parents("ul").find("li").removeClass('active');
+                $(this).parent().addClass('active');
+                $('#page-1').fadeOut();
+                $('#page-2').fadeIn();
+            });
+        });
+
+
+
+
+
+
+    </script>
+
+</head>
+<body>
+<div id="container">
+
+    <div id="header"></div>
+
+    <nav>
+        <form>
+            <div id="nav-timkiem" class="container-fluid">
+                <!-- da~ dung Bootstrap table, grid => viec chia theo size cac input, button kem` theo margin (se~ ko deu`) -->
+                <!--ban dau dien` background img giong voi trang homepage-->
+                <div class="inner-addon left-addon" style="float: left">
+                    <div id="search-locations">
+                        <i class="fa fa-map-marker" style="font-size: 22px; color: rgb(220,30,40)"></i>
+                        <img src="../../static/img/homepage/Delete-25.png" width="16px"
+                             style="position: absolute; margin-left: 327px; margin-top: 15px; display: none"/>
+                        <input class="form-control biginput" name="locations" id="autocomplete" type="search"
+                               value="Đà Nẵng"
+                               placeholder="Nhập tên thành phố, khu vực, khách sạn ..." required
+                               style="width: 350px">
+                        <!--da~ thu width theo %-->
+                    </div>
+                </div>
+
+                <div class="inner-addon left-addon my-tooltip" data-tooltip="Ngày nhận phòng" style="float: left">
+                    <i class="fa fa-calendar-o" style="font-size: 19px; color: rgb(220,30,40)"></i>
+                    <input id="s-datePicker1" type="date" class="form-control">
+                </div>
+                <div class="inner-addon left-addon my-tooltip" data-tooltip="Ngày trả phòng" style="float: left">
+                    <i class="fa fa-calendar-o" style="font-size: 19px; color: rgb(220,30,40)"></i>
+                    <input id="s-datePicker2" type="date" class="form-control">
+                </div>
+
+                <div id="loaiphong" class="inner-addon left-addon" style="float: left">
+                    <i class="material-icons" style="font-size: 22px; color: rgb(220,30,40)">group_add</i>
+                    <select class="form-control">
+                        <option>1 phòng (1 người lớn)</option>
+                        <option selected>1 phòng (2 người lớn)</option>
+                        <option>lựa chọn khác ...</option>
+                    </select>
+                </div>
+
+                <div id="loaiphong-khac" style="color: white; width: 22%; display: none">
+                    <!--toi da 6 phong` & 18 khach'-->
+                    <h5 style="margin-top: 30px">Khách</h5>
+                    <input class="form-control" type="number" name="guest" min="1" max="18" style="width: 70px"/>
+                    <h5 style="margin-top: 30px">Phòng</h5>
+                    <input class="form-control" type="number" name="room" min="1" max="6" style="width: 70px"/>
+                </div>
+
+                <!--http://www.tutorialrepublic.com/codelab.php?topic=bootstrap&file=icons
+                http://www.tutorialspoint.com/bootstrap/bootstrap_glyphicons.htm -->
+                <!--button lien quan den' modal nen khi click thi` co' dau hieu. refresh page-->
+                <button type="submit" class="btn mybtn-style1">
+                    <span class="glyphicon glyphicon-search"></span>&nbsp;TÌM KIẾM
+                </button>
+
+            </div>
+        </form>
+    </nav>
+
+    <div id="center">
+        <div id="left-center">
+            <div id="left-center-result" style="margin-top: 15px; width: 100%; height: 40px; background-color: #ffffff">
+                Tìm thấy <span class="badge">10</span> khách sạn tại
+                <!--class="name-of-location" duoc cai vao tat ca? ca'c tu` khoa' Da Nang-->
+                <span class="name-of-location" style="font-weight: bold">Đà Nẵng</span>
+            </div> <!-- span ko the cai margin-top -->
+            <div style="height: auto">
+                <div class="left-title">ĐỊA ĐIỂM NỔI BẬT</div>
+                <div class="3-dd-noibat" style="display: none">
+                    <!--T cai theo kieu div -> chinh lai theo ul, li-->
+                    <!--<div class="radio"><label><input type="radio" name="optradio">Option 1</label></div>-->
+                    <ul style="list-style-type: none">
+                        <!--input nhin rat giong voi khi ko dung` bootstrap, dug ra li la` 1 the? a va khi click vao do' thi radio cung~ duoc checked -->
+                        <!--ban dau co' dat  class="radio-ddnoibat"-->
+                        <!--bo bot' muc check de don gian dk the hien tai muc lua chon cua ban-->
+                        <!--neu value === voi' li ben trong thi co the dat. 1 the span va` ko can dat gia tri value, -->
+                        <!--van co the tim ra gia tri dang chon-->
+                        <li><input type="radio" name="dd-noibat" value="Phố Cổ"/> Phố Cổ</li>
+                        <li><input type="radio" name="dd-noibat" value="Quận Hoàn Kiếm"/> Quận Hoàn Kiếm</li>
+                        <li><input type="radio" name="dd-noibat" value="Quận Tây Hồ"/> Quận Tây Hồ</li>
+                        <li><input type="radio" name="dd-noibat" value="Quận Đống Đa"/> Quận Đống Đa</li>
+                        <li><input type="radio" name="dd-noibat" value="Sân vận động quốc gia Mỹ Đình"/> Sân vận động
+                            quốc gia Mỹ Đình
+                        </li>
+                    </ul>
+                </div>
+                <div class="3-dd-noibat">
+                    <ul style="list-style-type: none">
+                        <li><input type="radio" name="dd-noibat" value="Gần cầu rồng"/> Gần cầu rồng</li>
+                        <li><input type="radio" name="dd-noibat" value="Ven biển Mỹ Khê"/> Ven biển Mỹ Khê</li>
+                        <li><input type="radio" name="dd-noibat" value="Ven sông Hàn"/> Ven sông Hàn</li>
+                        <li><input type="radio" name="dd-noibat" value="Ven biển Phạm Văn Đồng"/> Ven biển Phạm Văn Đồng
+                        </li>
+                        <li><input type="radio" name="dd-noibat" value="Ven biển Bắc Mỹ An"/> Ven biển Bắc Mỹ An</li>
+                        <li><input type="radio" name="dd-noibat" value="Khu thắng cảnh Ngũ Hành Sơn"/> Khu thắng cảnh
+                            Ngũ Hành Sơn
+                        </li>
+                        <li><input type="radio" name="dd-noibat" value="Khu du lịch Bà Nà Hills"/> Khu du lịch Bà Nà
+                            Hills
+                        </li>
+                        <li><input type="radio" name="dd-noibat" value="Khu bán đảo Sơn Trà/Núi Khỉ"/> Khu bán đảo Sơn
+                            Trà/Núi Khỉ
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="3-dd-noibat" style="display: none">
+                    <ul style="list-style-type: none">
+                        <li><input type="radio" name="dd-noibat" value="Chợ Bến Thành Quận 1"/> Chợ Bến Thành Quận 1
+                        </li>
+                        <li><input type="radio" name="dd-noibat" value="Nhà thờ Đức Bà Quận 1"/> Nhà thờ Đức Bà Quận 1
+                        </li>
+                        <li><input type="radio" name="dd-noibat" value="Công viên Đầm Sen Quận 11"/> Công viên Đầm Sen
+                            Quận 11
+                        </li>
+                        <li><input type="radio" name="dd-noibat" value="Phạm Ngũ Lão Quận 1"/> Phạm Ngũ Lão Quận 1</li>
+                        <li><input type="radio" name="dd-noibat" value="Chợ Lớn Quận 5"/> Chợ Lớn Quận 5</li>
+                    </ul>
+                </div>
+
+            </div>
+            <div style="height: auto; border-top: 1px solid rgb(223,221,221)">
+                <div class="left-title">GIÁ</div>
+                <div>
+                    <!--neu' 1 nut'-->
+                    <!--dien san~ text de ko bi noi' rong. san~ the div-->
+                    <!--<div style="text-align: center"><output id="rangevalue" style="margin-bottom: 10px; font-size: 15px">2.000.000 <sup>đ</sup></output></div>-->
+                    <!--<input id="range-price" type="range" name="points" min="168600" max="25952800" value="2000000"-->
+                    <!--onchange="rangevalue.value = (parseInt(value)).toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })"-->
+                    <!--/>-->
+                    <!--<br/>-->
+                    <!--<div style="font-size: 15px; height: 35px">-->
+                    <!--<span style="float: left">168.600 <sup>đ</sup></span>-->
+                    <!--<span style="float: right">25.952.800 <sup>đ</sup></span>-->
+                    <!--</div>-->
+                    <!--http://jqueryui.com/slider/#range-->
+                    <div id="slider-range"
+                         style="margin: auto; margin-top: 15px; margin-bottom: 15px; width: 90%"></div>
+                    <div style="font-size: 15px; height: 35px">
+                        <span id="amount-1" style="float: left"></span>
+                        <span id="amount-2" style="float: right"></span>
+                    </div>
+
+                    <!--co the co' them 1 checkbox dk: chỉ hiện các khách sạn còn phòng-->
+                    <div style="margin: auto; margin-bottom: 10px">
+                        <input type="checkbox" name="status"/> Chỉ hiện khách sạn còn phòng
+                    </div>
+                </div>
+            </div>
+
+            <div style="height: auto; border-top: 1px solid rgb(223,221,221)">
+                <div class="left-title">KHOẢNG CÁCH TỪ TRUNG TÂM</div>
+                <div>
+                    <ul style="list-style-type: none">
+                        <li><input type="radio" name="khoangcach" value="2 Km" checked/> 2 Km</li>
+                        <li><input type="radio" name="khoangcach" value="5 Km"/> 5 Km</li>
+                        <li><input type="radio" name="khoangcach" value="Bất kỳ"/> Bất kỳ</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="height: auto; border-top: 1px solid rgb(223,221,221)">
+                <div class="left-title">HẠNG KHÁCH SẠN</div>
+                <div>
+                    <ul style="list-style-type: none; color: rgb(255,192,0)">
+                        <li>
+                            <input type="radio" name="hang-khachsang" value="*****"/>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                        </li>
+                        <li>
+                            <input type="radio" name="hang-khachsang" value="****">
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                        </li>
+                        <li>
+                            <input type="radio" name="hang-khachsang" value="***">
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                        </li>
+                        <li>
+                            <input type="radio" name="hang-khachsang" value="**">
+                            <span class="glyphicon glyphicon-star"></span>
+                            <span class="glyphicon glyphicon-star"></span>
+                        </li>
+                        <li style="color: rgb(70,68,73)"><input type="radio" name="hang-khachsang" value=""> Bất kỳ</li>
+
+                    </ul>
+                </div>
+            </div>
+            <div style="height: auto; border-top: 1px solid rgb(223,221,221)">
+                <div class="left-title">LOẠI</div>
+                <div id="loai">
+                    <ul style="list-style-type: none">
+                        <li><input type="checkbox" value="Bình dân"/> Bình dân</li>
+                        <li><input type="checkbox" value="Hạng trung"/> Hạng trung</li>
+                        <li><input type="checkbox" value="Sang trọng"/> Sang trọng</li>
+                        <li><input type="checkbox" value="Lãng mạn"/> Lãng mạn</li>
+                        <li><a id="loai-them" data-toggle="modal" href="#myModal"
+                               style="color: black; font-size: small"> Thêm ...</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div style="height: auto; border-top: 1px solid rgb(223,221,221)"> <!-- shorthand: top right bottom left -->
+                <div class="left-title">TIỆN NGHI</div>
+                <div id="tiennghi">
+                    <ul style="list-style-type: none">
+                        <li><input type="checkbox" value="Bãi đậu xe"/> Bãi đậu xe</li>
+                        <li><input type="checkbox" value="Xe lăn cho người khuyết tật"/> Xe lăn cho người khuyết tật
+                        </li>
+                        <!--<li><a href="#" style="color: black"> Thêm ...</a></li>-->
+                        <li><a id="loai-tiennghi" data-toggle="modal" href="#myModal-2"
+                               style="color: black; font-size: small"> Thêm ...</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="right-center">
+            <div id="right-center-1" style="height: 70px; border-width: thin">
+                <!--chinh lai height de add tu* dong-->
+                <div id="options" style="width: 55%; height: auto; float: left">
+                    <div style="margin-bottom: 5px; font-weight: bold; color: rgb(156,153,153)">Lựa chọn của bạn:</div>
+                    <!--=============-->
+                    <div id="opts-ddnoitieng" class="options" style="display: none">
+                        <!--da~ bo bot muc check vi` co' den 3 locations-->
+                        <!--<a href="#"><div class="options-x">&times;</div> Gần cầu rồng </a>-->
+                    </div>
+                    <div id="opts-price" class="options" style="display: none">
+                        <!--da~ dieu chinh thanh 2 nut-->
+                        <!--<a href="#"><div class="options-x">&times;</div> 2.000.000 <sup>đ</sup></a>-->
+                    </div>
+                    <div id="opts-km" class="options">
+                        <a href="#">
+                            <div class="options-x">&times;</div>
+                            2 Km</a>
+                    </div>
+                    <!--them display: none vi` co' kem` class="options" co' ke? border (du` chua co' noi dung)
+                    add margin-top vao` class options xay ra loi~
+                    -->
+                    <div id="opts-hangks" class="options"
+                         style="display: none; margin-top: 5px; margin-bottom: 5px"></div>
+                    <div id="opts-loaiks" class="options"
+                         style="display: none; margin-top: 5px; margin-bottom: 5px"></div>
+                    <div id="opts-tiennghi" class="options"
+                         style="display: none; margin-top: 5px; margin-bottom: 5px"></div>
+                </div>
+
+                <div id="sort"
+                     style="width: 45%; float: right; text-align: right; border-left: 1px solid rgb(156,153,153)">
+                    <span style="font-weight: bold; color: rgb(156,153,153)">SẮP XẾP THEO: </span>
+                    <a href="#" style="color: rgb(156,153,153)">Xếp hạng</a><span> -</span>
+                    <a href="#" style="color: rgb(156,153,153)">Khoảng cách</a><span> -</span>
+                    <a id="sort-price" href="#" style="color: rgb(156,153,153)">Giá <span
+                            class="glyphicon glyphicon-menu-up"></span></a>
+                </div>
+            </div>
+
+            <div id="right-center-2" style="margin-top: -25px">
+                <!-- chinh lai margin do margin-top cua row bi. day? xuong -->
+                <div id="page-1">
+                    <!--dung ra phai khai bao' trong Object, array => ho tro viec tim kiem + sap xep ...    -->
+                    <!-- dung` Bootstrap table: xuat hien ko chuan? = Bootstrap Grid -->
+                    <div class="row" style="color: white">
+                        <div class="col-sm-6">
+                            <!--<img class="size-of-img" src="../img/search-hotels/vanda1.png" />-->
+                            <!--khi click thang? vao buc anh thi` xem trinh` chieu' + dat phong`-->
+                            <!-- Start WOWSlider.com BODY section --> <!-- add to the <body> of your page -->
+
+                            <div id="wowslider-container0">
+                                <!--nhom thong tin phai dat trong cung` id="wowslider-container1" va truoc' cac pic
+                                thi moi' dung hover duoc.
+                                -->
+                                <div>
+                                    <!--tinh trang phong`-->
+                                    <!-- neu' nhap chung => anh huong den opacity-->
+                                    <!--<div>-->
+                                    <!--<div class="badge-outer"></div>-->
+                                    <!--<div class="badge-inner">Hết phòng</div>-->
+                                    <!--</div>-->
+                                    <div class="loaiphong"> PREMIUM</div>
+                                    <!--http://www.vandahotel.vn/-->
+                                    <!-- SUPERIOR | DELUXE | GRAND SUITE | FAMILY JUNIOR SUITE -->
+                                    <div class="info-hotel">
+                                        <span style="font-weight: bolder; font-size: 20px" class="name-of-hotel">
+                                            Vanda Hotel
+                                        </span><br/>
+                                        <div style="font-size: 12px">
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                        </div>
+                                        <span style="font-size: 12px" class="address-of-hotel">
+                                            <!--tao them 1 class phu de ho tro xac dinh vi tri ao tren Google Map (trong Da Nang)-->
+                                            <span class="address-of-hotel-sub">3 Nguyễn Văn Linh, Q Hải Châu,</span>
+                                            <span class="name-of-location">Đà Nẵng</span>
+                                        </span>
+                                    </div>
+                                    <div class="price">1,890,000 <sup>đ</sup></div>
+                                </div>
+                                <!--class="img-responsive"-->
+                                <div class="ws_images">
+                                    <ul>
+                                        <li>
+                                            <!-- dung jQuery add toan bo href='room-bookings.html' vao` .ws_images a -->
+                                            <a>
+                                                <img src="../Utilities/slideshow/slideshow1/data0/images/room01.jpg"
+                                                     alt="room01" title="room01" id="wows0_0"/>
+                                            </a>
+                                        </li>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data0/images/room02.jpg"
+                                                    alt="room02" title="room02" id="wows0_1"/></a></li>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data0/images/room03.jpg"
+                                                    alt="room03" title="room03" id="wows0_2"/></a></li>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data0/images/room04.jpg"
+                                                    alt="room04" title="room04" id="wows0_3"/></a></li>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data0/images/hanhlang01.jpg"
+                                                    alt="hanhlang01" title="hanhlang01" id="wows0_4"/></a></li>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data0/images/hanhlang02.jpg"
+                                                    alt="hanhlang02" title="hanhlang02" id="wows0_5"/></a></li>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data0/images/nhahang01.jpg"
+                                                    alt="nhahang01" title="nhahang01" id="wows0_6"/></a></li>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data0/images/nhahang02.jpg"
+                                                    alt="nhahang02" title="nhahang02" id="wows0_7"/></a></li>
+                                    </ul>
+                                </div>
+                                <!--Logo tao ra khi lam` slide tu` pm ngoai`,
+                                sau khi tat' di van~ click duoc ra trang http://wowslider.com/-->
+                                <div class="ws_script" style="position:absolute;left:-99%">
+                                    <a href="http://wowslider.net">jquery slider</a>
+                                    by WOWSlider.com v8.6
+                                </div>
+                                <div class="ws_shadow"></div>
+                            </div>
+                            <script type="text/javascript"
+                                    src="../Utilities/slideshow/slideshow1/engine0/wowslider.js"></script>
+                            <script type="text/javascript"
+                                    src="../Utilities/slideshow/slideshow1/engine0/script.js"></script>
+                            <!-- End WOWSlider.com BODY section -->
+                        </div>
+
+                        <div class="col-sm-6">
+                            <!--<img src="../img/search-hotels/room.png" />-->
+                            <div id="wowslider-container1">
+                                <div>
+                                    <div>
+                                        <img src="../../static/img/search-hotels/Bookmark-100.png" width="70"
+                                             class="badge-outer-2"/>
+                                        <div class="badge-inner-2">50% Off</div>
+                                    </div>
+                                    <!--<div class="loaiphong"> PREMIUM </div>-->
+                                    <!--http://www./-->
+                                    <div class="info-hotel">
+                                        <span style="font-weight: bolder; font-size: 20px" class="name-of-hotel">
+                                            Vĩnh Trung Plaza
+                                        </span><br/>
+                                        <div style="font-size: 12px">
+                                            <!--neu ko co xep hang thi noi dung bi day len cao-->
+                                            <!--<span class="glyphicon glyphicon-star"></span>-->
+                                            <!--<span class="glyphicon glyphicon-star"></span>-->
+                                            <!--<span class="glyphicon glyphicon-star"></span>-->
+                                            <!--<span class="glyphicon glyphicon-star"></span>-->
+                                        </div>
+                                        <span style="font-size: 12px" class="address-of-hotel">
+                                            <span class="address-of-hotel-sub">255-257 Hùng Vương, Q Hải Châu,</span>
+                                            <span class="name-of-location">Đà Nẵng</span>
+                                        </span>
+                                    </div>
+                                    <div class="price">1,636,364 <sup>đ</sup></div>
+                                </div>
+
+                                <!-- Start WOWSlider.com BODY section --> <!-- add to the <body> of your page -->
+                                <!--<div id="wowslider-container1">-->
+                                <div class="ws_images">
+                                    <ul>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data1/images/1.jpg" alt="1"
+                                                    title="1" id="wows1_0"/></a></li>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data1/images/2.jpg" alt="2"
+                                                    title="2" id="wows1_1"/></a></li>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data1/images/3.jpg" alt="3"
+                                                    title="3" id="wows1_2"/></a></li>
+                                    </ul>
+                                </div>
+                                <div class="ws_script" style="position:absolute;left:-99%"><a
+                                        href="http://wowslider.net">jquery slider</a> by WOWSlider.com v8.6
+                                </div>
+                                <div class="ws_shadow"></div>
+                            </div>
+                            <script type="text/javascript"
+                                    src="../Utilities/slideshow/slideshow1/engine1/wowslider.js"></script>
+                            <script type="text/javascript"
+                                    src="../Utilities/slideshow/slideshow1/engine1/script.js"></script>
+                            <!-- End WOWSlider.com BODY section -->
+                        </div>
+                    </div>
+
+                    <div class="row" style="color: white">
+                        <div class="col-sm-6">
+                            <!--<img src="../img/search-hotels/room.png" />-->
+                            <div id="wowslider-container2">
+                                <div>
+                                    <div>
+                                        <div class="badge-outer-3"></div>
+                                        <div class="badge-inner-3">Còn 2 phòng</div>
+                                    </div>
+                                    <!--<div class="loaiphong"> PREMIUM </div>-->
+                                    <!--http://www.-->
+                                    <div class="info-hotel">
+                                        <span style="font-weight: bolder; font-size: 20px" class="name-of-hotel">
+                                            Samdi Hotel
+                                        </span><br/>
+                                        <div style="font-size: 12px">
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                        </div>
+                                        <span style="font-size: 12px" class="address-of-hotel">
+                                            <span class="address-of-hotel-sub">203-211 Nguyễn Văn Linh,</span>
+                                            <span class="name-of-location">Đà Nẵng</span>
+                                        </span>
+                                    </div>
+                                    <div class="price">2,110,390 <sup>đ</sup></div>
+                                </div>
+                                <!-- Start WOWSlider.com BODY section --> <!-- add to the <body> of your page -->
+                                <div class="ws_images">
+                                    <ul>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data2/images/1.jpg" alt="1"
+                                                    title="1" id="wows2_0"/></a></li>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data2/images/2.jpg" alt="2"
+                                                    title="2" id="wows2_1"/></a></li>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data2/images/3.jpg" alt="3"
+                                                    title="3" id="wows2_2"/></a></li>
+                                    </ul>
+                                </div>
+                                <div class="ws_script" style="position:absolute;left:-99%"><a
+                                        href="http://wowslider.net">jquery slider</a> by WOWSlider.com v8.6
+                                </div>
+                                <div class="ws_shadow"></div>
+                            </div>
+                            <script type="text/javascript"
+                                    src="../Utilities/slideshow/slideshow1/engine2/wowslider.js"></script>
+                            <script type="text/javascript"
+                                    src="../Utilities/slideshow/slideshow1/engine2/script.js"></script>
+                            <!-- End WOWSlider.com BODY section -->
+
+                        </div>
+                        <div class="col-sm-6">
+                            <!--<img src="../img/search-hotels/room.png" />-->
+                            <div id="wowslider-container3">
+                                <div>
+                                    <div>
+                                        <div class="badge-outer"></div>
+                                        <div class="badge-inner">Hết phòng</div>
+                                    </div>
+                                    <div class="loaiphong"> DELUXE</div>
+                                    <!--http://www./-->
+                                    <div class="info-hotel">
+                                        <span style="font-weight: bolder; font-size: 20px" class="name-of-hotel">
+                                            Minh Toan Galaxy Hotel
+                                        </span><br/>
+                                        <div style="font-size: 12px">
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                        </div>
+                                        <span style="font-size: 12px" class="address-of-hotel">
+                                            <span class="address-of-hotel-sub">2/9 Street, Sông Hàn,</span>
+                                            <span class="name-of-location">Đà Nẵng</span>
+                                        </span>
+                                    </div>
+                                    <div class="price">1,904,762 <sup>đ</sup></div>
+                                </div>
+                                <!-- Start WOWSlider.com BODY section --> <!-- add to the <body> of your page -->
+                                <div class="ws_images">
+                                    <ul>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data3/images/1.jpg" alt="1"
+                                                    title="1" id="wows3_0"/></a></li>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data3/images/2.jpg" alt="2"
+                                                    title="2" id="wows3_1"/></a></li>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data3/images/3.jpg" alt="3"
+                                                    title="3" id="wows3_2"/></a></li>
+                                    </ul>
+                                </div>
+                                <div class="ws_script" style="position:absolute;left:-99%"><a
+                                        href="http://wowslider.net">jquery slider</a> by WOWSlider.com v8.6
+                                </div>
+                                <div class="ws_shadow"></div>
+                            </div>
+                            <script type="text/javascript"
+                                    src="../Utilities/slideshow/slideshow1/engine3/wowslider.js"></script>
+                            <script type="text/javascript"
+                                    src="../Utilities/slideshow/slideshow1/engine3/script.js"></script>
+                            <!-- End WOWSlider.com BODY section -->
+                        </div>
+                    </div>
+
+                    <div class="row" style="color: white">
+                        <div class="col-sm-6">
+                            <!--<img src="../img/search-hotels/room.png" />-->
+                            <div id="wowslider-container4">
+                                <div>
+                                    <div>
+                                        <div class="badge-outer"></div>
+                                        <div class="badge-inner">Hết phòng</div>
+                                    </div>
+                                    <div class="loaiphong"> SUPERIOR</div>
+                                    <!--http://www./-->
+                                    <!-- SUPERIOR | DELUXE | GRAND SUITE | FAMILY JUNIOR SUITE -->
+                                    <div class="info-hotel">
+                                        <span style="font-weight: bolder; font-size: 20px" class="name-of-hotel">
+                                            Novotel Danang Premier
+                                        </span><br/>
+                                        <div style="font-size: 12px">
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                        </div>
+                                        <span style="font-size: 12px" class="address-of-hotel">
+                                            <span class="address-of-hotel-sub">36 Bạch Đằng, Sông Hàn,</span>
+                                            <span class="name-of-location">Đà Nẵng</span>
+                                        </span>
+                                    </div>
+                                    <div class="price">3,802,122 <sup>đ</sup></div>
+                                </div>
+                                <!-- Start WOWSlider.com BODY section --> <!-- add to the <body> of your page -->
+                                <div class="ws_images">
+                                    <ul>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data4/images/1.jpg" alt="1"
+                                                    title="1" id="wows4_0"/></a></li>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data4/images/2.jpg" alt="2"
+                                                    title="2" id="wows4_1"/></a></li>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data4/images/3.jpg" alt="3"
+                                                    title="3" id="wows4_2"/></a></li>
+                                    </ul>
+                                </div>
+                                <div class="ws_script" style="position:absolute;left:-99%"><a
+                                        href="http://wowslider.net">jquery slider</a> by WOWSlider.com v8.6
+                                </div>
+                                <div class="ws_shadow"></div>
+                            </div>
+                            <script type="text/javascript"
+                                    src="../Utilities/slideshow/slideshow1/engine4/wowslider.js"></script>
+                            <script type="text/javascript"
+                                    src="../Utilities/slideshow/slideshow1/engine4/script.js"></script>
+                            <!-- End WOWSlider.com BODY section -->
+                        </div>
+                        <div class="col-sm-6">
+                            <!--<img src="../img/search-hotels/room.png" />-->
+                            <div id="wowslider-container5">
+                                <div>
+                                    <!--<div>-->
+                                    <!--<div class="badge-outer"></div>-->
+                                    <!--<div class="badge-inner">Hết phòng</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="loaiphong"> SUPERIOR </div>-->
+                                    <!--http://www./-->
+                                    <!-- SUPERIOR | DELUXE | GRAND SUITE | FAMILY JUNIOR SUITE -->
+                                    <div class="info-hotel">
+                                        <span style="font-weight: bolder; font-size: 20px" class="name-of-hotel">
+                                            Green Plaza Hotel
+                                        </span><br/>
+                                        <div style="font-size: 12px">
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                        </div>
+                                        <span style="font-size: 12px" class="address-of-hotel">
+                                            <span class="address-of-hotel-sub">238 Bạch Đằng, Quận Hải Châu,</span>
+                                            <span class="name-of-location">Đà Nẵng</span>
+                                        </span>
+                                    </div>
+                                    <div class="price">1,380,952 <sup>đ</sup></div>
+                                </div>
+                                <!-- Start WOWSlider.com BODY section --> <!-- add to the <body> of your page -->
+                                <div class="ws_images">
+                                    <ul>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data5/images/1.jpg" alt="1"
+                                                    title="1" id="wows5_0"/></a></li>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data5/images/2.jpg" alt="2"
+                                                    title="2" id="wows5_1"/></a></li>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data5/images/3.jpg" alt="3"
+                                                    title="3" id="wows5_2"/></a></li>
+                                    </ul>
+                                </div>
+                                <div class="ws_script" style="position:absolute;left:-99%"><a
+                                        href="http://wowslider.net">jquery slider</a> by WOWSlider.com v8.6
+                                </div>
+                                <div class="ws_shadow"></div>
+                            </div>
+                            <script type="text/javascript"
+                                    src="../Utilities/slideshow/slideshow1/engine5/wowslider.js"></script>
+                            <script type="text/javascript"
+                                    src="../Utilities/slideshow/slideshow1/engine5/script.js"></script>
+                            <!-- End WOWSlider.com BODY section -->
+                        </div>
+                    </div>
+
+                    <div class="row" style="color: white">
+                        <div class="col-sm-6">
+                            <!--<img src="../img/search-hotels/room.png" />-->
+                            <div id="wowslider-container6">
+                                <div>
+                                    <!--<div>-->
+                                    <!--<div class="badge-outer"></div>-->
+                                    <!--<div class="badge-inner">Hết phòng</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="loaiphong"> PREMIUM </div>-->
+                                    <!--http://www/-->
+                                    <!-- SUPERIOR | DELUXE | GRAND SUITE | FAMILY JUNIOR SUITE -->
+                                    <div class="info-hotel">
+                                        <span style="font-weight: bolder; font-size: 20px" class="name-of-hotel">
+                                            Brilliant Hotel
+                                        </span><br/>
+                                        <div style="font-size: 12px">
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                        </div>
+                                        <span style="font-size: 12px" class="address-of-hotel">
+                                            <span class="address-of-hotel-sub">162 Bạch Đằng, Q Hải Châu,</span>
+                                            <span class="name-of-location">Đà Nẵng</span>
+                                        </span>
+                                    </div>
+                                    <div class="price">1,624,575 <sup>đ</sup></div>
+                                </div>
+                                <!-- Start WOWSlider.com BODY section --> <!-- add to the <body> of your page -->
+                                <div class="ws_images">
+                                    <ul>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data6/images/1.jpg" alt="1"
+                                                    title="1" id="wows6_0"/></a></li>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data6/images/2.jpg" alt="2"
+                                                    title="2" id="wows6_1"/></a></li>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data6/images/3.jpg" alt="3"
+                                                    title="3" id="wows6_2"/></a></li>
+                                    </ul>
+                                </div>
+                                <div class="ws_script" style="position:absolute;left:-99%"><a
+                                        href="http://wowslider.net">jquery slider</a> by WOWSlider.com v8.6
+                                </div>
+                                <div class="ws_shadow"></div>
+                            </div>
+                            <script type="text/javascript"
+                                    src="../Utilities/slideshow/slideshow1/engine6/wowslider.js"></script>
+                            <script type="text/javascript"
+                                    src="../Utilities/slideshow/slideshow1/engine6/script.js"></script>
+                            <!-- End WOWSlider.com BODY section -->
+                        </div>
+                        <div class="col-sm-6">
+                            <!--<img src="../img/search-hotels/room.png" />-->
+                            <div id="wowslider-container7">
+                                <div>
+                                    <div>
+                                        <img src="../../static/img/search-hotels/Bookmark-100.png" width="70"
+                                             class="badge-outer-2"/>
+                                        <div class="badge-inner-2">35% Off</div>
+                                    </div>
+                                    <div class="loaiphong"> PREMIUM</div>
+                                    <!--http://www.vandahotel.vn/-->
+                                    <!-- SUPERIOR | DELUXE | GRAND SUITE | FAMILY JUNIOR SUITE -->
+                                    <div class="info-hotel">
+                                        <span style="font-weight: bolder; font-size: 20px" class="name-of-hotel">
+                                            OneOpera Danang Hotel
+                                        </span><br/>
+                                        <div style="font-size: 12px">
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                        </div>
+                                        <span style="font-size: 12px" class="address-of-hotel">
+                                            <span class="address-of-hotel-sub">115 Nguyễn Văn Linh, Q Hải Châu,</span>
+                                            <span class="name-of-location">Đà Nẵng</span>
+                                        </span>
+                                    </div>
+                                    <div class="price">1,406,926 <sup>đ</sup></div>
+                                </div>
+                                <!-- Start WOWSlider.com BODY section --> <!-- add to the <body> of your page -->
+                                <div class="ws_images">
+                                    <ul>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data7/images/1.jpg" alt="1"
+                                                    title="1" id="wows7_0"/></a></li>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data7/images/2.jpg" alt="2"
+                                                    title="2" id="wows7_1"/></a></li>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data7/images/3.jpg" alt="3"
+                                                    title="3" id="wows7_2"/></a></li>
+                                    </ul>
+                                </div>
+                                <div class="ws_script" style="position:absolute;left:-99%"><a
+                                        href="http://wowslider.net">jquery slider</a> by WOWSlider.com v8.6
+                                </div>
+                                <div class="ws_shadow"></div>
+                            </div>
+                            <script type="text/javascript"
+                                    src="../Utilities/slideshow/slideshow1/engine7/wowslider.js"></script>
+                            <script type="text/javascript"
+                                    src="../Utilities/slideshow/slideshow1/engine7/script.js"></script>
+                            <!-- End WOWSlider.com BODY section -->
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="page-2" style="display: none">
+                    <div class="row" style="color: white">
+                        <div class="col-sm-6">
+                            <!--<img class="size-of-img" src="../img/search-hotels/vanda1.png" />-->
+                            <div id="wowslider-container8">
+                                <div>
+                                    <div>
+                                        <div class="badge-outer"></div>
+                                        <div class="badge-inner">Hết phòng</div>
+                                    </div>
+                                    <div class="loaiphong"> Executive</div>
+                                    <!--http://www./-->
+                                    <!-- SUPERIOR | DELUXE | GRAND SUITE | FAMILY JUNIOR SUITE -->
+                                    <div class="info-hotel">
+                                        <span style="font-weight: bolder; font-size: 20px" class="name-of-hotel">
+                                            Mường Thanh Hotel
+                                        </span><br/>
+                                        <div style="font-size: 12px">
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                        </div>
+                                        <span style="font-size: 12px" class="address-of-hotel">
+                                            <!--962 Ngô Quyền, An Hải Tây, Sơn Trà, Đà Nẵng, Việt Nam
+                                            vì có phân phân biệt khu vực An Hải Tây & An Hải Đông => phải điền chính xác.
+                                            -->
+                                            <span class="address-of-hotel-sub">962 Ngô Quyền, An Hải Tây, Sơn Trà,</span>
+                                            <span class="name-of-location">Đà Nẵng</span>
+                                        </span>
+                                    </div>
+                                    <div class="price">2,271,766 <sup>đ</sup></div>
+                                </div>
+                                <!-- Start WOWSlider.com BODY section --> <!-- add to the <body> of your page -->
+                                <div class="ws_images">
+                                    <ul>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data8/images/1.jpg" alt="1"
+                                                    title="1" id="wows8_0"/></a></li>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data8/images/2.jpg" alt="2"
+                                                    title="2" id="wows8_1"/></a></li>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data8/images/3.jpg" alt="3"
+                                                    title="3" id="wows8_2"/></a></li>
+                                    </ul>
+                                </div>
+                                <div class="ws_script" style="position:absolute;left:-99%"><a
+                                        href="http://wowslider.net">jquery slider</a> by WOWSlider.com v8.6
+                                </div>
+                                <div class="ws_shadow"></div>
+                            </div>
+                            <script type="text/javascript"
+                                    src="../Utilities/slideshow/slideshow1/engine8/wowslider.js"></script>
+                            <script type="text/javascript"
+                                    src="../Utilities/slideshow/slideshow1/engine8/script.js"></script>
+                            <!-- End WOWSlider.com BODY section -->
+
+                        </div>
+
+                        <div class="col-sm-6">
+                            <!--<img src="../img/search-hotels/room.png" />-->
+                            <div id="wowslider-container9">
+                                <div>
+                                    <div>
+                                        <div class="badge-outer"></div>
+                                        <div class="badge-inner">Hết phòng</div>
+                                    </div>
+                                    <div class="loaiphong"> Suite</div>
+                                    <!--http://www./-->
+                                    <!-- SUPERIOR | DELUXE | GRAND SUITE | FAMILY JUNIOR SUITE -->
+                                    <div class="info-hotel">
+                                        <span style="font-weight: bolder; font-size: 20px" class="name-of-hotel">
+                                            Gopatel Hotel & Spa
+                                        </span><br/>
+                                        <div style="font-size: 12px">
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                        </div>
+                                        <span style="font-size: 12px" class="address-of-hotel">
+                                            <span class="address-of-hotel-sub">202 Nguyễn Chí Thanh, Q Hải Châu,</span>
+                                            <span class="name-of-location">Đà Nẵng</span>
+                                        </span>
+                                    </div>
+                                    <div class="price">2,500,500 <sup>đ</sup></div>
+                                </div>
+                                <!-- Start WOWSlider.com BODY section --> <!-- add to the <body> of your page -->
+                                <div class="ws_images">
+                                    <ul>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data9/images/1.jpg" alt="1"
+                                                    title="1" id="wows9_0"/></a></li>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data9/images/2.jpg" alt="2"
+                                                    title="2" id="wows9_1"/></a></li>
+                                        <li><a><img src="../Utilities/slideshow/slideshow1/data9/images/3.jpg" alt="3"
+                                                    title="3" id="wows9_2"/></a></li>
+                                    </ul>
+                                </div>
+                                <div class="ws_script" style="position:absolute;left:-99%"><a
+                                        href="http://wowslider.net">jquery slider</a> by WOWSlider.com v8.6
+                                </div>
+                                <div class="ws_shadow"></div>
+                            </div>
+                            <script type="text/javascript"
+                                    src="../Utilities/slideshow/slideshow1/engine9/wowslider.js"></script>
+                            <script type="text/javascript"
+                                    src="../Utilities/slideshow/slideshow1/engine9/script.js"></script>
+                            <!-- End WOWSlider.com BODY section -->
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 15px">
+                    <!-- chinh height o day de~ bi. day? cac phan tu* cua footer -->
+                    <ul class="pagination"><!-- Bootstrap -->
+                        <li>
+                            <a href="#">«</a>
+                        </li>
+                        <li class="active">
+                            <a href="#" id="pagi-1">1</a>
+                        </li>
+                        <li>
+                            <a href="#" id="pagi-2">2</a>
+                        </li>
+                        <li>
+                            <a href="#">»</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer"></div>
+
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!--Modal content-->
+            <div class="modal-content">
+                <div class="modal-header"> <!-- style="padding:35px 50px;" -->
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <!--khi dat chung file thi ko can` cai` su* kien  id="refreshDIV" onClick="history.go(0)" cho nut'-->
+                    <h4>Loại</h4>
+                </div>
+                <div class="modal-body" style="padding:30px 30px"> <!--  style="padding:40px 50px;" -->
+                    <div class="row">
+                        <form role="form">
+                            <table class="table borderless">
+                                <tr>
+                                    <td><input type="checkbox"> Bình dân</td>
+                                    <td><input type="checkbox"> Khách sạn nghĩ dưỡng</td>
+                                    <td><input type="checkbox"> Yên tĩnh</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"> Cổ điển</td>
+                                    <td><input type="checkbox"> Nhỏ và sang trọng</td>
+                                    <td><input type="checkbox"> Thương gia</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"> Dành cho gia đình</td>
+                                    <td><input type="checkbox"> Quyến rũ</td>
+                                    <td><input type="checkbox"> Thời thượng</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"> Gía tốt nhất</td>
+                                    <td><input type="checkbox"> Hạng trung</td>
+                                </tr>
+                                <tr>
+                                </tr>
+                                <tr>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+
+                <div style="text-align: right; margin-top: -140px">
+                    <img src="../../static/img/img_audio/stay-awesome.png"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myModal-2" role="dialog">
+        <div class="modal-dialog" style="width: 60%">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!-- style="padding:35px 50px;" -->
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4>Tiện nghi</h4>
+                </div>
+                <div class="modal-body" style="padding:30px 30px"> <!--  style="padding:40px 50px;" -->
+                    <div class="row">
+                        <form role="form">
+                            <table class="table borderless">
+                                <tr>
+                                    <td><input type="checkbox"> Bãi biển</td>
+                                    <td><input type="checkbox"> Phòng họp</td>
+                                    <td><input type="checkbox"> Dịch vụ phòng</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"> Bể bơi</td>
+                                    <td><input type="checkbox"> Đỗ xe miễn phí</td>
+                                    <td><input type="checkbox"> Quầy bar/Phòng khách</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"> Bếp nhỏ</td>
+                                    <td><input type="checkbox"> Internet</td>
+                                    <td><input type="checkbox"> Sân gôn</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"> Khách sạn không hút thuốc</td>
+                                    <td><input type="checkbox"> Sòng bạc</td>
+                                    <td><input type="checkbox"> Xe đưa đón đén sân bay</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"> Cho phép mang theo vật nuôi</td>
+                                    <td><input type="checkbox"> Lối ra cho xe lăn</td>
+                                    <td><input type="checkbox"> Spa</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"> Dãy buồng</td>
+                                    <td><input type="checkbox"> Người giữ cửa</td>
+                                    <td><input type="checkbox"> Trung tâm thể dục thẩm mỹ</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox"> Dịch vụ kinh doanh</td>
+                                    <td><input type="checkbox"> Nhà hàng</td>
+                                    <td><input type="checkbox"> Phòng cho người khuyết tật</td>
+                                </tr>
+                                <tr>
+
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+
+                <div style="text-align: right; margin-top: -120px">
+                    <img src="../../static/img/img_audio/stay-awesome.png"/>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        //        da~ them thuoc tinh' data-toggle="modal" => ko can` cai` script
+        //        $(document).ready(function(){
+        //            $("#loai-them").click(function(){
+        //                $("#myModal").modal();
+        //            });
+        //            $("#loai-tiennghi").click(function(){
+        //                $("#myModal-2").modal();
+        //            });
+        //        });
+    </script>
+
+    <!-- JavaScript -->
+    <!--js nay` phai dat phia' sau cac slide thi moi' chay duoc (co le code tren chua cai ready...)-->
+    <script type="text/javascript" src="../../static/js/search-hotels.js"></script>
+
+    <script src="../Utilities/smoothscroll-for-websites-master/SmoothScroll.js"></script>
+
+    <script src="../Utilities/LiveChat.js"></script>
+
+    <!--Form Feedback (position: fixed): https://webengage.com/ , phai dang ky', chua tach ra duoc file rieng do co' kem` id-->
+    <script id="_webengage_script_tag" type="text/javascript">
+        var webengage;
+        !function (e, t, n) {
+            function o(e, t) {
+                e[t[t.length - 1]] = function () {
+                    r.__queue.push([t.join("."), arguments])
+                }
+            }
+
+            var i, s, r = e[n], g = " ", l = "init options track onReady".split(g),
+                a = "feedback survey notification".split(g), c = "options render clear abort".split(g),
+                p = "Open Close Submit Complete View Click".split(g), u = "identify login logout setAttribute".split(g);
+            if (!r || !r.__v) {
+                for (e[n] = r = {__queue: [], __v: "5.0", user: {}}, i = 0; i < l.length; i++) o(r, [l[i]]);
+                for (i = 0; i < a.length; i++) {
+                    for (r[a[i]] = {}, s = 0; s < c.length; s++) o(r[a[i]], [a[i], c[s]]);
+                    for (s = 0; s < p.length; s++) o(r[a[i]], [a[i], "on" + p[s]])
+                }
+                for (i = 0; i < u.length; i++) o(r.user, ["user", u[i]]);
+                var f = t.createElement("script"), d = t.getElementById("_webengage_script_tag");
+                f.type = "text/javascript", f.async = !0, f.src = ("https:" == t.location.protocol ? "//ssl.widgets.webengage.com" : "//cdn.widgets.webengage.com") + "/js/widget/webengage-min-v-5.0.js", d.parentNode.insertBefore(f, d)
+            }
+        }(window, document, "webengage");
+        webengage.init('~15ba209b4');
+        webengage.options('isDemoMode', true);
+    </script>
+
+</div>
+</body>
+</html>

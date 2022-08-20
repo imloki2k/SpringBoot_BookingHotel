@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>YOY | all-locations</title>
+    <!-- bootstrap: de y' 2 file: ajax phai dat truoc maxcdn thi moi dung` duoc modal (Form)-->
+    <!-- Online -->
+    <!--neu dung`: bootstrap.css (chua nen') de co the xem dc code, khi chay chinh thuc thi dung` ban min-->
+    <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">-->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
+    <!--<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
+    <!-- Offline -->
+    <!--    <link rel="stylesheet" href="../Utilities/bootstrap-3.3.5-dist/css/bootstrap.min.css">-->
+    <script src="../Utilities/jQuery-1.x/jquery-1.11.3.min.js"></script>
+    <script src="../Utilities/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <style>
+
+    </style>
+
+    <script>
+        // phan dung code
+        $(document).ready(function () {
+            let token = $("meta[name='_csrf']").attr("content");
+            let header = $("meta[name='_csrf_header']").attr("content");
+            $(document).ajaxSend(function (e, xhr, options) {
+                xhr.setRequestHeader(header, token);
+            });
+            console.log("ready to get data");
+            let regionNames = [];
+
+            $.ajax({
+
+                url: '/getAllRegions',
+                type: 'get',
+                data: {},
+
+                success: function (data) {
+                    if (data === "cant get location names") {
+                        console.log("gap su co khi lay thong tin ve cac location")
+                        alert("some error happen");
+                    } else {
+                        regionNames = seperateStrToArr(data);
+                        console.log("thong tin cua locations:" + regionNames)
+                        let locations = regionNames;
+                        printRegionInfo(locations);
+                        loadMultipleCss();
+                        checkLink();
+                        // $(document).ready(function(){{
+                        //     window.stop();
+                        // }})
+
+                        // tu tat loading neu page loading qua' 1s
+                        setTimeout(function () {
+                            window.stop();
+                        }, 1000);
+
+
+                    }
+                },
+                error: function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+
+
+        })
+        var loadMultipleCss = function () {
+            //load local stylesheet
+            loadCss('../css/all-locations.css');
+
+            //load Bootstrap from CDN
+            loadCss('../Utilities/bootstrap-3.3.5-dist/css/bootstrap.min.css');
+
+            //load Bootstrap theme from CDN
+            loadCss('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css');
+        }
+
+        var loadCss = function (cssPath) {
+            var cssLink = document.createElement('link');
+            cssLink.rel = 'stylesheet';
+            cssLink.href = cssPath;
+            var head = document.getElementsByTagName('head')[0];
+            head.parentNode.insertBefore(cssLink, head);
+        };
+
+        function printRegionInfo(locations) {
+            document.write("<div id='header'></div><div id='close'>");
+            // document.write("<a href='/' target='_self' style='color: black' title='Về trang chủ'>" + "&times;" + "</a>");
+            document.write("</div>");
+
+            document.write("<div id='title'>");
+            document.write("<h3>");
+            document.write("Mạng đặt phòng Online" + "<br>" + "trải rộng khắp 63 tỉnh, thành phố" + "<br>" + "với trên 1000 khách sạn");
+            document.write("</h3>");
+            document.write("<div id='redline'>" + "</div>");
+            document.write("</div>");
+            // in hinh nuoc viet nam
+            // http://www.conceptdraw.com/How-To-Guide/geo-map-asia-vietnam
+            document.write("<div  id='img-background'>" + "<img src='../img/all-locations/Vietnam-map.png'/>" + "</div>");
+
+            document.write("<div style='width: 90%; color: rgb(70,68,68); margin: auto;margin-bottom: 80px;'>");
+            document.write("<div id='content' class='row' style='line-height: 32px'>");
+            // the hien tren Bootstrap Grid (12 cot)
+            document.write("<div class='col-sm-1'>");
+            document.write("</div>");
+
+            // can chinh vi tri cac hang
+            for (var i = 0; i < locations.length; i++) {
+                let name1 = locations[i].value;
+//            cach 2 la dug them 1 bien' dem cac name1 co' length = 1, neu' % 4 == 0 ...
+                if (name1 == 'A' || name1 == 'Đ' || name1 == 'K' || name1 == 'P' || name1 == 'T') {
+                    document.write("<div class='col-sm-2' style='text-align: center'>");
+                    document.write("<span class='alphabet'>" + locations[i].value + "</span>");
+
+                    for (i = i + 1; i < locations.length; i++) {
+                        let name2 = locations[i].value;
+                        if (name2 == 'Đ' || name2 == 'K' || name2 == 'P' || name2 == 'T') {
+                            i = i - 1;
+                            break;
+                        }
+                        document.write("<br>");
+                        if (locations[i].value.length == 1) {
+                            document.write("<span class='alphabet'>" + locations[i].value + "</span>");
+                        } else {
+//                        document.write(locations[i].value);
+                            document.write("<a href='/search-hotels/"+locations[i].value+"' style='color: black'>" + locations[i].value + "</a>");
+                        }
+                    }
+                }
+
+                if (name1 == 'A' || name1 == 'Đ' || name1 == 'K' || name1 == 'P' || name1 == 'T') {
+                    document.write("</div>");
+                }
+            }
+
+            document.write("<div class='col-sm-1'>");
+            document.write("</div>");
+            document.write("</div>");
+            document.write("</div><div id='footer'></div>");
+            $("#header").load("/header");
+            $("#footer").load("/footer");
+            setTimeout(function(){
+                console.log(document.getElementById("language"));
+                document.getElementById("language").style.display = 'none';
+            },100)
+
+
+        }
+
+
+        function seperateStrToArr(str) {
+            let obj = {};
+            let arr = [];
+            let names = str.split(',');
+            for (let i = 0; i < names.length; i++) {
+                obj = {value: names[i]}
+                arr.push(obj);
+                console.log(obj);
+            }
+
+            return arr;
+
+        }
+
+        function checkLink() {
+            $('#content a').click(function () {
+                var $txt = $(this).text();
+                if (typeof (Storage) !== "undefined") {
+                    //cac bien' nay` se~ duoc chuyen sang trang search-hotels
+//                if (localStorage.index_tmp_name) {
+
+//                    localStorage.index_tmp_name = $txt;
+//                } else {
+//                    alert('else');
+//                    localStorage.index_tmp_name = "Đà Nẵng";
+//                }
+                    //luc duoc luc ko khi co' dk if + tu` trang homepage link toi'
+                    localStorage.index_tmp_name = $txt;
+                    //3 bien sau: co' dinh
+                    localStorage.index_tmp_checkin = "";
+                    localStorage.index_tmp_checkout = "";
+                    localStorage.index_tmp_typeofroom = "1 phòng (2 người lớn)";
+                } else {
+                    alert("Sorry, your browser does not support web storage...");
+                }
+                //hoac window.open("search-hotels.html","_self");
+                //loai bo 2 thuoc tinh href='search-hotels.html' target='_blank' o? the? a
+                window.location = 'search-hotels';
+            });
+        }
+        localStorage.removeItem('searchhotels_tmp_checkin')
+
+        localStorage.removeItem('searchhotels_tmp_checkout')
+
+        localStorage.removeItem('searchhotels_tmp_numberofpeople')
+        // phan dung code-end
+    </script>
+
+</head>
+<body>
+
+</body>
+</html>

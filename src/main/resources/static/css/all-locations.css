@@ -1,0 +1,73 @@
+#title {
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 35px;
+}
+
+#redline {
+    width: 50px;
+    height: 2px;
+    background-color: rgb(220, 30, 40);
+    margin: auto;
+    margin-top: 20px;
+}
+
+#close {
+    position: absolute;
+    font-size: 40px;
+    /*float: right;*/
+    /*margin-right: 100px;*/
+    right: 15%;
+    color: rgb(117, 117, 120);
+    margin-top: -20px;
+}
+
+#img-background {
+    opacity: 0.4;
+    position: absolute;
+    width: 100%;
+    /*anh? trong div ko cai` duoc margin hoac position (center)*/
+    text-align: center;
+}
+
+.alphabet {
+    color: rgb(220, 30, 40);
+    font-size: larger;
+}
+
+#close a {
+    /*bo underline*/
+    text-decoration: none;
+}
+
+#content a:hover {
+    /*do the a ko co' href*/
+    cursor: pointer;
+}
+
+/*hien tai the? a ko co' dia chi href */
+#content a:link {
+    color: green;
+    background-color: transparent;
+    text-decoration: none
+}
+
+#content a:visited {
+    color: pink;
+    background-color: transparent;
+    text-decoration: none
+}
+
+#content a:hover {
+    color: red;
+    background-color: transparent;
+    text-decoration: underline
+}
+
+#content a:active {
+    color: yellow;
+    background-color: transparent;
+    text-decoration: underline
+}

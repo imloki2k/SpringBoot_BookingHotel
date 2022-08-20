@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up Form by Colorlib</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="main">
+
+    <div class="container" style="margin-top: -8px">
+        <div class="signup-content">
+            <form th:action="@{/saveOwner}" th:object="${owner}" method="post"  id="signup-form" class="signup-form">
+                <h2>Sign up for hotel owner </h2>
+                <p class="desc">Become a hotel owner with very simple steps
+                </p>
+
+                <table>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <input type="text" class="form-input" name="name" id="name" th:field="*{username}" placeholder="Your Name" required/>
+                                <p class="invalid-feedback" style="color: red;" th:if="${#fields.hasErrors('username')}" th:errors="*{username}" />
+                                <p class="invalid-feedback" style="color: red;" th:if="${errolUsername}" th:text="${errolUsername}"></p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group" style="margin-left: 143px ; margin-bottom: 10px" >
+                                <label class="label">Gender</label>
+                                <div>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <label >Male
+                                                    <input type="radio" name="gender" checked="checked" id="male" value="Male" th:field="*{gender}"
+                                                           required>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                            <td style="padding-left: 10px">
+                                                <label >Female
+                                                    <input type="radio" name="gender" id="female"  value="Female" th:field="*{gender}"
+                                                           required>
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="form-group">
+                    <input type="email" class="form-input" name="email" id="email" placeholder="Email" th:field="*{email}" required/>
+                    <p class="invalid-feedback" style="color: red;" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" />
+                    <p class="invalid-feedback" style="color: red;" th:if="${errolEmail}" th:text="${errolEmail}"></p>
+                </div>
+
+                <table>
+                    <tr>
+                        <td>
+                            <div class="form-group">
+                                <input type="text" class="form-input" placeholder="Address" th:field="*{address}" required/>
+                                <p class="invalid-feedback" style="color: red;" th:if="${#fields.hasErrors('address')}" th:errors="*{address}" />
+                            </div>
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <input type="password" class="form-input" name="password" id="password" th:field="*{password}"
+                                       placeholder="Password" required/>
+                                <p class="invalid-feedback" style="color: red;" th:if="${#fields.hasErrors('password')}" th:errors="*{password}" />
+                            </div>
+
+                        </td>
+                    </tr>
+                </table>
+
+
+                <div class="form-group">
+                    <input type="text" class="form-input" id="phone" placeholder="Phone" th:field="*{phoneNumber}" required/>
+                    <p class="invalid-feedback" style="color: red;" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}" />
+                </div>
+
+
+
+
+                <div class="form-group">
+                    <input type="checkbox" name="agree-term" id="agree-term" class="agree-term"/>
+                    <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in
+                        <a href="#" class="term-service">Terms of service</a></label>
+                </div>
+                <div class="alert alert-success" style="color: #4dae3c ; font-size: 20px; margin-top: 10px" th:if="${globalMessage}" th:text="${globalMessage}"></div>
+                <div class="form-group">
+                    <input type="submit"  class="form-submit submit" value="Sign up"/>
+                    <a th:href="@{/}" class="submit-link submit">Homepage</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<!-- JS -->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="js/main.js"></script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

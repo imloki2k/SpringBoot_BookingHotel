@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>YOY | search-hotels</title>
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">-->
+    <!--    <link rel="stylesheet" href="/css/search-hotels.css">-->
+    <link rel="stylesheet" href="/css/search-hotels.css">
+    <link rel="stylesheet" href="/Utilities/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <script src="/Utilities/jQuery-1.x/jquery-1.11.3.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+<!--    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" media="all" href="/Utilities/autocomplete-suggestions/style.css">
+    <script type="text/javascript" src="/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="/Utilities/autocomplete-suggestions/jquery.autocomplete.min.js"></script>
+    <script type="text/javascript" src="/Utilities/autocomplete-suggestions/locations-autocomplete.js"></script>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!--Slider-->
+    <link rel="stylesheet" href="/Utilities/RangeSlider/jquery-ui.css">
+    <script src="/Utilities/RangeSlider/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
+    <style>
+        .ws_images img {
+            border-radius: 4px;
+        }
+
+        #left-center ul li {
+            cursor: pointer;
+        }
+
+        #left-center ul li:hover {
+            background-color: rgb(246, 246, 246);
+        }
+
+        #left-center input {
+            /*cho dong bo voi' cac li*/
+            cursor: pointer;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            $("#header").load("/header");
+            $("#footer").load("/footer");
+            //lay' ten locations da~ search o? trang homepage (neu co)
+            $('#autocomplete').val(localStorage.index_tmp_name);
+            $('.name-of-location').text(localStorage.index_tmp_name);
+            $('#s-datePicker1').val(localStorage.searchhotels_tmp_checkin);
+            $('#s-datePicker2').val(localStorage.searchhotels_tmp_checkout);
+
+            if(localStorage.searchhotels_tmp_numberofpeople!=undefined)
+            $('#loaiphong select').val(localStorage.searchhotels_tmp_numberofpeople);
+            // $('.3-dd-noibat').fadeOut(10);
+//        neu viet theo css: $('.3-dd-noibat'+':nth-child('+ localStorage.ddnoibat + ')').fadeIn(10);
+//        http://stackoverflow.com/questions/27519457/jquery-get-nth-child-having-a-particular-class
+//        https://api.jquery.com/eq-selector/
+//        http://www.w3schools.com/jquery/jquery_ref_selectors.asp
+            $('.3-dd-noibat' + ':eq(' + localStorage.ddnoibat + ')').fadeIn(10);
+            //
+            $('.ws_images a').attr('href', 'room-bookings.html');
+            // sau khi load xong thi check user da~ login hay chua
+            // phai them delay thi moi' kich hoat duoc localStorage + id tu` file header1
+//      se~ check + load sau khi load xong part-header1.html
+//      bien' localStorage.check_login luu tai file user-login
+            var timer;
+//      neu thoi gian load body nhieu hon delay thi co the xay ra loi
+            var delay = 1000;
+            timer = setTimeout(function () {
+                if (localStorage.check_login === 'true') {
+//                    alert('DA DANG NHAP');
+                    $('#welcome').fadeIn(10);
+                    $('#signup-signin').fadeOut(10);
+                } else {
+                    $('#welcome').fadeOut(10);
+                    $('#signup-signin').fadeIn(10);
+                }
+            }, delay);
+        });
+    </script>
+
+</head>
+<body>
+<div id="container">
+
+    <div id="header"></div>
+
+    <nav>
+        <form style="background-color: rgb(220,30,30)  " id="formSm" th:action="@{/search-hotels/}"  method="post">
+            <div id="nav-timkiem" class="container-fluid">
+                <!-- da~ dung Bootstrap table, grid => viec chia theo size cac input, button kem` theo margin (se~ ko deu`) -->
+                <!--ban dau dien` background img giong voi trang homepage-->
+                <div class="inner-addon left-addon" style="float: left">
+                    <div id="search-locations">
+                        <i class="fa fa-map-marker" style="font-size: 22px; color: rgb(220,30,40)"></i>
+                        <img src="/img/homepage/Delete-25.png" width="16px"
+                             style="position: absolute; margin-left: 327px; margin-top: 15px; display: none"/>
+                        <input class="form-control biginput" name="locations" id="autocomplete" type="search"
+                               value=""
+                               placeholder="Nhập tên thành phố, khu vực" required
+                               style="width: 350px">
+
+                    </div>
+                </div>
+
+                <div class="inner-addon left-addon my-tooltip" data-tooltip="Ngày nhận phòng" style="float: left">
+                    <i class="fa fa-calendar-o" style="font-size: 19px; color: rgb(220,30,40)"></i>
+                    <input id="s-datePicker1" type="date" name="start_date" class="form-control">
+                </div>
+                <div class="inner-addon left-addon my-tooltip" data-tooltip="Ngày trả phòng" style="float: left">
+                    <i class="fa fa-calendar-o" style="font-size: 19px; color: rgb(220,30,40)"></i>
+                    <input id="s-datePicker2" type="date" name="end_date" class="form-control">
+                </div>
+
+                <div id="loaiphong" class="inner-addon left-addon" style="float: left">
+                    <i class="material-icons" style="font-size: 22px; color: rgb(220,30,40)">group_add</i>
+                    <select class="form-control" name="number_of_people" id="dropList">
+                        <option   value="1" >1 phòng (1 người lớn)</option>
+                        <option value="2" selected >1 phòng (2 người lớn)</option>
+                        <option value="3"  >1 phòng (3 người lớn)</option>
+                        <option value="4"  >1 phòng (4 người lớn)</option>
+<!--                        <option value="3">lựa chọn khác ...</option>-->
+                    </select>
+                </div>
+
+                <div id="loaiphong-khac" style="color: white; width: 22%; display: none">
+                    <!--toi da 6 phong` & 18 khach'-->
+                    <h5 style="margin-top: 30px">Khách</h5>
+                    <input class="form-control" type="number" name="guest" min="1" max="18" style="width: 70px"/>
+                    <h5 style="margin-top: 30px">Phòng</h5>
+                    <input class="form-control" type="number" name="room" min="1" max="6" style="width: 70px"/>
+                </div>
+
+                <!--http://www.tutorialrepublic.com/codelab.php?topic=bootstrap&file=icons
+                http://www.tutorialspoint.com/bootstrap/bootstrap_glyphicons.htm -->
+                <!--button lien quan den' modal nen khi click thi` co' dau hieu. refresh page-->
+                <button type="submit" id="btnForm" class="btn mybtn-style1" >
+                    <span class="glyphicon glyphicon-search"></span>&nbsp;TÌM KIẾM
+                </button>
+
+            </div>
+        </form>
+    </nav>
+
+    <div id="center">
+        <div id="left-center" style="margin-bottom: 50%;">
+            <div id="left-center-result" style="margin-top: 15px; width: 100%; height: 40px; background-color: #ffffff">
+                <span id="leftText">Tìm thấy</span> <span class="badge"></span> <span id="rightText">khách sạn tương ứng tại</span>
+                <!--class="name-of-location" duoc cai vao tat ca? ca'c tu` khoa' Da Nang-->
+                <span class="name-of-location" style="font-weight: bold">?</span>
+            </div> <!-- span ko the cai margin-top -->
+            <div style="height: auto">
+                <!--                <div class="left-title">ĐỊA ĐIỂM NỔI BẬT</div>-->
+                <!--                <div class="3-dd-noibat" style="display: none">-->
+                <!--                    &lt;!&ndash;T cai theo kieu div -> chinh lai theo ul, li&ndash;&gt;-->
+                <!--                    &lt;!&ndash;<div class="radio"><label><input type="radio" name="optradio">Option 1</label></div>&ndash;&gt;-->
+                <!--                    <ul style="list-style-type: none">-->
+                <!--                        &lt;!&ndash;input nhin rat giong voi khi ko dung` bootstrap, dug ra li la` 1 the? a va khi click vao do' thi radio cung~ duoc checked &ndash;&gt;-->
+                <!--                        &lt;!&ndash;ban dau co' dat  class="radio-ddnoibat"&ndash;&gt;-->
+                <!--                        &lt;!&ndash;bo bot' muc check de don gian dk the hien tai muc lua chon cua ban&ndash;&gt;-->
+                <!--                        &lt;!&ndash;neu value === voi' li ben trong thi co the dat. 1 the span va` ko can dat gia tri value, &ndash;&gt;-->
+                <!--                        &lt;!&ndash;van co the tim ra gia tri dang chon&ndash;&gt;-->
+                <!--                        <li><input type="radio" name="dd-noibat" value="Phố Cổ"/> Phố Cổ</li>-->
+                <!--                        <li><input type="radio" name="dd-noibat" value="Quận Hoàn Kiếm"/> Quận Hoàn Kiếm</li>-->
+                <!--                        <li><input type="radio" name="dd-noibat" value="Quận Tây Hồ"/> Quận Tây Hồ</li>-->
+                <!--                        <li><input type="radio" name="dd-noibat" value="Quận Đống Đa"/> Quận Đống Đa</li>-->
+                <!--                        <li><input type="radio" name="dd-noibat" value="Sân vận động quốc gia Mỹ Đình"/> Sân vận động-->
+                <!--                            quốc gia Mỹ Đình-->
+                <!--                        </li>-->
+                <!--                    </ul>-->
+                <!--                </div>-->
+                <!--                <div class="3-dd-noibat">-->
+                <!--                    <ul style="list-style-type: none">-->
+                <!--                        <li><input type="radio" name="dd-noibat" value="Gần cầu rồng"/> Gần cầu rồng</li>-->
+                <!--                        <li><input type="radio" name="dd-noibat" value="Ven biển Mỹ Khê"/> Ven biển Mỹ Khê</li>-->
+                <!--                        <li><input type="radio" name="dd-noibat" value="Ven sông Hàn"/> Ven sông Hàn</li>-->
+                <!--                        <li><input type="radio" name="dd-noibat" value="Ven biển Phạm Văn Đồng"/> Ven biển Phạm Văn Đồng-->
+                <!--                        </li>-->
+                <!--                        <li><input type="radio" name="dd-noibat" value="Ven biển Bắc Mỹ An"/> Ven biển Bắc Mỹ An</li>-->
+                <!--                        <li><input type="radio" name="dd-noibat" value="Khu thắng cảnh Ngũ Hành Sơn"/> Khu thắng cảnh-->
+                <!--                            Ngũ Hành Sơn-->
+                <!--                        </li>-->
+                <!--                        <li><input type="radio" name="dd-noibat" value="Khu du lịch Bà Nà Hills"/> Khu du lịch Bà Nà-->
+                <!--                            Hills-->
+                <!--                        </li>-->
+                <!--                        <li><input type="radio" name="dd-noibat" value="Khu bán đảo Sơn Trà/Núi Khỉ"/> Khu bán đảo Sơn-->
+                <!--                            Trà/Núi Khỉ-->
+                <!--                        </li>-->
+                <!--                    </ul>-->
+                <!--                </div>-->
+
+                <!--                <div class="3-dd-noibat" style="display: none">-->
+                <!--                    <ul style="list-style-type: none">-->
+                <!--                        <li><input type="radio" name="dd-noibat" value="Chợ Bến Thành Quận 1"/> Chợ Bến Thành Quận 1-->
+                <!--                        </li>-->
+                <!--                        <li><input type="radio" name="dd-noibat" value="Nhà thờ Đức Bà Quận 1"/> Nhà thờ Đức Bà Quận 1-->
+                <!--                        </li>-->
+                <!--                        <li><input type="radio" name="dd-noibat" value="Công viên Đầm Sen Quận 11"/> Công viên Đầm Sen-->
+                <!--                            Quận 11-->
+                <!--                        </li>-->
+                <!--                        <li><input type="radio" name="dd-noibat" value="Phạm Ngũ Lão Quận 1"/> Phạm Ngũ Lão Quận 1</li>-->
+                <!--                        <li><input type="radio" name="dd-noibat" value="Chợ Lớn Quận 5"/> Chợ Lớn Quận 5</li>-->
+                <!--                    </ul>-->
+                <!--                </div>-->
+
+            </div>
+            <div style="height: auto; border-top: 1px solid rgb(223,221,221)">
+                <div class="left-title">GIÁ</div>
+                <div>
+                    <!--neu' 1 nut'-->
+                    <!--dien san~ text de ko bi noi' rong. san~ the div-->
+                    <!--<div style="text-align: center"><output id="rangevalue" style="margin-bottom: 10px; font-size: 15px">2.000.000 <sup>đ</sup></output></div>-->
+                    <!--<input id="range-price" type="range" name="points" min="168600" max="25952800" value="2000000"-->
+                    <!--onchange="rangevalue.value = (parseInt(value)).toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })"-->
+                    <!--/>-->
+                    <!--<br/>-->
+                    <!--<div style="font-size: 15px; height: 35px">-->
+                    <!--<span style="float: left">168.600 <sup>đ</sup></span>-->
+                    <!--<span style="float: right">25.952.800 <sup>đ</sup></span>-->
+                    <!--</div>-->
+                    <!--http://jqueryui.com/slider/#range-->
+                    <div id="slider-range"
+                         style="margin: auto; margin-top: 15px; margin-bottom: 15px; width: 90%"></div>
+                    <div style="font-size: 15px; height: 35px">
+                        <span id="amount-1" style="float: left"></span>
+                        <span id="amount-2" style="float: right"></span>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <!--            <div style="height: auto; border-top: 1px solid rgb(223,221,221)">-->
+            <!--                <div class="left-title">KHOẢNG CÁCH TỪ TRUNG TÂM</div>-->
+            <!--                <div>-->
+            <!--                    <ul style="list-style-type: none">-->
+            <!--                        <li><input type="radio" name="khoangcach" value="2 Km" checked/> 2 Km</li>-->
+            <!--                        <li><input type="radio" name="khoangcach" value="5 Km"/> 5 Km</li>-->
+            <!--                        <li><input type="radio" name="khoangcach" value="Bất kỳ"/> Bất kỳ</li>-->
+            <!--                    </ul>-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <div style="height: auto; border-top: 1px solid rgb(223,221,221)">
+                <div class="left-title">HẠNG KHÁCH SẠN</div>
+                <div>
+                    <ul style="list-style-type: none; color: rgb(255,192,0)" th:if="${standards}">
+                        <th:block th:each="standard:${standards}">
+                            <li th:if="${standard}">
+                                <input type="radio" name="hang-khachsang" th:value="${#lists.size(standard)}"/>
+                                <!--                          dung class lists de tinh size (class org.thymeleaf.expression.Lists) link doc: https://www.thymeleaf.org/doc/tutorials/3.0/usingthymeleaf.html#lists-->
+                                <th:block th:each="star:${standard}">
+
+                                    <span th:if="${star}" class="glyphicon glyphicon-star"></span>
+                                </th:block>
+                            </li>
+                        </th:block>
+
+                        <li style="color: rgb(70,68,73)"><input type="radio" name="hang-khachsang" value="0"> Bất kỳ</li>
+
+                    </ul>
+                </div>
+            </div>
+            <div style="height: auto; border-top: 1px solid rgb(223,221,221)">
+                <div class="left-title">LOẠI</div>
+                <div class="loai">
+
+                    <ul style="list-style-type: none">
+                        <th:block th:each="hotelProperty:${hotel_types1}">
+
+                            <li><input type="radio" name="hotel_types1" th:value="${hotelProperty.getType()}"
+                                       th:text="${hotelProperty.getType()}"/></li>
+
+                        </th:block>
+                        <li><input type="radio" name="hotel_types1" value="all"/>Bất kì</li>
+                        <li><a id="loai-them" data-toggle="modal" data-target="#myModal"
+                               style="color: black; font-size: small"> Thêm ...</a></li>
+
+                    </ul>
+
+                </div>
+            </div>
+            <!--            <div style="height: auto; border-top: 1px solid rgb(223,221,221)"> &lt;!&ndash; shorthand: top right bottom left &ndash;&gt;-->
+            <!--                <div class="left-title">TIỆN NGHI</div>-->
+            <!--                <div id="tiennghi">-->
+            <!--                    <ul style="list-style-type: none">-->
+            <!--                        <li><input type="checkbox" value="Bãi đậu xe"/> Bãi đậu xe</li>-->
+            <!--                        <li><input type="checkbox" value="Xe lăn cho người khuyết tật"/> Xe lăn cho người khuyết tật-->
+            <!--                        </li>-->
+            <!--                        &lt;!&ndash;<li><a href="#" style="color: black"> Thêm ...</a></li>&ndash;&gt;-->
+            <!--                        <li><a id="loai-tiennghi" data-toggle="modal" href="#myModal-2"-->
+            <!--                               style="color: black; font-size: small"> Thêm ...</a></li>-->
+            <!--                    </ul>-->
+            <!--                </div>-->
+            <!--            </div>-->
+        </div>
+
+        <div id="right-center">
+
+            <div id="right-center-1" style="height: 70px; border-width: thin">
+                <!--chinh lai height de add tu* dong-->
+                <div id="options" style="width: 55%; height: auto; float: left">
+                    <div style="margin-bottom: 5px; font-weight: bold; color: rgb(156,153,153)">Lựa chọn của bạn:</div>
+                    <!--=============-->
+                    <!--                    <div id="opts-ddnoitieng" class="options" style="display: none">-->
+                    <!--                        &lt;!&ndash;da~ bo bot muc check vi` co' den 3 locations&ndash;&gt;-->
+                    <!--                        &lt;!&ndash;<a href="#"><div class="options-x">&times;</div> Gần cầu rồng </a>&ndash;&gt;-->
+                    <!--                    </div>-->
+                    <div id="opts-price" class="options" style="display: none">
+                        <!--da~ dieu chinh thanh 2 nut-->
+                        <!--<a href="#"><div class="options-x">&times;</div> 2.000.000 <sup>đ</sup></a>-->
+                    </div>
+                    <!--                    <div id="opts-km" class="options">-->
+                    <!--                        <a href="#">-->
+                    <!--                            <div class="options-x">&times;</div>-->
+                    <!--                            2 Km</a>-->
+                    <!--                    </div>-->
+                    <!--them display: none vi` co' kem` class="options" co' ke? border (du` chua co' noi dung)
+                    add margin-top vao` class options xay ra loi~
+                    -->
+                    <div id="opts-hangks" class="options"
+                         style="display: none; margin-top: 5px; margin-bottom: 5px"></div>
+                    <div id="opts-loaiks" class="options"
+                         style="display: none; margin-top: 5px; margin-bottom: 5px"></div>
+                    <div id="opts-tiennghi" class="options"
+                         style="display: none; margin-top: 5px; margin-bottom: 5px"></div>
+                </div>
+
+                <div id="sort"
+                     style="width: 45%; float: right; text-align: right; border-left: 1px solid rgb(156,153,153)">
+                    <span style="font-weight: bold; color: rgb(156,153,153)">SẮP XẾP THEO: </span>
+                    <a href="#" id="rank" style="color: rgb(156,153,153)">Xếp hạng</a><span> -</span>
+<!--                    <a href="#" style="color: rgb(156,153,153)">Khoảng cách</a><span> -</span>-->
+<!--                    <a id="sort-price" href="#" style="color: rgb(156,153,153)">Giá <span-->
+<!--                            class="glyphicon glyphicon-menu-up"></span></a>-->
+                </div>
+            </div>
+            <div id="right-center-2" style="margin-top: -25px">
+
+            </div>
+
+        </div>
+    </div>
+
+    <div id="footer"></div>
+
+    <div class="modal fade loai" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!--Modal content-->
+            <div class="modal-content">
+                <div class="modal-header"> <!-- style="padding:35px 50px;" -->
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <!--khi dat chung file thi ko can` cai` su* kien  id="refreshDIV" onClick="history.go(0)" cho nut'-->
+
+                </div>
+                <div class="modal-body" style="padding:30px 30px"> <!--  style="padding:40px 50px;" -->
+                    <div class="row">
+                        <form role="form">
+                            <table class="table borderless">
+                                <th:block th:each="hotelProperty,state:${hotel_types2}">
+                                    <th:block th:if="${state.index}%3==0" th:utext="'&lt;tr&gt;'"/>
+
+                                    <td><input type="radio" name="hotel_types2" th:value="${hotelProperty.getType()}"
+                                               th:text="${hotelProperty.getType()}"/></td>
+
+                                    <th:block th:if="${state.index}%3==2" th:utext="'&lt;/tr&gt;'"/>
+                                </th:block>
+
+
+
+                            </table>
+                        </form>
+                    </div>
+                </div>
+
+                <div style="text-align: right; margin-top: -140px">
+                    <img src="/img/img_audio/stay-awesome.png" style="opacity: 0.4"/>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--    <div class="modal fade" id="myModal-2" role="dialog">-->
+    <!--        <div class="modal-dialog" style="width: 60%">-->
+    <!--            &lt;!&ndash; Modal content&ndash;&gt;-->
+    <!--            <div class="modal-content">-->
+    <!--                <div class="modal-header">-->
+    <!--                    &lt;!&ndash; style="padding:35px 50px;" &ndash;&gt;-->
+    <!--                    <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+    <!--                    <h4>Tiện nghi</h4>-->
+    <!--                </div>-->
+    <!--                <div class="modal-body" style="padding:30px 30px"> &lt;!&ndash;  style="padding:40px 50px;" &ndash;&gt;-->
+    <!--                    <div class="row">-->
+    <!--                        <form role="form">-->
+    <!--                            <table class="table borderless">-->
+    <!--                                <tr>-->
+    <!--                                    <td><input type="checkbox"> Bãi biển</td>-->
+    <!--                                    <td><input type="checkbox"> Phòng họp</td>-->
+    <!--                                    <td><input type="checkbox"> Dịch vụ phòng</td>-->
+    <!--                                </tr>-->
+    <!--                                <tr>-->
+    <!--                                    <td><input type="checkbox"> Bể bơi</td>-->
+    <!--                                    <td><input type="checkbox"> Đỗ xe miễn phí</td>-->
+    <!--                                    <td><input type="checkbox"> Quầy bar/Phòng khách</td>-->
+    <!--                                </tr>-->
+    <!--                                <tr>-->
+    <!--                                    <td><input type="checkbox"> Bếp nhỏ</td>-->
+    <!--                                    <td><input type="checkbox"> Internet</td>-->
+    <!--                                    <td><input type="checkbox"> Sân gôn</td>-->
+    <!--                                </tr>-->
+    <!--                                <tr>-->
+    <!--                                    <td><input type="checkbox"> Khách sạn không hút thuốc</td>-->
+    <!--                                    <td><input type="checkbox"> Sòng bạc</td>-->
+    <!--                                    <td><input type="checkbox"> Xe đưa đón đén sân bay</td>-->
+    <!--                                </tr>-->
+    <!--                                <tr>-->
+    <!--                                    <td><input type="checkbox"> Cho phép mang theo vật nuôi</td>-->
+    <!--                                    <td><input type="checkbox"> Lối ra cho xe lăn</td>-->
+    <!--                                    <td><input type="checkbox"> Spa</td>-->
+    <!--                                </tr>-->
+    <!--                                <tr>-->
+    <!--                                    <td><input type="checkbox"> Dãy buồng</td>-->
+    <!--                                    <td><input type="checkbox"> Người giữ cửa</td>-->
+    <!--                                    <td><input type="checkbox"> Trung tâm thể dục thẩm mỹ</td>-->
+    <!--                                </tr>-->
+    <!--                                <tr>-->
+    <!--                                    <td><input type="checkbox"> Dịch vụ kinh doanh</td>-->
+    <!--                                    <td><input type="checkbox"> Nhà hàng</td>-->
+    <!--                                    <td><input type="checkbox" > Phòng cho người khuyết tật</td>-->
+    <!--                                </tr>-->
+    <!--                                <tr>-->
+
+    <!--                                </tr>-->
+    <!--                            </table>-->
+    <!--                        </form>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+
+    <!--                <div style="text-align: right; margin-top: -120px">-->
+    <!--                    <img src="/img/img_audio/stay-awesome.png"/>-->
+    <!--                </div>-->
+    <!--            </div>-->
+
+    <!--        </div>-->
+    <!--    </div>-->
+
+    <script>
+        //        da~ them thuoc tinh' data-toggle="modal" => ko can` cai` script
+        //        $(document).ready(function(){
+        //            $("#loai-them").click(function(){
+        //                $("#myModal").modal();
+        //            });
+        //            $("#loai-tiennghi").click(function(){
+        //                $("#myModal-2").modal();
+        //            });
+        //        });
+    </script>
+
+    <!-- JavaScript -->
+    <!--js nay` phai dat phia' sau cac slide thi moi' chay duoc (co le code tren chua cai ready...)-->
+    <script type="text/javascript" src="/js/search-hotels.js"></script>
+
+    <script src="/Utilities/smoothscroll-for-websites-master/SmoothScroll.js"></script>
+
+    <script src="/Utilities/LiveChat.js"></script>
+
+    <!--Form Feedback (position: fixed): https://webengage.com/ , phai dang ky', chua tach ra duoc file rieng do co' kem` id-->
+
+    <script>
+
+        // phan dung code
+
+        function standard_check() {
+            let standard = 0; // mac dinh la khong chon gi se set = 0
+            let standard_list = document.getElementsByName('hang-khachsang');
+            for (let i = 0; i < standard_list.length; i++) {
+
+                let star = standard_list[i].checked;
+                if (star == true) {
+                    standard = standard_list[i].value;
+                    break;
+                }
+            }
+            return standard;
+        }
+
+        function hotel_type_check() {
+            let loaiHotel = document.getElementsByClassName('loai');
+            let __hotel_types = [];
+            let m = 0;
+            for (let i = 0; i < loaiHotel.length; i++) {
+                let __checkboxes = loaiHotel[i].getElementsByTagName('input');
+                let __length = __checkboxes.length;
+                for (let j = 0; j < __length; j++) {
+                    if (__checkboxes[j].checked) {
+                        __hotel_types[m++] = __checkboxes[j].value;
+                    }
+                }
+            }
+            return __hotel_types;
+        }
+        // xu ly 1 group radio nhung bi chia thanh 2 phan
+        let radioState1_old =false ;
+        let radioState2_old = false;
+        let radioState1_new = false;
+        let radioState2_new = false;
+        let hotel_types1 = document.getElementsByName('hotel_types1');
+        let hotel_types2 = document.getElementsByName('hotel_types2');
+
+        function checkStateRadio() {
+            // lay trang thai moi
+            for (let i = 0; i < hotel_types1.length; i++) {
+                if (hotel_types1[i].checked) {
+                    radioState1_new = true;
+                    break;
+                }
+            }
+
+            for (let i = 0; i < hotel_types2.length; i++) {
+                if (hotel_types2[i].checked) {
+                    radioState2_new = true;
+                    break;
+                }
+            }
+            if(radioState1_new==true&&radioState1_old==false){
+                // chinh lai trang thai the sai
+                for (let i = 0; i < hotel_types2.length; i++) {
+                    if (hotel_types2[i].checked) {
+                        hotel_types2[i].checked = false;
+                    }
+                }
+                radioState2_new = false;
+
+            }
+            if(radioState2_new==true&&radioState2_old==false){
+                for (let i = 0; i < hotel_types1.length; i++) {
+                    if (hotel_types1[i].checked) {
+                        hotel_types1[i].checked = false;
+                    }
+                }
+                radioState1_new = false;
+            }
+            radioState1_old = radioState1_new;
+            radioState2_old = radioState2_new;
+        }
+        let page = 0;
+        function changePage(e){
+            page = e.getElementsByTagName('a')[0].innerText - 1;
+            console.log(page);
+            changed(page);
+        }
+        function prevPage(){
+            let pagination = document.getElementsByClassName("pagination")[0];
+            let activePage = pagination.getElementsByClassName('active')[0].innerText-1;
+            if(activePage!=0){
+            page = activePage - 1;
+            changed(page);
+            }
+        }
+        function nextPage(){
+            let pagination = document.getElementsByClassName("pagination")[0];
+            let activePage = pagination.getElementsByClassName('active')[0].innerText-1;
+            let number_of_page = pagination.getElementsByTagName('li').length-2;
+            if(activePage != number_of_page-1){
+                page = activePage + 1;
+            changed(page);
+            }
+        }
+        function checkValueSearchBarInLocal(start_date,end_date,number_of_people){
+
+
+        }
+
+
+        function changed(page_number) {
+            setTimeout(function(){checkStateRadio();},1);
+            if(page_number==undefined){
+                page_number = 0;
+            }
+            ranked();
+
+            // doi thay doi xong(trong 1s) moi cap nhat tinh trang filter
+            setTimeout(function () {
+                let location = document.getElementById('autocomplete').value;
+                let standard = standard_check();
+                let start_date = "";
+                let end_date = "";
+                let number_of_people = 0;
+                // check start date,end_date , number_of_people in localStorage
+                if(localStorage.searchhotels_tmp_checkin==undefined){
+                    start_date = "no-date";
+                }else{
+                    start_date = localStorage.searchhotels_tmp_checkin
+                } ;
+                if(localStorage.searchhotels_tmp_checkout==undefined){
+                    end_date = "no-date";
+                }else{
+                    end_date  = localStorage.searchhotels_tmp_checkout;
+                } ;
+                if(localStorage.searchhotels_tmp_numberofpeople==undefined){
+                    number_of_people = 0;
+                }else{
+                    number_of_people =localStorage.searchhotels_tmp_numberofpeople;
+                };
+                //
+                console.log("start_date:"+start_date);
+                let hotel_type_list = hotel_type_check();
+                if (standard == undefined) {
+                    standard = 0;
+                }
+                if (hotel_type_list.length == 0) {
+                    hotel_type_list = [];
+                }
+                // console.log('standard:'+ standard);
+                // console.log(hotel_type_list);
+                let price_order;
+                let standard_order;
+                let price;// chua xac dinh trong db
+                let price_up = 0
+                let price_down = 0
+                price_up = $('#slider-range').slider("values")[1];
+                price_down = $('#slider-range').slider("values")[0];
+                console.log(price_up+","+price_down);
+                let token = $("meta[name='_csrf']").attr("content");
+                let header = $("meta[name='_csrf_header']").attr("content");
+                $(document).ajaxSend(function (e, xhr, options) {
+                    xhr.setRequestHeader(header, token);
+                });
+
+
+                let content = document.getElementById("right-center");
+                // let str = JSON.stringify(hotel_type_list);
+                // console.log(str);
+
+                if(localStorage.index_tmp_name==undefined){
+                    location = ""
+                }
+                console.log(hotel_type_list[0]+","+standard+","+localStorage.index_tmp_name);
+                $.ajax({
+
+                    url: '/filterProcess',
+                    type: 'post',
+                    data: {
+                        'location': location,
+                        'hotel_type': hotel_type_list,
+                        'hotel_standard': standard,
+                        'price_up':price_up,
+                        'price_down':price_down,
+                        'orderByStandard': orderByStandard,
+                        'page_number':page_number,
+                        'start_date':start_date,
+                        'end_date': end_date,
+                        'number_of_people':number_of_people,
+
+                    },
+                    dataType: 'text',
+
+
+                    success: function (data) {
+                        if (data !== 'error') {
+                            // console.log("done");
+                            setTimeout(function () {
+                                $("#right-center-2").html(data)
+                                CountNumberOfHotel(hotel_type_list,standard,page_number,start_date,end_date,number_of_people,price_down,price_up);
+
+
+                                // console.log(localStorage.searchhotels_tmp_checkin+","+localStorage.searchhotels_tmp_checkout+","+
+                                //     localStorage.searchhotels_tmp_numberofpeople+","+localStorage.index_tmp_name);
+                                //
+                                //
+                                // console.log(localStorage.searchhotels_tmp_checkin+","+localStorage.searchhotels_tmp_checkout);
+                                // $(".carousel").each(function(i,c){
+                                //     c.carousel("pause");
+                                // });
+                            }, 100)
+
+                            // console.log(data);
+
+                        }
+                    },
+                    error: function (request, error) {
+                        alert("Request: " + JSON.stringify(request));
+                    }
+                });
+
+
+                // them sao tren thanh lua chon cua ban
+                $('#opts-hangks').fadeIn();
+                var toAdd = $("input[name=hang-khachsang]:checked").val();
+                var star = '<span class="glyphicon glyphicon-star" style="color: rgb(255,192,0); font-size: 10px">' + '</span>';
+
+                if (toAdd == 5) {
+                    toAdd = star + star + star + star + star;
+                } else if (toAdd == 4) {
+                    toAdd = star + star + star + star;
+                } else if (toAdd == 3) {
+                    toAdd = star + star + star;
+                } else if (toAdd == 2) {
+                    toAdd = star + star;
+                } else if (toAdd == 1) {
+                    toAdd = star;
+                } else {
+                    toAdd = "Mọi tiêu chuẩn"
+                }
+                // else {
+//                      neu ko an? thi dung` su* kien check click lan` 2 de? bo? input radio + ko can input bat ky` nay`
+//                 $('#opts-hangks').fadeOut();
+                // }
+
+                $('#opts-hangks').html(
+                    '<a href="#">' +
+                    '<div class="options-x">' + '&times;' + '</div>' + toAdd +
+                    '</a>');
+
+//      $('#opts-hangks').css('backgroundColor','#ffc000');
+                add_HoverClickUpdate();
+//             refreshPage();
+
+                opt_hang_display();
+
+            }, 1);
+
+        }
+        var orderByStandard = 'DESC';
+        function CountNumberOfHotel(hotel_type_list,standard,page_number,start_date,end_date,number_of_people,price_down, price_up){
+            $.ajax({
+
+                url: '/filterProcessCount',
+                type: 'post',
+                data: {
+                    'location': localStorage.index_tmp_name,
+                    'hotel_type': hotel_type_list,
+                    'hotel_standard': standard,
+                    'price_up':price_up,
+                    'price_down':price_down,
+                    'orderByStandard': orderByStandard,
+                    'page_number':page_number,
+                    'start_date':start_date,
+                    'end_date':end_date,
+                    'number_of_people':number_of_people
+
+                },
+                dataType: 'text',
+
+
+                success: function (data) {
+                    if (data !== 'error') {
+                        // console.log("done");
+                        setTimeout(function () {
+
+                            // $(".carousel").each(function(i,c){
+                            //     c.carousel("pause");
+                            // });
+                            let leftText = document.getElementById('leftText');
+                            console.log(data);
+                            if(data == '0'){
+                                leftText.innerText  = "Không tìm thấy ";
+                                document.getElementsByClassName("badge")[0].innerText = '';
+
+                            }
+                            else {
+                                leftText.innerText = "Tìm thấy "
+                                document.getElementsByClassName("badge")[0].innerText = data;
+                            }
+                        }, 10)
+
+                        // console.log(data);
+
+                    }
+                },
+                error: function (request, error) {
+                    alert("Request: " + JSON.stringify(request));
+                }
+            });
+        }
+        function ranked(){
+
+            var list = document.getElementsByClassName("ranked");
+            if(list.length!=0){
+                orderByStandard = 'ASC';
+            }else orderByStandard = 'DESC'
+
+        }
+        function opt_hang_display(){
+            var toAdd = $('.loai input[type=radio]:checked').val()
+            // map(function () {
+            //     return " " + this.value;
+            // }).get();
+            let display = toAdd;
+            if(toAdd=='all'){
+                display = "Tất cả kiểu khách sạn";
+            }
+            console.log("toAdd:"+toAdd);
+            $('#opts-loaiks').html(
+                '<a href="#">' +
+                '<div class="options-x">' + '&times;' + '</div>' + display +
+                '</a>');
+
+            add_HoverClickUpdate();
+            if(toAdd!=undefined)
+            $('#opts-loaiks').fadeIn();
+            // refreshPage();
+
+            // if (toAdd.length == 0) {
+            //alert('if' + toAdd.length);
+            // ko co delay thi ko the an? (bi choi~ voi' 1 thanh phan nao do' dag chay fia sau)
+            //  setTimeout(function () {
+            //     $('#opts-loaiks').fadeOut();
+            // }, 20);
+            //return false;
+            // }
+        }
+
+        // cap nhat kha nang doc thay doi cua cac nut quan trong
+        $(document).ready(function () {
+            $('input[type=checkbox]').each(function () {
+                let target = this;
+                this.classList.add("checkChange");
+            });
+            $('input[type=radio]').each(function () {
+                let target = this;
+                this.classList.add("checkChange");
+            });
+            $('.glyphicon-star').each(function () {
+                let target = this;
+                this.classList.add("checkChange");
+            });
+            $('li').each(function () {
+                let target = this;
+                this.classList.add("checkChange");
+            });
+            $(".checkChange").each(function () {
+                let target = this;
+                target.addEventListener("click", function () {
+                    changed();
+                })
+            });
+            changed();
+        })
+
+        $('#btnForm').on('click',function ValidateTime(e){
+            e.preventDefault();
+            var today = new Date().getTime() ;
+            var check_in = new Date(document.getElementById("s-datePicker1").value);
+            var check_out = new Date(document.getElementById("s-datePicker2").value);
+            if(check_in=='Invalid Date'||check_out=='Invalid Date'){
+                alert("Vui lòng nhập đúng ngày tháng");
+            }else if(new Date().getTime() >= check_in||new Date().getTime() >= check_in){
+                alert("Vui lòng chọn ngày đặt phòng hơn ngày hiện tại ít nhất 1 ngày");
+                // var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+            }else{
+
+                //check_in
+                var month_check_in = check_in.getMonth() + 1;
+                var day_check_in = check_in.getDate();
+                if (check_in.getMonth() < 10) month_check_in = "0" + month_check_in;
+                if (day_check_in < 10) day_check_in = "0" + day_check_in;
+                //check_out
+                var month_check_out = check_out.getMonth() + 1;
+                var day_check_out = check_out.getDate();
+                if (check_out.getMonth() < 10) month_check_out = "0" + month_check_out;
+                if (day_check_out < 10) day_check_out = "0" + day_check_out;
+                //convert
+                var check_in_convert = check_in.getFullYear() + "-" + month_check_in + "-" + day_check_in;
+                var check_out_convert = check_out.getFullYear() + "-" + month_check_out + "-" + day_check_out;
+                //save
+                if($('#autocomplete').val() == ""){alert('Vui lòng điền thông tin địa điểm')}else{
+                localStorage.index_tmp_name = $('#autocomplete').val();
+                localStorage.searchhotels_tmp_checkin = check_in_convert;
+                localStorage.searchhotels_tmp_checkout = check_out_convert;
+                localStorage.searchhotels_tmp_numberofpeople = parseInt($('#dropList').val());
+                console.log(check_in_convert+","+check_out_convert);
+                $('#formSm').submit();
+                }
+
+            }
+
+        });
+
+
+        var add_HoverClickUpdate = function () {
+//                    su* kien hover & click duoc ap dung cho tat ca cac tuy` chon (co' cai` lan dau tien khi load page)
+            $('.options a').hover(
+                function () {
+                    $(this).find('div').fadeIn();
+                    $(this).find('span').css("opacity", "0.5");
+                },
+                function () {
+                    $(this).find('div').fadeOut();
+                    $(this).find('span').css("opacity", "1");
+                }
+            );
+            $('.options').click(function () {
+//                        se~ fadeIn lai, khi add html
+                $(this).fadeOut();
+
+
+            });
+        };
+
+        //phan dung code-end
+
+    </script>
+</div>
+</body>
+</html>

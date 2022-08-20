@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<section class="accomodation_area section_gap">
+    <div class="container">
+        <div class="section_title text-center">
+            <h2 class="title_color">Hotel Accomodation</h2>
+            <p>The rooms you can book are right below</p>
+        </div>
+        <th:block th:if="${rooms}">
+            <th:block th:each="room,state:${rooms}">
+                <th:block th:if="${state.index}%4==0" th:utext="'&lt;div class=&#34;row mb_30&#34;&gt;'"/>
+                <div class="col-lg-3 col-sm-6">
+                    <div class="accomodation_item text-center">
+                        <div class="hotel_img">
+                            <img src="/image/hotel_detail/room1.jpg" alt="">
+                            <a th:href="'roomDetails'+${room.getId()}" class="btn theme_btn button_hover">View
+                                Detail</a>
+                        </div>
+                        <a href="#"><h4 class="sec_h4" th:text="${room.getPropertyType().getName()}"></h4><small
+                                th:text="'Phòng '+((${room.getTotalOfBedroom()}==4)?'Gia đình':(${room.getTotalOfBedroom()}+' người'))"></small></a>
+                        <h5><span th:text="${room.getPricePerNight()}"></span><span>$</span><small>/Day</small></h5>
+                    </div>
+                </div>
+                <th:block th:if="${state.index}%4==3" th:utext="'&lt;/div&gt;'"/>
+            </th:block>
+
+
+        </th:block>
+
+        <th:block th:unless="${rooms}">
+            <div>Hiện tại không còn phòng để phục vụ quý khách</div>
+        </th:block>
+    </div>
+</section>
+</body>
+</html>

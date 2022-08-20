@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--    -->
+
+
+<!--</head>-->
+<style>
+    .carousel-inner img {
+        width: 100%;
+        height: 350px;
+    }
+</style>
+<body>
+<!--<div id="right-center">-->
+
+
+<div id="page-1" >
+    <th:block th:each="row,RowState:${list_of_row}">
+    <div class="row" style="color: white" th:if="${row}">
+
+        <th:block th:each="hotel,count:${row}">
+        <div class="col-sm-6 carousel slide" style="display: flex;justify-content: center; " th:id="'demo'+${RowState.index}+${count.index}" data-interval="false" >
+
+
+            <div class="carousel-inner" style=" border-radius: 20px;position: relative ;" onclick="callLink(this)">
+                <a th:href="'/hotel_detail'+${hotel.getId()}" class="link"></a>
+                <div class="loaiphong" style="font-size: 13px" th:text="${hotel.getHotel_property().getType()}"> </div>
+                <!--http://www.vandahotel.vn/-->
+                <!-- SUPERIOR | DELUXE | GRAND SUITE | FAMILY JUNIOR SUITE -->
+                <div class="info-hotel" >
+                                        <span style="font-weight: bolder; font-size: 13px" class="name-of-hotel"
+                                              th:text="${hotel.getNameOfHotel()}">
+
+                                        </span><br/>
+                    <div style="font-size: 12px" >
+                        <span th:text="${hotel.getHotel_standard()}"></span>
+                        <span class="glyphicon glyphicon-star"></span>
+                    </div>
+                    <span style="font-size: 12px" class="address-of-hotel">
+                                            <!--tao them 1 class phu de ho tro xac dinh vi tri ao tren Google Map (trong Da Nang)-->
+                                            <span class="address-of-hotel-sub" th:text="${hotel.getAddressOfHotel()}"></span>
+<!--                                            <span class="name-of-location">Đà Nẵng</span>-->
+                                        </span>
+                </div>
+<!--                <div class="price">1,890,000 <sup>đ</sup></div>-->
+                <th:block th:each="image,state: ${hotel.getImages()}" >
+                <div class="carousel-item active" style="cursor:pointer;" th:if="${state.index} == 0"><a><img th:src="${image.getImage()}"
+                                                          /></a></div>
+
+                <div class="carousel-item" style="cursor:pointer;" th:if="${state.index}!=0"><a ><img  th:src="${image.getImage()}"
+                                                  /></a></div>
+                </th:block>
+<!--                <div class="carousel-item"><a><img src="Utilities/slideshow/slideshow1/data0/images/room03.jpg"-->
+<!--                                                   alt="room03" title="room03" /></a></div>-->
+            </div>
+            <!--Logo tao ra khi lam` slide tu` pm ngoai`,
+            sau khi tat' di van~ click duoc ra trang http://wowslider.com/-->
+            <a class="carousel-control-prev" th:href="'#demo'+${RowState.index}+${count.index}" data-slide="prev" style="z-index: 9999">
+                <span class="carousel-control-prev-icon" style="z-index: 9999" ></span>
+            </a>
+            <a class="carousel-control-next" th:href="'#demo'+${RowState.index}+${count.index}" data-slide="next" style="z-index: 9999">
+                <span class="carousel-control-next-icon" style="z-index: 9999" ></span>
+            </a>
+
+
+            <!-- End WOWSlider.com BODY section -->
+        </div>
+        </th:block>
+
+
+
+    </div>
+    </th:block>
+
+
+
+
+</div>
+
+
+
+<div style="text-align: center; margin-top: 15px;  display:flex;justify-content: center;">
+    <!-- chinh height o day de~ bi. day? cac phan tu* cua footer -->
+    <th:block th:if="${number_of_page!=0}">
+    <ul class="pagination"><!-- Bootstrap -->
+        <li>
+            <a href="#" onclick="prevPage()">«</a>
+        </li>
+
+        <th:block th:each="i: ${#numbers.sequence(0, number_of_page - 1)}">
+
+        <li  onclick="changePage(this)" th:attr="class=${i}==${active_page} ? 'active' : ''">
+            <a href="#" th:id="'pagi-'+${i}" th:text="${i}+1" ></a>
+        </li>
+        </th:block>
+        <li>
+            <a href="#" onclick="nextPage()">»</a>
+        </li>
+    </ul>
+    </th:block>
+    <th:block th:unless="${number_of_page!=0}"><div style="float:left;display:flex;justify-content: center;">Không có khách sạn tương ứng</div></th:block>
+</div>
+<!--  </div>-->
+<!--</div>-->
+<script>
+    function callLink(e){
+        e.getElementsByClassName('link')[0].click();
+    }
+</script>
+</body>
+</html>

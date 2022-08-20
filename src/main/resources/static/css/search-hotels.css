@@ -1,0 +1,421 @@
+* {
+    margin: 0px;
+    /*do co' file bootstrap.min.css => font duoc dinh dang san~*/
+    /*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+    /*font-size: 15px;*/
+    /*border-color: rgb(191,191,191);*/
+    /*border-style: none; uu tien cac div inline (neu co')*/
+}
+
+#container {
+    width: 100%;
+    height: auto;
+}
+
+/** navigation **/
+nav {
+    /*height: 70px;*/
+    width: 100%;
+    /*background-color: rgb(46,45,45);*/
+    background-color: rgb(233, 234, 237);
+
+}
+
+#nav-timkiem {
+    width: 85%;
+    /*height: 100%;*/
+    margin: auto;
+    padding-bottom: 10px;
+    /*background-color: yellow;*/
+    /*https://css-tricks.com/snippets/css/a-guide-to-flexbox/*/
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+
+}
+
+/*http://stackoverflow.com/questions/18838964/add-bootstrap-glyphicon-to-input-box*/
+/* enable absolute positioning */
+.inner-addon {
+    position: relative;
+}
+
+/* style icon */
+/*.inner-addon .glyphicon {*/
+.inner-addon .fa {
+    position: absolute;
+    /*padding: 5px;*/
+    pointer-events: none;
+}
+
+/* align icon */
+/*.left-addon .glyphicon  { left:  0px;}*/
+.left-addon .fa {
+    left: 7px;
+    top: 23px;
+}
+
+/*.right-addon .glyphicon { right: 0px;}*/
+/* add padding  */
+.left-addon input {
+    padding-left: 30px;
+}
+
+/*.right-addon input { padding-right: 30px; }*/
+
+/*icon Google http://www.w3schools.com/icons/google_icons_social.asp */
+.inner-addon .material-icons {
+    position: absolute;
+    pointer-events: none;
+}
+
+/* align icon */
+.left-addon .material-icons {
+    left: 7px;
+    top: 23px;
+}
+
+/* add padding  */
+.left-addon select {
+    padding-left: 30px;
+}
+
+input[type='date'] {
+    /*margin: left & top*/
+    /*background: url(../img/index/cal-icon.png) no-repeat scroll 5px 10px;*/
+    /*padding-left:35px;*/
+    /*background-color: #ffffff;*/
+    width: 180px;
+}
+
+/*nhom' data-tooltip*/
+/*http://stackoverflow.com/questions/19746767/hide-title-from-tooltip*/
+input[type=date] {
+    /*position: relative; => anh huong den' class icon ben trong */
+}
+
+.my-tooltip:hover:after {
+    position: absolute;
+    /*#333*/
+    /*background: #ffffff;*/
+    /*background: rgba(0,0,0,.8);*/
+    background: rgba(255, 255, 255, 1);
+    border-radius: 5px;
+    margin-top: -90px;
+    /*bottom: 26px;*/
+    /*color: #fff;*/
+    content: attr(data-tooltip);
+    /*left: 20%;*/
+    padding: 5px 15px;
+    z-index: 1000;
+    width: auto;
+    border: 1px solid rgb(233, 234, 237);
+}
+
+.my-tooltip:hover:before {
+    position: absolute;
+    border: solid;
+    /*#333*/
+    border-color: white transparent;
+    border-width: 6px 6px 0 6px;
+    margin-top: 0px;
+    /*bottom: 20px;*/
+    content: "";
+    /*left: 50%;*/
+    margin-left: 15px;
+    z-index: 1001;
+}
+
+input[type='search'] {
+    /*background: url(../img/index/MarkerFilled-23.png) no-repeat scroll 5px 10px;*/
+    /*padding-left:35px;*/
+    /*background-color: #ffffff;*/
+}
+
+button[type="submit"].mybtn-style1 {
+    background: rgb(220, 30, 40);
+    color: white;
+    /*hoac dung width % tai. id*/
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+button[type="submit"].mybtn-style1:hover {
+    background: rgb(212, 18, 28);
+}
+
+/*viet day du? thuoc tinh', select (viet khac 1 ti') #nav-timkiem input[type='search'] */
+#nav-timkiem input, #nav-timkiem select:optional, #nav-timkiem button {
+    /*margin-top co' the dat tai the div*/
+    margin-top: 10px;
+    height: 48px;
+}
+
+#loaiphong-khac {
+    /*width: 65%;*/
+    /*margin: auto;*/
+    /*https://css-tricks.com/snippets/css/a-guide-to-flexbox/*/
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+/** END navigation **/
+
+/** center **/
+#center {
+    margin: auto;
+    margin-left: 7%;
+    margin-right: 7%;
+    /*height: 1280px;*/
+    height: auto;
+}
+
+#left-center {
+    width: 28%;
+    height: 100%;
+    float: left;
+}
+
+/*dat height 100%, se~ bi day? xuong khi co' margin-top, anh huong den Footer*/
+#right-center {
+    width: 70%;
+    float: right;
+    margin-top: 15px;
+}
+
+.left-title {
+    font-weight: bold;
+    /*chuyen tu` span sang div*/
+    margin-top: 15px;
+    color: rgb(70, 68, 68);
+}
+
+#left-center li {
+    margin-top: 10px;
+    margin-left: -20px;
+}
+
+/*http://brennaobrien.com/blog/2014/05/style-input-type-range-in-every-browser.html*/
+input[type=range] {
+    -webkit-appearance: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 300px;
+    height: 5px;
+    /*#ddd*/
+    background: rgb(220, 30, 40);
+    border: none;
+    border-radius: 3px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    /*goldenrod*/
+    background: white;
+    box-shadow: 1px 1px 1px 1px grey;
+    margin-top: -4px;
+}
+
+input[type=range]:focus {
+    outline: none;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+    /*#ccc*/
+    /*background: #ff0000;*/
+}
+
+/*END style-input-type-range-in-every-browser*/
+
+/*nhóm Lựa chọn của bạn*/
+.options {
+    border: 1px solid rgb(223, 221, 221);
+    /*display: inline-block; chi tao border bao quoanh text*/
+    display: inline-block;
+    /*padding: top right bottom left*/
+    padding: 2px 5px 2px 5px;
+}
+
+.options a {
+    color: black;
+}
+
+.options a:hover {
+    color: rgb(239, 238, 239);
+    text-decoration: none;
+}
+
+.options-x {
+    display: none;
+    position: absolute;
+    color: black;
+}
+
+#right-center-2 .row {
+    margin-top: 25px;
+}
+
+#right-center-2 .size-of-img {
+    width: 393px;
+    height: 238px;
+}
+
+.my-wowslider {
+    cursor: pointer;
+}
+
+/*duoc dung chung cho nhieu image*/
+/*https://css-tricks.com/examples/ShapesOfCSS/*/
+.badge-outer {
+    position: absolute;
+    z-index: 1000;
+    border-bottom: 25px solid black;
+    color: white;
+    opacity: 0.3;
+    /*#####*/
+    border-left: 21px solid transparent;
+    border-right: 29px solid transparent;
+    height: 0;
+    width: 135px;
+    /*#####*/
+    -webkit-transform: rotate(-40deg);
+    margin-left: -24px;
+    margin-top: 21px;
+}
+
+.badge-inner {
+    position: absolute;
+    z-index: 1000;
+    color: white;
+    text-align: center;
+    -webkit-transform: rotate(-42deg);
+    margin-top: 25px;
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+/*badge-outer-2, badge-inner-2: dung cho khuyen mai~
+neu dung` glyphicon thi ko tuy chon duoc size
+*/
+.badge-outer-2 {
+    position: absolute;
+    z-index: 999;
+    opacity: 0.5;
+    margin-top: -10px;
+}
+
+.badge-inner-2 {
+    position: absolute;
+    z-index: 1000;
+    width: 30px;
+    text-align: center;
+    margin-left: 20px;
+    font-size: larger;
+    margin-top: 5px;
+}
+
+.badge-outer-3 {
+    position: absolute;
+    z-index: 1000;
+    border-bottom: 25px solid rgb(220, 30, 40);
+    color: white;
+    opacity: 0.3;
+    /*#####*/
+    border-left: 21px solid transparent;
+    border-right: 29px solid transparent;
+    height: 0;
+    width: 135px;
+    /*#####*/
+    -webkit-transform: rotate(-40deg);
+    margin-left: -24px;
+    margin-top: 21px;
+}
+
+.badge-inner-3 {
+    position: absolute;
+    z-index: 1000;
+    color: white;
+    text-align: center;
+    -webkit-transform: rotate(-40deg);
+    margin-top: 25px;
+    margin-left: 0px;
+    font-size: 14px;
+}
+
+.loaiphong {
+    position: absolute;
+    z-index: 1000;
+    margin-top: 15px;
+    /*margin-left: 300px; xay ra loi~ khi zoom browser*/
+    right: 20px;
+    width: 150px;
+    height: 40px;
+    line-height: 28px;
+    border: 0px solid;
+    color: rgb(238, 166, 16);
+    text-align: center;
+    border-radius: 15px;
+    background-color: black;
+    font-size: 12px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-hotel {
+    position: absolute;
+    z-index: 1000;
+    /*margin-top: 170px; xay ra loi~ khi zoom browser*/
+    /*dam bao khi zoom thi van thay' dc price'*/
+    bottom: 5px;
+    width: 280px;
+    /*height: 100px;*/
+    margin-left: 7px;
+    margin-bottom: 5px;
+    text-shadow: 1px 0px black;
+}
+
+.price {
+    position: absolute;
+    z-index: 1000;
+    width: 100px;
+    text-align: right;
+    /*margin-left: 285px;*/
+    right: 10px;
+    /*margin-top: 210px;*/
+    bottom: 0px;
+    text-shadow: 1px 0px black;
+    font-size: 15px;
+}
+
+
+/*da chuyen sang dung div*/
+/*viet day du ten Id cua the div chua' class .borderless khi tach' rieng file doc lap, neu dat chung 1 file thi ok*/
+#myModal .borderless tbody tr td, #myModal .borderless tbody tr th, #myModal .borderless thead tr th {
+    /*http://stackoverflow.com/questions/18075794/bootstrap-table-without-stripe-borders
+    do mac dinh table co' ke khung, neu them css inline thi ko the tac dong. den duoc.
+    */
+    border: none;
+}
+
+#myModal-2 .borderless tbody tr td, #myModal-2 .borderless tbody tr th, #myModal-2 .borderless thead tr th {
+    border: none;
+}
+
+/*neu img la` display: none thi dung` jQuery su kien fadeIn tac dong den (neu' lien quan den' toc' do^)
+va phai kem` the? a de? show duoc ban` tay
+tai index cung co' img nay`*/
+/*ko the kiem tra duoc dk input = empty*/
+/*#search-locations img{*/
+/*visibility: hidden;*/
+/*cursor: pointer;*/
+/*}*/
+/*#search-locations:hover img{*/
+/*visibility: visible;*/
+/*}*/
